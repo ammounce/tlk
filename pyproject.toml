@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=43.0.0", "wheel"]
+requires = ["setuptools", "wheels"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -11,5 +11,6 @@ authors = [
     ]
 description = "Thorlabs Kinesis python wrappers"
 keywords = ["thorlabs", "kinesis", "instrument control" , "science"]
+dependencies = ["comtypes"]
 
 [tool]

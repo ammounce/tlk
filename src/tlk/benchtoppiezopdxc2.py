@@ -1,9 +1,8 @@
 from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_ulong, cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     MOT_TravelDirection,
     PDXC2_TriggerModes,
-    PDXC2_TriggerParams,
     PZ_AmpOutParameters,
     PZ_ControlModeTypes,
     PZ_StageAxisParameters)
@@ -11,6 +10,7 @@ from .definitions.structures import (
     PDXC2_ClosedLoopParameters,
     PDXC2_JogParameters,
     PDXC2_OpenLoopMoveParameters,
+    PDXC2_TriggerParams,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
 from pathlib import Path
@@ -21,7 +21,7 @@ device_manager = cdll.LoadLibrary(
     lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "")
+    lib_path / "MotionControl.Benchtop.Piezo.DLL")
 PDXC2_CheckConnection = lib.PDXC2_CheckConnection
 PDXC2_CheckConnection.restype = c_bool
 PDXC2_CheckConnection.argtypes = [POINTER(c_char)]

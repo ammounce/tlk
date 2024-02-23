@@ -1,5 +1,5 @@
 from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_short, c_uint, c_ulong, cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (TSG_Display_Modes, TSG_Hub_Analogue_Modes)
 from .definitions.structures import (TLI_DeviceInfo, TLI_HardwareInformation, TSG_IOSettings)
 from pathlib import Path

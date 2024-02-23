@@ -14,7 +14,7 @@ from ctypes import (
     c_uint,
     c_ulong,
     cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     KMOT_TriggerPortMode,
     KMOT_TriggerPortPolarity,

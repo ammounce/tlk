@@ -27,20 +27,27 @@ from .enumerations import (
     KIM_DirectionSense,
     KIM_FBSignalMode,
     KIM_JogMode,
+    KIM_JoystickModes,
     KIM_LimitSwitchModes,
     KIM_TravelDirection,
     KIM_TrigModes,
     KIM_TrigPolarities,
+    KLDTriggerMode,
     KLD_TrigPolarity,
+    KLS_Polarity,
     KLS_TriggerMode,
     KMOT_TriggerPortMode,
     KMOT_TriggerPortPolarity,
     KMOT_WheelMode,
     KNA_HighOutputVoltageRoute,
     KNA_HighVoltageRange,
+    KNA_LowOutputVoltageRoute,
+    KNA_LowVoltageRange,
     KNA_TIARange,
+    KNA_TriggerPolarity,
     KNA_TriggerPortMode,
     KNA_WheelAdjustRate,
+    KPC_MonitorOutputMode,
     KPC_TriggerPortMode,
     KPC_TriggerPortPolarity,
     KPZ_TriggerPortMode,
@@ -48,31 +55,57 @@ from .enumerations import (
     KPZ_WheelChangeRate,
     KPZ_WheelDirectionSense,
     KPZ_WheelMode,
+    KSC_TriggerPolarity,
     KSC_TriggerPortMode,
+    MOD_AuxIOPortMode,
     MOD_IOPortMode,
     MOD_IOPortSource,
+    MOD_Monitor_Variable,
     MOT_ButtonModes,
+    MOT_CurrentLoopPhases,
+    MOT_DirectionSense,
+    MOT_HomeLimitSwitchDirection,
     MOT_JogModes,
     MOT_LimitSwitchModes,
     MOT_LimitSwitchSWModes,
+    MOT_MotorTypes,
+    MOT_PID_LoopMode,
+    MOT_RasterScanMovePattern,
+    MOT_RasterScanMoveTriggerMode,
     MOT_StopModes,
     MOT_TravelDirection,
     MOT_TriggerInputConfigModes,
     MOT_TriggerInputSource,
     MOT_TriggerOutputConfigModes,
     MOT_TriggerPolarity,
+    MOT_VelocityProfileModes,
     MPC_IOModes,
     MPC_SignalModes,
+    NT_CircleAdjustment,
+    NT_CircleDiameterMode,
+    NT_LowPassFrequency,
     NT_OddOrEven,
     NT_OutputVoltageRoute,
     NT_TIARangeMode,
+    NT_UnderOrOver,
     NT_VoltageRange,
+    PCC_DerivFilterState,
+    PCC_DisplayIntensity,
+    PCC_FeedbackPolarity,
+    PCC_IOFeedbackSourceDefinition,
+    PCC_IOOutputBandwidth,
+    PCC_IOOutputMode,
+    PCC_NotchFilterChannel,
+    PCC_NotchFilterState,
     PPC_IOControlMode,
+    PZ_JogModes,
+    PZ_OutputLUTModes,
     QD_FilterEnable,
     QD_KPA_TrigModes,
     QD_KPA_TrigPolarities,
     QD_LowVoltageRoute,
     QD_OpenLoopHoldValues,
+    TSG_DisplayModes,
     TSG_Hub_Analogue_Modes)
 
 
@@ -382,7 +415,7 @@ class KPC_TriggerConfig(Structure):
     _fields_ = [
         ("LowerLimit", c_int32),
         ("MonitorFilterFrequency", c_int16),
-        ("MonitorOutput", KPC_MonitorOuptutMode),
+        ("MonitorOutput", KPC_MonitorOutputMode),
         ("MonitorOutputSoftwareValue", c_int32),
         ("SmoothingSamples", c_int16),
         ("Trigger1Mode", KPC_TriggerPortMode),
@@ -486,7 +519,7 @@ class KSG_TriggerConfig(Structure):
 class MOD_AnalogMonitorConfigurationParameters(Structure):
     _fields_ = [
         ("MonitorNo", c_long),
-        ("MonitorVar", MOD_Monitro_Variable),
+        ("MonitorVar", MOD_Monitor_Variable),
         ("MotorChannelNo", c_long),
         ("Offset", c_long),
         ("Scale", c_long),
@@ -495,7 +528,7 @@ class MOD_AnalogMonitorConfigurationParameters(Structure):
 
 class MOD_AuxIOPortConfigurationParameters(Structure):
     _fields_ = [
-        ("Mode", MODE_AuxIOPortMode),
+        ("Mode", MOD_AuxIOPortMode),
         ("PortNo", c_long),
         ("SWState", c_long),
     ]
@@ -503,7 +536,7 @@ class MOD_AuxIOPortConfigurationParameters(Structure):
 
 class MOD_AuxIOPortConfigurationSetParameters(Structure):
     _fields_ = [
-        ("Mode", MODE_AuxIOPortMode),
+        ("Mode", MOD_AuxIOPortMode),
         ("PortNo", c_long),
         ("SWState", c_long),
     ]
@@ -622,6 +655,14 @@ class MOT_HomingParameters(Structure):
     ]
 
 
+class MOT_VelocityParameters(Structure):
+    _fields_ = [
+        ("acceleration", c_int),
+        ("maxVelocity", c_int),
+        ("minVelocity", c_int),
+    ]
+
+
 class MOT_JogParameters(Structure):
     _fields_ = [
         ("mode", MOT_JogModes),
@@ -687,7 +728,7 @@ class MOT_LimitSwitchParameters(Structure):
     _fields_ = [
         ("anticlockwiseHardwareLimit", MOT_LimitSwitchModes),
         ("anticlockwisePosition", c_ulong),
-        ("clockwiseHardwareLimit", MOTLimitSwitchModes),
+        ("clockwiseHardwareLimit", MOT_LimitSwitchModes),
         ("clockwisePosition", MOT_LimitSwitchSWModes),
     ]
 
@@ -728,17 +769,11 @@ class MOT_PowerParameters(Structure):
 
 class MOT_RasterScanMoveAxisParams(Structure):
     _fields_ = [
-        ("AxisMovement1", MOT_RasterScanMoveAxisParams),
-        ("AxisMovement2", MOT_RasterScanMoveAxisParams),
         ("ChannelNo", c_long),
         ("CycleCount", c_long),
         ("DwellTime", c_long),
         ("RelativeDistance", c_long),
-        ("ScanPattern", MOT_RasterScanMovePattern),
         ("StartPos", c_long),
-        ("TriggerInPolarity", MOT_TriggerPolarity),
-        ("TriggerMode", MOT_RasterScanMoveTriggerMode),
-        ("TriggerSource", MOT_TriggerInputSource),
     ]
 
 
@@ -798,14 +833,6 @@ class MOT_TriggerIOConfigParameters(Structure):
     ]
 
 
-class MOT_VelocityParameters(Structure):
-    _fields_ = [
-        ("acceleration", c_int),
-        ("maxVelocity", c_int),
-        ("minVelocity", c_int),
-    ]
-
-
 class MOT_VelocityProfileParameters(Structure):
     _fields_ = [
         ("jerk", c_ulong),
@@ -857,7 +884,7 @@ class NT_CircleParameters(Structure):
         ("diameter", c_long),
         ("maxDiameter", c_long),
         ("minDiameter", c_long),
-        ("mode", NT_circleDiameterMode),
+        ("mode", NT_CircleDiameterMode),
         ("samplesPerRevolution", c_long),
     ]
 
@@ -951,6 +978,21 @@ class PDXC2_Status(Structure):
     ]
 
 
+class PDXC2_TriggerParams(Structure):
+    _fields_ = [
+        ("analogInOffset", c_float),
+        ("analogOutGain", c_float),
+        ("analogOutOffset", c_float),
+        ("analongInGain", c_float),
+        ("fallFixedStep", c_int32),
+        ("fallPosition1", c_int32),
+        ("fallPosition2", c_int32),
+        ("riseFixedStep", c_int32),
+        ("risePosition1", c_int32),
+        ("risePosition2", c_int32),
+    ]
+
+
 class PPC_IOSettings(Structure):
     _fields_ = [
         ("FPBrightness", PCC_DisplayIntensity),
@@ -969,8 +1011,8 @@ class PPC_NotchParams(Structure):
         ("filter2Fc", c_float),
         ("filter2Q", c_float),
         ("filterNo", PCC_NotchFilterChannel),
-        ("notchFilter1On", PCCNotchFilterState),
-        ("notchFilter2On", PCCNotchFilterState),
+        ("notchFilter1On", PCC_NotchFilterState),
+        ("notchFilter2On", PCC_NotchFilterState),
     ]
 
 

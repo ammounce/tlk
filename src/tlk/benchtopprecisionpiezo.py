@@ -1,5 +1,5 @@
 from ctypes import (POINTER, c_byte, c_char, c_int, c_long, c_short, c_ulong, cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (PZ_ControlModeTypes, PZ_InputSourceFlags)
 from .definitions.structures import (
     PPC_IOSettings,

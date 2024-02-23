@@ -1,2 +1,2 @@
-# from .safearray import SafeArray
+from .safearray import SafeArray
 from .enumeration import Enumeration

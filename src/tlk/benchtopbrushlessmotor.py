@@ -13,7 +13,7 @@ from ctypes import (
     c_uint,
     c_ulong,
     cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     MOD_AuxIOPortMode,
     MOD_IOPortMode,

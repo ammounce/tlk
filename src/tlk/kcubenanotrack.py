@@ -12,7 +12,7 @@ from ctypes import (
     c_short,
     c_ulong,
     cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     KNA_Channels,
     KNA_FeedbackModeTypes,

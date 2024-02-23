@@ -1,5 +1,5 @@
 from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_uint, c_ulong, cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (FF_Positions)
 from .definitions.structures import (FF_IOSettings, TLI_DeviceInfo)
 from pathlib import Path

@@ -13,7 +13,7 @@ from ctypes import (
     c_uint,
     c_ulong,
     cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     MOT_ButtonModes,
     MOT_JogModes,

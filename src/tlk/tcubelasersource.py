@@ -1,5 +1,5 @@
 from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_short, c_ulong, cdll)
-from .safearray import SafeArray
+from .definitions.safearray import SafeArray
 from .definitions.enumerations import (LS_DisplayUnits, LS_InputSourceFlags)
 from .definitions.structures import (TLI_DeviceInfo, TLI_HardwareInformation)
 from pathlib import Path

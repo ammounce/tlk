@@ -6,91 +6,67 @@ on:
 jobs:
   build:
     name: Build distribution 📦
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+# This workflow performs all the deployment steps to PyPi, and is intended to be run manually
+# since the automatic deployment fails to trigger so often.
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.7"
-    - name: Install pypa/build
-      run: >-
-        python3 -m
-        pip install
-        build
-        --user
-    - name: Build a binary wheel and a source tarball
-      run: python3 -m build
-    - name: Store the distribution packages
-      uses: actions/upload-artifact@v3
-      with:
-        name: python-package-distributions
-        path: dist/
-        
-  github-release:
-    name: >-
-      Sign the Python distribution package with Sigstore
-      and upload them to GitHub Release
-    # needs:
-    #   - publish-to-pypi
-    runs-on: ubuntu-latest
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # to fetch all branches and *tags* (needed to get version number correctly)
+  
+      - uses: actions/setup-python@v5
+        name: Install Python
+        with:
+          python-version: '3.10'
+          
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.1.2
+        env:
+          CIBW_BUILD: cp38-* cp39-* cp310-* cp311-* cp312-*
+          CIBW_BUILD_VERBOSITY: 1
 
-    permissions:
-      contents: write  # IMPORTANT: mandatory for making GitHub Releases
-      id-token: write  # IMPORTANT: mandatory for sigstore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels
+          path: ./wheelhouse/*.whl
 
+  build_sdist:
+    name: Build source distribution
+    runs-on: windows-latest
+    
     steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v3
-      with:
-        name: python-package-distributions
-        path: dist/
-    - name: Sign the dists with Sigstore
-      uses: sigstore/gh-action-sigstore-python@v1.2.3
-      with:
-        inputs: >-
-          ./dist/*.tar.gz
-          ./dist/*.whl
-    - name: Create GitHub Release
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      run: >-
-        gh release create
-        '${{ github.ref_name }}'
-        --repo '${{ github.repository }}'
-        --notes ""
-    - name: Upload artifact signatures to GitHub Release
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      # Upload to GitHub Release using the `gh` CLI.
-      # `dist/` contains the built packages, and the
-      # sigstore-produced signatures and certificates.
-      run: >-
-        gh release upload
-        '${{ github.ref_name }}' dist/**
-        --repo '${{ github.repository }}'
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # to fetch all branches and *tags* (needed to get version number correctly)
 
-  publish-to-testpypi:
-    name: Publish Python 🐍 distribution 📦 to TestPyPI
-    needs:
-    - build
-    runs-on: ubuntu-latest
+      - uses: actions/setup-python@v5
+        name: Install Python
+        with:
+          python-version: '3.10'
 
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/<package-name>
+      - name: Build sdist
+        run: python setup.py sdist
 
-    permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-sdist
+          path: dist/*.tar.gz
 
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v3
-      with:
-        name: python-package-distributions
-        path: dist/
-    - name: Publish distribution 📦 to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
+  # upload_pypi:
+  #   needs: [build_wheels, build_sdist]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         pattern: cibw-*
+  #         path: dist
+  #         merge-multiple: true
+
+  #     - name: Publish package on PyPI
+  #       uses: pypa/gh-action-pypi-publish@release/v1
+  #       with:
+  #         user: __token__
+  #         password: ${{ secrets.PYPI_API_TOKEN }}
+  #         verbose: true
+

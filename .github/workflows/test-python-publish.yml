@@ -1,4 +1,4 @@
-name: Publish Python 🐍 distribution 📦 to PyPI and TestPyPI
+name: TestPyPI Upload
 
 on: 
   workflow_dispatch:
@@ -30,10 +30,10 @@ jobs:
         
   github-release:
     name: >-
-      Sign the Python 🐍 distribution 📦 with Sigstore
+      Sign the Python distribution package with Sigstore
       and upload them to GitHub Release
-    needs:
-    - publish-to-pypi
+    # needs:
+    #   - publish-to-pypi
     runs-on: ubuntu-latest
 
     permissions:

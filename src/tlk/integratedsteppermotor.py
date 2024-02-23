@@ -12,6 +12,7 @@ from ctypes import (
     c_short,
     c_uint,
     c_ulong,
+    c_void_p,
     cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
@@ -35,15 +36,15 @@ from .definitions.structures import (
     MOT_VelocityParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.IntegratedStepperMotors.DLL")
+    lib_path + "Thorlabs.MotionControl.IntegratedStepperMotors.DLL")
+
 ISC_CanHome = lib.ISC_CanHome
 ISC_CanHome.restype = c_bool
 ISC_CanHome.argtypes = [POINTER(c_char)]
@@ -60,12 +61,12 @@ ISC_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 ISC_ClearMessageQueue = lib.ISC_ClearMessageQueue
-ISC_ClearMessageQueue.restype = None
+ISC_ClearMessageQueue.restype = c_void_p
 ISC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 ISC_Close = lib.ISC_Close
-ISC_Close.restype = None
+ISC_Close.restype = c_void_p
 ISC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -80,7 +81,7 @@ ISC_EnableChannel.argtypes = [POINTER(c_char)]
 # *serialNo
 
 ISC_EnableLastMsgTimer = lib.ISC_EnableLastMsgTimer
-ISC_EnableLastMsgTimer.restype = None
+ISC_EnableLastMsgTimer.restype = c_void_p
 ISC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -316,7 +317,7 @@ ISC_Home.argtypes = [POINTER(c_char)]
 # *serialNo
 
 ISC_Identify = lib.ISC_Identify
-ISC_Identify.restype = None
+ISC_Identify.restype = c_void_p
 ISC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -391,8 +392,8 @@ ISC_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 ISC_RegisterMessageCallback = lib.ISC_RegisterMessageCallback
-ISC_RegisterMessageCallback.restype = None
-ISC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+ISC_RegisterMessageCallback.restype = c_void_p
+ISC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 ISC_RequestBacklash = lib.ISC_RequestBacklash
@@ -506,12 +507,12 @@ ISC_SetButtonParamsBlock.argtypes = [MOT_ButtonParameters, POINTER(c_char)]
 # *buttonParams, *serialNo
 
 ISC_SetCalibrationFile = lib.ISC_SetCalibrationFile
-ISC_SetCalibrationFile.restype = None
+ISC_SetCalibrationFile.restype = c_void_p
 ISC_SetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_bool]
 # *filename, *serialNo, enabled
 
 ISC_SetDirection = lib.ISC_SetDirection
-ISC_SetDirection.restype = None
+ISC_SetDirection.restype = c_void_p
 ISC_SetDirection.argtypes = [POINTER(c_char), c_bool]
 # *serialNo, reverse
 
@@ -567,7 +568,7 @@ ISC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_c
 # *limitSwitchParams, *serialNo
 
 ISC_SetLimitsSoftwareApproachPolicy = lib.ISC_SetLimitsSoftwareApproachPolicy
-ISC_SetLimitsSoftwareApproachPolicy.restype = None
+ISC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
 ISC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), MOT_LimitsSoftwareApproachPolicy]
 # *serialNo, limitsSoftwareApproachPolicy
 
@@ -662,7 +663,7 @@ ISC_StopImmediate.argtypes = [POINTER(c_char)]
 # *serialNo
 
 ISC_StopPolling = lib.ISC_StopPolling
-ISC_StopPolling.restype = None
+ISC_StopPolling.restype = c_void_p
 ISC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -683,8 +684,7 @@ ISC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -723,10 +723,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

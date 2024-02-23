@@ -11,6 +11,7 @@ from ctypes import (
     c_short,
     c_uint,
     c_ulong,
+    c_void_p,
     cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
@@ -34,15 +35,15 @@ from .definitions.structures import (
     MOT_VelocityParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.TCube.DCServo.DLL")
+    lib_path + "Thorlabs.MotionControl.TCube.DCServo.DLL")
+
 CC_CanHome = lib.CC_CanHome
 CC_CanHome.restype = c_bool
 CC_CanHome.argtypes = [POINTER(c_char)]
@@ -59,12 +60,12 @@ CC_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 CC_ClearMessageQueue = lib.CC_ClearMessageQueue
-CC_ClearMessageQueue.restype = None
+CC_ClearMessageQueue.restype = c_void_p
 CC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 CC_Close = lib.CC_Close
-CC_Close.restype = None
+CC_Close.restype = c_void_p
 CC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -79,7 +80,7 @@ CC_EnableChannel.argtypes = [POINTER(c_char)]
 # *serialNo
 
 CC_EnableLastMsgTimer = lib.CC_EnableLastMsgTimer
-CC_EnableLastMsgTimer.restype = None
+CC_EnableLastMsgTimer.restype = c_void_p
 CC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -305,7 +306,7 @@ CC_Home.argtypes = [POINTER(c_char)]
 # *serialNo
 
 CC_Identify = lib.CC_Identify
-CC_Identify.restype = None
+CC_Identify.restype = c_void_p
 CC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -375,8 +376,8 @@ CC_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 CC_RegisterMessageCallback = lib.CC_RegisterMessageCallback
-CC_RegisterMessageCallback.restype = None
-CC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+CC_RegisterMessageCallback.restype = c_void_p
+CC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 CC_RequestBacklash = lib.CC_RequestBacklash
@@ -485,7 +486,7 @@ CC_SetDCPIDParams.argtypes = [MOT_DC_PIDParameters, POINTER(c_char)]
 # *DCproportionalIntegralDerivativeParams, *serialNo
 
 CC_SetDirection = lib.CC_SetDirection
-CC_SetDirection.restype = None
+CC_SetDirection.restype = c_void_p
 CC_SetDirection.argtypes = [POINTER(c_char), c_bool]
 # *serialNo, reverse
 
@@ -546,7 +547,7 @@ CC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_ch
 # *limitSwitchParams, *serialNo
 
 CC_SetLimitsSoftwareApproachPolicy = lib.CC_SetLimitsSoftwareApproachPolicy
-CC_SetLimitsSoftwareApproachPolicy.restype = None
+CC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
 CC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), MOT_LimitsSoftwareApproachPolicy]
 # *serialNo, limitsSoftwareApproachPolicy
 
@@ -631,7 +632,7 @@ CC_StopImmediate.argtypes = [POINTER(c_char)]
 # *serialNo
 
 CC_StopPolling = lib.CC_StopPolling
-CC_StopPolling.restype = None
+CC_StopPolling.restype = c_void_p
 CC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -657,8 +658,7 @@ CC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -697,10 +697,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

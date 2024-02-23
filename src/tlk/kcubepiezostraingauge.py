@@ -1,4 +1,17 @@
-from ctypes import (POINTER, c_bool, c_byte, c_char, c_int, c_int16, c_int32, c_int64, c_long, c_short, c_ulong, cdll)
+from ctypes import (
+    POINTER,
+    c_bool,
+    c_byte,
+    c_char,
+    c_int,
+    c_int16,
+    c_int32,
+    c_int64,
+    c_long,
+    c_short,
+    c_ulong,
+    c_void_p,
+    cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     KPC_HubAnalogueModes,
@@ -18,15 +31,15 @@ from .definitions.structures import (
     PZ_LUTWaveParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.KCube.PiezoStrainGauge.DLL")
+    lib_path + "Thorlabs.MotionControl.KCube.PiezoStrainGauge.DLL")
+
 KPC_CanDeviceLockFrontPanel = lib.KPC_CanDeviceLockFrontPanel
 KPC_CanDeviceLockFrontPanel.restype = c_bool
 KPC_CanDeviceLockFrontPanel.argtypes = [POINTER(c_char)]
@@ -38,12 +51,12 @@ KPC_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KPC_ClearMessageQueue = lib.KPC_ClearMessageQueue
-KPC_ClearMessageQueue.restype = None
+KPC_ClearMessageQueue.restype = c_void_p
 KPC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KPC_Close = lib.KPC_Close
-KPC_Close.restype = None
+KPC_Close.restype = c_void_p
 KPC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -63,7 +76,7 @@ KPC_Enable.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KPC_EnableLastMsgTimer = lib.KPC_EnableLastMsgTimer
-KPC_EnableLastMsgTimer.restype = None
+KPC_EnableLastMsgTimer.restype = c_void_p
 KPC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -243,7 +256,7 @@ KPC_HasLastMsgTimerOverrun.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KPC_Identify = lib.KPC_Identify
-KPC_Identify.restype = None
+KPC_Identify.restype = c_void_p
 KPC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -278,8 +291,8 @@ KPC_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KPC_RegisterMessageCallback = lib.KPC_RegisterMessageCallback
-KPC_RegisterMessageCallback.restype = None
-KPC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+KPC_RegisterMessageCallback.restype = c_void_p
+KPC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 KPC_RequestActualPosition = lib.KPC_RequestActualPosition
@@ -538,7 +551,7 @@ KPC_StopLUTwave.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KPC_StopPolling = lib.KPC_StopPolling
-KPC_StopPolling.restype = None
+KPC_StopPolling.restype = c_void_p
 KPC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -554,8 +567,7 @@ KPC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -594,10 +606,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

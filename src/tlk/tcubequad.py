@@ -1,4 +1,4 @@
-from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_short, c_ulong, cdll)
+from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_short, c_ulong, c_void_p, cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (QD_OperatingMode)
 from .definitions.structures import (
@@ -11,32 +11,32 @@ from .definitions.structures import (
     QD_Readings,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.TCube.Quad.DLL")
+    lib_path + "Thorlabs.MotionControl.TCube.Quad.DLL")
+
 QD_CheckConnection = lib.QD_CheckConnection
 QD_CheckConnection.restype = c_bool
 QD_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 QD_ClearMessageQueue = lib.QD_ClearMessageQueue
-QD_ClearMessageQueue.restype = None
+QD_ClearMessageQueue.restype = c_void_p
 QD_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 QD_Close = lib.QD_Close
-QD_Close.restype = None
+QD_Close.restype = c_void_p
 QD_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
 QD_EnableLastMsgTimer = lib.QD_EnableLastMsgTimer
-QD_EnableLastMsgTimer.restype = None
+QD_EnableLastMsgTimer.restype = c_void_p
 QD_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -131,7 +131,7 @@ QD_HasLastMsgTimerOverrun.argtypes = [POINTER(c_char)]
 # *serialNo
 
 QD_Identify = lib.QD_Identify
-QD_Identify.restype = None
+QD_Identify.restype = c_void_p
 QD_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -166,8 +166,8 @@ QD_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 QD_RegisterMessageCallback = lib.QD_RegisterMessageCallback
-QD_RegisterMessageCallback.restype = None
-QD_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+QD_RegisterMessageCallback.restype = c_void_p
+QD_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 QD_RequestLEDBrightness = lib.QD_RequestLEDBrightness
@@ -256,7 +256,7 @@ QD_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 QD_StopPolling = lib.QD_StopPolling
-QD_StopPolling.restype = None
+QD_StopPolling.restype = c_void_p
 QD_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -272,8 +272,7 @@ QD_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -312,10 +311,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

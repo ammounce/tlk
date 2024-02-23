@@ -1,4 +1,17 @@
-from ctypes import (POINTER, c_bool, c_byte, c_char, c_int, c_int16, c_int32, c_int64, c_long, c_short, c_ulong, cdll)
+from ctypes import (
+    POINTER,
+    c_bool,
+    c_byte,
+    c_char,
+    c_int,
+    c_int16,
+    c_int32,
+    c_int64,
+    c_long,
+    c_short,
+    c_ulong,
+    c_void_p,
+    cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     HubAnalogueModes,
@@ -17,15 +30,15 @@ from .definitions.structures import (
     TLI_DeviceInfo,
     TLI_HardwareInformation,
     TPZ_IOSettings)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.KCube.Piezo.DLL")
+    lib_path + "Thorlabs.MotionControl.KCube.Piezo.DLL")
+
 PCC_CanDeviceLockFrontPanel = lib.PCC_CanDeviceLockFrontPanel
 PCC_CanDeviceLockFrontPanel.restype = c_bool
 PCC_CanDeviceLockFrontPanel.argtypes = [POINTER(c_char)]
@@ -37,12 +50,12 @@ PCC_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PCC_ClearMessageQueue = lib.PCC_ClearMessageQueue
-PCC_ClearMessageQueue.restype = None
+PCC_ClearMessageQueue.restype = c_void_p
 PCC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PCC_Close = lib.PCC_Close
-PCC_Close.restype = None
+PCC_Close.restype = c_void_p
 PCC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -62,7 +75,7 @@ PCC_Enable.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PCC_EnableLastMsgTimer = lib.PCC_EnableLastMsgTimer
-PCC_EnableLastMsgTimer.restype = None
+PCC_EnableLastMsgTimer.restype = c_void_p
 PCC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -211,7 +224,7 @@ PCC_HasLastMsgTimerOverrun.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PCC_Identify = lib.PCC_Identify
-PCC_Identify.restype = None
+PCC_Identify.restype = c_void_p
 PCC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -246,8 +259,8 @@ PCC_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PCC_RegisterMessageCallback = lib.PCC_RegisterMessageCallback
-PCC_RegisterMessageCallback.restype = None
-PCC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+PCC_RegisterMessageCallback.restype = c_void_p
+PCC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 PCC_RequestActualPosition = lib.PCC_RequestActualPosition
@@ -474,7 +487,7 @@ PCC_StopLUTwave.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PCC_StopPolling = lib.PCC_StopPolling
-PCC_StopPolling.restype = None
+PCC_StopPolling.restype = c_void_p
 PCC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -490,8 +503,7 @@ PCC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -530,10 +542,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

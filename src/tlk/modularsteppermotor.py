@@ -16,15 +16,15 @@ from .definitions.structures import (
     MOT_LimitSwitchParameters,
     MOT_PowerParameters,
     MOT_VelocityParameters)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.Modular.DLL")
+    lib_path + "Thorlabs.MotionControl.Modular.DLL")
+
 SBC_CanHome = lib.SBC_CanHome
 SBC_CanHome.restype = c_bool
 SBC_CanHome.argtypes = [POINTER(c_char), c_short]
@@ -46,7 +46,7 @@ SBC_EnableChannel.argtypes = [POINTER(c_char), c_short]
 # *serialNo, channel
 
 SBC_EnableLastMsgTimer = lib.SBC_EnableLastMsgTimer
-SBC_EnableLastMsgTimer.restype = None
+SBC_EnableLastMsgTimer.restype = c_void_p
 SBC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_short, c_bool, c_int32]
 # *serialNo, channel, enable, lastMsgTimeout
 
@@ -333,7 +333,7 @@ SBC_SetBowIndex.argtypes = [POINTER(c_char), c_short, c_short]
 # *serialNo, bowIndex, channel
 
 SBC_SetCalibrationFile = lib.SBC_SetCalibrationFile
-SBC_SetCalibrationFile.restype = None
+SBC_SetCalibrationFile.restype = c_void_p
 SBC_SetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_short, c_bool]
 # *filename, *serialNo, channel, enabled
 
@@ -405,7 +405,7 @@ SBC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_c
 # *limitSwitchParams, *serialNo, channel
 
 SBC_SetLimitsSoftwareApproachPolicy = lib.SBC_SetLimitsSoftwareApproachPolicy
-SBC_SetLimitsSoftwareApproachPolicy.restype = None
+SBC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
 SBC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), c_short, MOT_LimitsSoftwareApproachPolicy]
 # *serialNo, channel, limitsSoftwareApproachPolicy
 
@@ -490,7 +490,7 @@ SBC_StopImmediate.argtypes = [POINTER(c_char), c_short]
 # *serialNo, channel
 
 SBC_StopPolling = lib.SBC_StopPolling
-SBC_StopPolling.restype = None
+SBC_StopPolling.restype = c_void_p
 SBC_StopPolling.argtypes = [POINTER(c_char), c_short]
 # *serialNo, channel
 

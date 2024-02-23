@@ -11,6 +11,7 @@ from ctypes import (
     c_long,
     c_short,
     c_ulong,
+    c_void_p,
     cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
@@ -46,15 +47,15 @@ from .definitions.structures import (
     NT_TIAReading,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.KCube.NanoTrak.DLL")
+    lib_path + "Thorlabs.MotionControl.KCube.NanoTrak.DLL")
+
 NT_CanDeviceLockFrontPanel = lib.NT_CanDeviceLockFrontPanel
 NT_CanDeviceLockFrontPanel.restype = c_bool
 NT_CanDeviceLockFrontPanel.argtypes = [POINTER(c_char)]
@@ -66,12 +67,12 @@ NT_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_ClearMessageQueue = lib.NT_ClearMessageQueue
-NT_ClearMessageQueue.restype = None
+NT_ClearMessageQueue.restype = c_void_p
 NT_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_Close = lib.NT_Close
-NT_Close.restype = None
+NT_Close.restype = c_void_p
 NT_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -81,7 +82,7 @@ NT_Disconnect.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_EnableLastMsgTimer = lib.NT_EnableLastMsgTimer
-NT_EnableLastMsgTimer.restype = None
+NT_EnableLastMsgTimer.restype = c_void_p
 NT_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -286,7 +287,7 @@ NT_HomeCircle.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_Identify = lib.NT_Identify
-NT_Identify.restype = None
+NT_Identify.restype = c_void_p
 NT_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -336,8 +337,8 @@ NT_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_RegisterMessageCallback = lib.NT_RegisterMessageCallback
-NT_RegisterMessageCallback.restype = None
-NT_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+NT_RegisterMessageCallback.restype = c_void_p
+NT_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 NT_RequestCircleDiameterLUT = lib.NT_RequestCircleDiameterLUT
@@ -581,7 +582,7 @@ NT_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 NT_StopPolling = lib.NT_StopPolling
-NT_StopPolling.restype = None
+NT_StopPolling.restype = c_void_p
 NT_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -602,8 +603,7 @@ NT_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -642,10 +642,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

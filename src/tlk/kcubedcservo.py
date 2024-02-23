@@ -11,6 +11,7 @@ from ctypes import (
     c_long,
     c_uint,
     c_ulong,
+    c_void_p,
     cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
@@ -32,15 +33,15 @@ from .definitions.structures import (
     MOT_VelocityParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.KCube.DCServo.dll")
+    lib_path + "Thorlabs.MotionControl.KCube.DCServo.dll")
+
 KVS_CanDeviceLockFrontPanel = lib.KVS_CanDeviceLockFrontPanel
 KVS_CanDeviceLockFrontPanel.restype = c_bool
 KVS_CanDeviceLockFrontPanel.argtypes = [POINTER(c_char)]
@@ -62,12 +63,12 @@ KVS_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KVS_ClearMessageQueue = lib.KVS_ClearMessageQueue
-KVS_ClearMessageQueue.restype = None
+KVS_ClearMessageQueue.restype = c_void_p
 KVS_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KVS_Close = lib.KVS_Close
-KVS_Close.restype = None
+KVS_Close.restype = c_void_p
 KVS_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -82,7 +83,7 @@ KVS_EnableChannel.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KVS_EnableLastMsgTimer = lib.KVS_EnableLastMsgTimer
-KVS_EnableLastMsgTimer.restype = None
+KVS_EnableLastMsgTimer.restype = c_void_p
 KVS_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -326,7 +327,7 @@ KVS_Home.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KVS_Identify = lib.KVS_Identify
-KVS_Identify.restype = None
+KVS_Identify.restype = c_void_p
 KVS_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -396,8 +397,8 @@ KVS_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KVS_RegisterMessageCallback = lib.KVS_RegisterMessageCallback
-KVS_RegisterMessageCallback.restype = None
-KVS_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+KVS_RegisterMessageCallback.restype = c_void_p
+KVS_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 KVS_RequestBacklash = lib.KVS_RequestBacklash
@@ -516,7 +517,7 @@ KVS_SetDigitalOutputs.argtypes = [POINTER(c_char), c_byte]
 # *serialNo, outputsBits
 
 KVS_SetDirection = lib.KVS_SetDirection
-KVS_SetDirection.restype = None
+KVS_SetDirection.restype = c_void_p
 KVS_SetDirection.argtypes = [POINTER(c_char), c_bool]
 # *serialNo, reverse
 
@@ -566,7 +567,7 @@ KVS_SetLEDswitches.argtypes = [POINTER(c_char), c_long]
 # *serialNo, LEDswitches
 
 KVS_SetLimitsSoftwareApproachPolicy = lib.KVS_SetLimitsSoftwareApproachPolicy
-KVS_SetLimitsSoftwareApproachPolicy.restype = None
+KVS_SetLimitsSoftwareApproachPolicy.restype = c_void_p
 KVS_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), MOT_LimitsSoftwareApproachPolicy]
 # *serialNo, limitsSoftwareApproachPolicy
 
@@ -675,7 +676,7 @@ KVS_StopImmediate.argtypes = [POINTER(c_char)]
 # *serialNo
 
 KVS_StopPolling = lib.KVS_StopPolling
-KVS_StopPolling.restype = None
+KVS_StopPolling.restype = c_void_p
 KVS_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -701,8 +702,7 @@ KVS_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -741,10 +741,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

@@ -1,4 +1,17 @@
-from ctypes import (POINTER, c_bool, c_char, c_double, c_float, c_int, c_int32, c_int64, c_long, c_short, c_ulong, cdll)
+from ctypes import (
+    POINTER,
+    c_bool,
+    c_char,
+    c_double,
+    c_float,
+    c_int,
+    c_int32,
+    c_int64,
+    c_long,
+    c_short,
+    c_ulong,
+    c_void_p,
+    cdll)
 from .definitions.enumerations import (
     KNA_FeedbackSource,
     KNA_TIARange,
@@ -18,15 +31,15 @@ from .definitions.structures import (
     NT_TIARangeParameters,
     NT_TIAReading,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.Modular.DLL")
+    lib_path + "Thorlabs.MotionControl.Modular.DLL")
+
 NT_ChannelEnable = lib.NT_ChannelEnable
 NT_ChannelEnable.restype = c_short
 NT_ChannelEnable.argtypes = [POINTER(c_char), c_long, c_bool]
@@ -38,12 +51,12 @@ NT_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_ClearMessageQueue = lib.NT_ClearMessageQueue
-NT_ClearMessageQueue.restype = None
+NT_ClearMessageQueue.restype = c_void_p
 NT_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_Close = lib.NT_Close
-NT_Close.restype = None
+NT_Close.restype = c_void_p
 NT_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -53,7 +66,7 @@ NT_Disconnect.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_EnableLastMsgTimer = lib.NT_EnableLastMsgTimer
-NT_EnableLastMsgTimer.restype = None
+NT_EnableLastMsgTimer.restype = c_void_p
 NT_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -203,7 +216,7 @@ NT_HomeCircle.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_Identify = lib.NT_Identify
-NT_Identify.restype = None
+NT_Identify.restype = c_void_p
 NT_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -238,8 +251,8 @@ NT_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 NT_RegisterMessageCallback = lib.NT_RegisterMessageCallback
-NT_RegisterMessageCallback.restype = None
-NT_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+NT_RegisterMessageCallback.restype = c_void_p
+NT_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 NT_RequestChannelStates = lib.NT_RequestChannelStates
@@ -423,7 +436,7 @@ NT_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 NT_StopPolling = lib.NT_StopPolling
-NT_StopPolling.restype = None
+NT_StopPolling.restype = c_void_p
 NT_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 

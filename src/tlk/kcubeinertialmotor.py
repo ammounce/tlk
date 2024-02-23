@@ -1,4 +1,4 @@
-from ctypes import (POINTER, c_bool, c_char, c_int, c_int16, c_int32, c_int64, c_long, c_ulong, cdll)
+from ctypes import (POINTER, c_bool, c_char, c_int, c_int16, c_int32, c_int64, c_long, c_ulong, c_void_p, cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     KIM_Channels,
@@ -23,15 +23,15 @@ from .definitions.structures import (
     KIM_TrigParamsParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.KCube.DCServo.dll")
+    lib_path + "Thorlabs.MotionControl.KCube.DCServo.dll")
+
 KIM_CanDeviceLockFrontPanel = lib.KIM_CanDeviceLockFrontPanel
 KIM_CanDeviceLockFrontPanel.restype = c_bool
 KIM_CanDeviceLockFrontPanel.argtypes = [POINTER(c_char)]
@@ -43,12 +43,12 @@ KIM_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNumber
 
 KIM_ClearMessageQueue = lib.KIM_ClearMessageQueue
-KIM_ClearMessageQueue.restype = None
+KIM_ClearMessageQueue.restype = c_void_p
 KIM_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNumber
 
 KIM_Close = lib.KIM_Close
-KIM_Close.restype = None
+KIM_Close.restype = c_void_p
 KIM_Close.argtypes = [POINTER(c_char)]
 # *serialNumber
 
@@ -78,7 +78,7 @@ KIM_EnableChannel.argtypes = [POINTER(c_char), KIM_Channels]
 # *serialNumber, channel
 
 KIM_EnableLastMsgTimer = lib.KIM_EnableLastMsgTimer
-KIM_EnableLastMsgTimer.restype = None
+KIM_EnableLastMsgTimer.restype = c_void_p
 KIM_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNumber, enable, lastMsgTimeout
 
@@ -275,7 +275,7 @@ KIM_Home.argtypes = [POINTER(c_char), KIM_Channels]
 # *serialNumber, channel
 
 KIM_Identify = lib.KIM_Identify
-KIM_Identify.restype = None
+KIM_Identify.restype = c_void_p
 KIM_Identify.argtypes = [POINTER(c_char)]
 # *serialNumber
 
@@ -335,8 +335,8 @@ KIM_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNumber
 
 KIM_RegisterMessageCallback = lib.KIM_RegisterMessageCallback
-KIM_RegisterMessageCallback.restype = None
-KIM_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+KIM_RegisterMessageCallback.restype = c_void_p
+KIM_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNumber, void
 
 KIM_RequestAbsoluteMoveParameters = lib.KIM_RequestAbsoluteMoveParameters
@@ -579,7 +579,7 @@ KIM_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNumber, milliseconds
 
 KIM_StopPolling = lib.KIM_StopPolling
-KIM_StopPolling.restype = None
+KIM_StopPolling.restype = c_void_p
 KIM_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNumber
 
@@ -610,8 +610,7 @@ KIM_ZeroPosition.argtypes = [POINTER(c_char), KIM_Channels]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -650,10 +649,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

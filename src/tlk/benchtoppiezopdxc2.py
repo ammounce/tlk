@@ -1,4 +1,4 @@
-from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_ulong, cdll)
+from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_ulong, c_void_p, cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     MOT_TravelDirection,
@@ -13,15 +13,15 @@ from .definitions.structures import (
     PDXC2_TriggerParams,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "MotionControl.Benchtop.Piezo.DLL")
+    lib_path + "MotionControl.Benchtop.Piezo.DLL")
+
 PDXC2_CheckConnection = lib.PDXC2_CheckConnection
 PDXC2_CheckConnection.restype = c_bool
 PDXC2_CheckConnection.argtypes = [POINTER(c_char)]
@@ -33,7 +33,7 @@ PDXC2_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PDXC2_Close = lib.PDXC2_Close
-PDXC2_Close.restype = None
+PDXC2_Close.restype = c_void_p
 PDXC2_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -53,7 +53,7 @@ PDXC2_Enable.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PDXC2_EnableLastMsgTimer = lib.PDXC2_EnableLastMsgTimer
-PDXC2_EnableLastMsgTimer.restype = None
+PDXC2_EnableLastMsgTimer.restype = c_void_p
 PDXC2_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -168,7 +168,7 @@ PDXC2_Home.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PDXC2_Identify = lib.PDXC2_Identify
-PDXC2_Identify.restype = None
+PDXC2_Identify.restype = c_void_p
 PDXC2_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -224,7 +224,7 @@ PDXC2_PulseParamsAcquireStart.argtypes = [POINTER(c_char)]
 
 PDXC2_RegisterMessageCallback = lib.PDXC2_RegisterMessageCallback
 PDXC2_RegisterMessageCallback.restype = c_short
-PDXC2_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+PDXC2_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 PDXC2_RequestAbnormalMoveDetectionEnabled = lib.PDXC2_RequestAbnormalMoveDetectionEnabled
@@ -358,7 +358,7 @@ PDXC2_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 PDXC2_StopPolling = lib.PDXC2_StopPolling
-PDXC2_StopPolling.restype = None
+PDXC2_StopPolling.restype = c_void_p
 PDXC2_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -374,8 +374,7 @@ PDXC2_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -414,12 +413,10 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #
 
 TLI_ScanEthernetRange = lib.TLI_ScanEthernetRange

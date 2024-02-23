@@ -1,4 +1,17 @@
-from ctypes import (POINTER, c_bool, c_byte, c_char, c_int, c_int16, c_int32, c_int64, c_long, c_uint, c_ulong, cdll)
+from ctypes import (
+    POINTER,
+    c_bool,
+    c_byte,
+    c_char,
+    c_int,
+    c_int16,
+    c_int32,
+    c_int64,
+    c_long,
+    c_uint,
+    c_ulong,
+    c_void_p,
+    cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     KSC_TriggerPortMode,
@@ -11,32 +24,32 @@ from .definitions.structures import (
     SC_CycleParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.KCube.Solenoid.DLL")
+    lib_path + "Thorlabs.MotionControl.KCube.Solenoid.DLL")
+
 SC_CheckConnection = lib.SC_CheckConnection
 SC_CheckConnection.restype = c_bool
 SC_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 SC_ClearMessageQueue = lib.SC_ClearMessageQueue
-SC_ClearMessageQueue.restype = None
+SC_ClearMessageQueue.restype = c_void_p
 SC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 SC_Close = lib.SC_Close
-SC_Close.restype = None
+SC_Close.restype = c_void_p
 SC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
 SC_EnableLastMsgTimer = lib.SC_EnableLastMsgTimer
-SC_EnableLastMsgTimer.restype = None
+SC_EnableLastMsgTimer.restype = c_void_p
 SC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -151,7 +164,7 @@ SC_HasLastMsgTimerOverrun.argtypes = [POINTER(c_char)]
 # *serialNo
 
 SC_Identify = lib.SC_Identify
-SC_Identify.restype = None
+SC_Identify.restype = c_void_p
 SC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -186,8 +199,8 @@ SC_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 SC_RegisterMessageCallback = lib.SC_RegisterMessageCallback
-SC_RegisterMessageCallback.restype = None
-SC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+SC_RegisterMessageCallback.restype = c_void_p
+SC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 SC_RequestCycleParams = lib.SC_RequestCycleParams
@@ -311,7 +324,7 @@ SC_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 SC_StopPolling = lib.SC_StopPolling
-SC_StopPolling.restype = None
+SC_StopPolling.restype = c_void_p
 SC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -327,8 +340,7 @@ SC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -367,10 +379,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

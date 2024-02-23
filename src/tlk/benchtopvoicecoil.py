@@ -12,6 +12,7 @@ from ctypes import (
     c_long,
     c_uint,
     c_ulong,
+    c_void_p,
     cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
@@ -40,15 +41,15 @@ from .definitions.structures import (
     MOT_VelocityParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.Benchtop.VoiceCoil.dll")
+    lib_path + "Thorlabs.MotionControl.Benchtop.VoiceCoil.dll")
+
 BVC_CanDeviceLockFrontPanel = lib.BVC_CanDeviceLockFrontPanel
 BVC_CanDeviceLockFrontPanel.restype = c_bool
 BVC_CanDeviceLockFrontPanel.argtypes = [POINTER(c_char)]
@@ -70,12 +71,12 @@ BVC_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 BVC_ClearMessageQueue = lib.BVC_ClearMessageQueue
-BVC_ClearMessageQueue.restype = None
+BVC_ClearMessageQueue.restype = c_void_p
 BVC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 BVC_Close = lib.BVC_Close
-BVC_Close.restype = None
+BVC_Close.restype = c_void_p
 BVC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -90,7 +91,7 @@ BVC_EnableChannel.argtypes = [POINTER(c_char)]
 # *serialNo
 
 BVC_EnableLastMsgTimer = lib.BVC_EnableLastMsgTimer
-BVC_EnableLastMsgTimer.restype = None
+BVC_EnableLastMsgTimer.restype = c_void_p
 BVC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -378,7 +379,7 @@ BVC_Home.argtypes = [POINTER(c_char)]
 # *serialNo
 
 BVC_Identify = lib.BVC_Identify
-BVC_Identify.restype = None
+BVC_Identify.restype = c_void_p
 BVC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -458,8 +459,8 @@ BVC_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 BVC_RegisterMessageCallback = lib.BVC_RegisterMessageCallback
-BVC_RegisterMessageCallback.restype = None
-BVC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+BVC_RegisterMessageCallback.restype = c_void_p
+BVC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 BVC_RequestBacklash = lib.BVC_RequestBacklash
@@ -588,7 +589,7 @@ BVC_SetDigitalOutputs.argtypes = [POINTER(c_char), c_byte]
 # *serialNo, outputsBits
 
 BVC_SetDirection = lib.BVC_SetDirection
-BVC_SetDirection.restype = None
+BVC_SetDirection.restype = c_void_p
 BVC_SetDirection.argtypes = [POINTER(c_char), c_bool]
 # *serialNo, reverse
 
@@ -654,7 +655,7 @@ BVC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_c
 # *limitSwitchParams, *serialNo
 
 BVC_SetLimitsSoftwareApproachPolicy = lib.BVC_SetLimitsSoftwareApproachPolicy
-BVC_SetLimitsSoftwareApproachPolicy.restype = None
+BVC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
 BVC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), MOT_LimitsSoftwareApproachPolicy]
 # *serialNo, limitsSoftwareApproachPolicy
 
@@ -806,7 +807,7 @@ BVC_StopImmediate.argtypes = [POINTER(c_char)]
 # *serialNo
 
 BVC_StopPolling = lib.BVC_StopPolling
-BVC_StopPolling.restype = None
+BVC_StopPolling.restype = c_void_p
 BVC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -837,8 +838,7 @@ BVC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -877,10 +877,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

@@ -1,4 +1,4 @@
-from ctypes import (POINTER, c_bool, c_byte, c_char, c_int, c_int16, c_int32, c_long, c_short, c_ulong, cdll)
+from ctypes import (POINTER, c_bool, c_byte, c_char, c_int, c_int16, c_int32, c_long, c_short, c_ulong, c_void_p, cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
     KPZ_WheelChangeRate,
@@ -15,15 +15,15 @@ from .definitions.structures import (
     PPC_PIDCriteria,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.IntegratedPrecisionPiezo.DLL")
+    lib_path + "Thorlabs.MotionControl.IntegratedPrecisionPiezo.DLL")
+
 IPP_CanDeviceLockFrontPanel = lib.IPP_CanDeviceLockFrontPanel
 IPP_CanDeviceLockFrontPanel.restype = c_bool
 IPP_CanDeviceLockFrontPanel.argtypes = [POINTER(c_char)]
@@ -40,7 +40,7 @@ IPP_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 IPP_Close = lib.IPP_Close
-IPP_Close.restype = None
+IPP_Close.restype = c_void_p
 IPP_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -183,7 +183,7 @@ IPP_GetVoltageSource.argtypes = [POINTER(c_char)]
 # *serialNo
 
 IPP_Identify = lib.IPP_Identify
-IPP_Identify.restype = None
+IPP_Identify.restype = c_void_p
 IPP_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -219,7 +219,7 @@ IPP_PollingDuration.argtypes = [POINTER(c_char)]
 
 IPP_RegisterMessageCallback = lib.IPP_RegisterMessageCallback
 IPP_RegisterMessageCallback.restype = c_short
-IPP_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+IPP_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 IPP_RequestFrontPanelLocked = lib.IPP_RequestFrontPanelLocked
@@ -376,7 +376,7 @@ IPP_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 IPP_StopPolling = lib.IPP_StopPolling
-IPP_StopPolling.restype = None
+IPP_StopPolling.restype = c_void_p
 IPP_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -387,8 +387,7 @@ IPP_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -427,10 +426,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

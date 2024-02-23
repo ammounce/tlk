@@ -12,6 +12,7 @@ from ctypes import (
     c_short,
     c_uint,
     c_ulong,
+    c_void_p,
     cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (
@@ -37,15 +38,15 @@ from .definitions.structures import (
     MOT_VelocityParameters,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.Benchtop.DCServo.dll")
+    lib_path + "Thorlabs.MotionControl.Benchtop.DCServo.dll")
+
 BDC_CanHome = lib.BDC_CanHome
 BDC_CanHome.restype = c_bool
 BDC_CanHome.argtypes = [POINTER(c_char), c_short]
@@ -82,7 +83,7 @@ BDC_EnableChannel.argtypes = [POINTER(c_char), c_short]
 # *serialNo, channel
 
 BDC_EnableLastMsgTimer = lib.BDC_EnableLastMsgTimer
-BDC_EnableLastMsgTimer.restype = None
+BDC_EnableLastMsgTimer.restype = c_void_p
 BDC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_short, c_bool, c_int32]
 # *serialNo, channel, enable, lastMsgTimeout
 
@@ -447,7 +448,7 @@ BDC_PollingDuration.argtypes = [POINTER(c_char), c_short]
 
 BDC_RegisterMessageCallback = lib.BDC_RegisterMessageCallback
 BDC_RegisterMessageCallback.restype = c_short
-BDC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_short, None]
+BDC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_short, c_void_p]
 # *serialNo, channel, void
 
 BDC_RequestBacklash = lib.BDC_RequestBacklash
@@ -566,7 +567,7 @@ BDC_SetBacklash.argtypes = [POINTER(c_char), c_short, c_long]
 # *serialNo, channel, distance
 
 BDC_SetCalibrationFile = lib.BDC_SetCalibrationFile
-BDC_SetCalibrationFile.restype = None
+BDC_SetCalibrationFile.restype = c_void_p
 BDC_SetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_short, c_bool]
 # *filename, *serialNo, channel, enabled
 
@@ -638,7 +639,7 @@ BDC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_c
 # *limitSwitchParams, *serialNo, channel
 
 BDC_SetLimitsSoftwareApproachPolicy = lib.BDC_SetLimitsSoftwareApproachPolicy
-BDC_SetLimitsSoftwareApproachPolicy.restype = None
+BDC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
 BDC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), c_short, MOT_LimitsSoftwareApproachPolicy]
 # *serialNo, channel, limitsSoftwareApproachPolicy
 
@@ -759,7 +760,7 @@ BDC_StopImmediate.argtypes = [POINTER(c_char), c_short]
 # *serialNo, channel
 
 BDC_StopPolling = lib.BDC_StopPolling
-BDC_StopPolling.restype = None
+BDC_StopPolling.restype = c_void_p
 BDC_StopPolling.argtypes = [POINTER(c_char), c_short]
 # *serialNo, channel
 
@@ -785,8 +786,7 @@ BDC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_short
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -825,10 +825,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

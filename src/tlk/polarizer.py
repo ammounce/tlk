@@ -1,33 +1,45 @@
-from ctypes import (POINTER, c_bool, c_char, c_double, c_int, c_int32, c_int64, c_long, c_short, c_ulong, cdll)
+from ctypes import (
+    POINTER,
+    c_bool,
+    c_char,
+    c_double,
+    c_int,
+    c_int32,
+    c_int64,
+    c_long,
+    c_short,
+    c_ulong,
+    c_void_p,
+    cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (MOT_TravelDirection, POL_PaddleBits, POL_Paddles, PolarizerParameters)
 from .definitions.structures import (TLI_DeviceInfo)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.Polarizer.DLL")
+    lib_path + "Thorlabs.MotionControl.Polarizer.DLL")
+
 MPC_CheckConnection = lib.MPC_CheckConnection
 MPC_CheckConnection.restype = c_bool
 MPC_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 MPC_ClearMessageQueue = lib.MPC_ClearMessageQueue
-MPC_ClearMessageQueue.restype = None
+MPC_ClearMessageQueue.restype = c_void_p
 MPC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 MPC_Close = lib.MPC_Close
-MPC_Close.restype = None
+MPC_Close.restype = c_void_p
 MPC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
 MPC_EnableLastMsgTimer = lib.MPC_EnableLastMsgTimer
-MPC_EnableLastMsgTimer.restype = None
+MPC_EnableLastMsgTimer.restype = c_void_p
 MPC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -122,7 +134,7 @@ MPC_Home.argtypes = [POINTER(c_char), POL_Paddles]
 # *serialNo, paddle
 
 MPC_Identify = lib.MPC_Identify
-MPC_Identify.restype = None
+MPC_Identify.restype = c_void_p
 MPC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -177,8 +189,8 @@ MPC_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 MPC_RegisterMessageCallback = lib.MPC_RegisterMessageCallback
-MPC_RegisterMessageCallback.restype = None
-MPC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+MPC_RegisterMessageCallback.restype = c_void_p
+MPC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 MPC_RequestPolParams = lib.MPC_RequestPolParams
@@ -237,7 +249,7 @@ MPC_Stop.argtypes = [POINTER(c_char), POL_Paddles]
 # *serialNo, paddle
 
 MPC_StopPolling = lib.MPC_StopPolling
-MPC_StopPolling.restype = None
+MPC_StopPolling.restype = c_void_p
 MPC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -253,8 +265,7 @@ MPC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -293,10 +304,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

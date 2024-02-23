@@ -1,33 +1,33 @@
-from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_uint, c_ulong, cdll)
+from ctypes import (POINTER, c_bool, c_char, c_int, c_int32, c_int64, c_long, c_uint, c_ulong, c_void_p, cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (FF_Positions)
 from .definitions.structures import (FF_IOSettings, TLI_DeviceInfo)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.FilterFlipper.DLL")
+    lib_path + "Thorlabs.MotionControl.FilterFlipper.DLL")
+
 FF_CheckConnection = lib.FF_CheckConnection
 FF_CheckConnection.restype = c_bool
 FF_CheckConnection.argtypes = [POINTER(c_char)]
 # *serialNo
 
 FF_ClearMessageQueue = lib.FF_ClearMessageQueue
-FF_ClearMessageQueue.restype = None
+FF_ClearMessageQueue.restype = c_void_p
 FF_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 FF_Close = lib.FF_Close
-FF_Close.restype = None
+FF_Close.restype = c_void_p
 FF_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
 FF_EnableLastMsgTimer = lib.FF_EnableLastMsgTimer
-FF_EnableLastMsgTimer.restype = None
+FF_EnableLastMsgTimer.restype = c_void_p
 FF_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 # *serialNo, enable, lastMsgTimeout
 
@@ -97,7 +97,7 @@ FF_Home.argtypes = [POINTER(c_char)]
 # *serialNo
 
 FF_Identify = lib.FF_Identify
-FF_Identify.restype = None
+FF_Identify.restype = c_void_p
 FF_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -137,8 +137,8 @@ FF_PollingDuration.argtypes = [POINTER(c_char)]
 # *serialNo
 
 FF_RegisterMessageCallback = lib.FF_RegisterMessageCallback
-FF_RegisterMessageCallback.restype = None
-FF_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+FF_RegisterMessageCallback.restype = c_void_p
+FF_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 FF_RequestIOSettings = lib.FF_RequestIOSettings
@@ -172,7 +172,7 @@ FF_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 FF_StopPolling = lib.FF_StopPolling
-FF_StopPolling.restype = None
+FF_StopPolling.restype = c_void_p
 FF_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -188,8 +188,7 @@ FF_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -228,10 +227,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

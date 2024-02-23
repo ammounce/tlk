@@ -1,4 +1,4 @@
-from ctypes import (POINTER, c_byte, c_char, c_int, c_long, c_short, c_ulong, cdll)
+from ctypes import (POINTER, c_byte, c_char, c_int, c_long, c_short, c_ulong, c_void_p, cdll)
 from .definitions.safearray import SafeArray
 from .definitions.enumerations import (PZ_ControlModeTypes, PZ_InputSourceFlags)
 from .definitions.structures import (
@@ -7,15 +7,15 @@ from .definitions.structures import (
     PPC_PIDConsts,
     TLI_DeviceInfo,
     TLI_HardwareInformation)
-from pathlib import Path
 
 
-lib_path = Path("C:/Program Files/Thorlabs/Kinesis/")
+lib_path = "C:/Program Files/Thorlabs/Kinesis/"
 device_manager = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.DeviceManager.dll")
+    lib_path + "Thorlabs.MotionControl.DeviceManager.dll")
 
 lib = cdll.LoadLibrary(
-    lib_path / "Thorlabs.MotionControl.Benchtop.PrecisionPiezo.dll")
+    lib_path + "Thorlabs.MotionControl.Benchtop.PrecisionPiezo.dll")
+
 PPC2_ClearMessageQueue = lib.PPC2_ClearMessageQueue
 PPC2_ClearMessageQueue.restype = c_short
 PPC2_ClearMessageQueue.argtypes = [POINTER(c_char), c_int]
@@ -123,7 +123,7 @@ PPC2_GetVoltageSource.argtypes = [POINTER(c_char), c_int]
 # *serialNo, channel
 
 PPC2_Identify = lib.PPC2_Identify
-PPC2_Identify.restype = None
+PPC2_Identify.restype = c_void_p
 PPC2_Identify.argtypes = [POINTER(c_char), c_int]
 # *serialNo, channel
 
@@ -154,7 +154,7 @@ PPC2_PollingDuration.argtypes = [POINTER(c_char), c_int]
 
 PPC2_RegisterMessageCallback = lib.PPC2_RegisterMessageCallback
 PPC2_RegisterMessageCallback.restype = c_short
-PPC2_RegisterMessageCallback.argtypes = [POINTER(c_char), c_int, None]
+PPC2_RegisterMessageCallback.argtypes = [POINTER(c_char), c_int, c_void_p]
 # *serialNo, channel, void
 
 PPC2_RequestActualPosition = lib.PPC2_RequestActualPosition
@@ -278,7 +278,7 @@ PPC2_StartPolling.argtypes = [POINTER(c_char), c_int, c_int]
 # *serialNo, channel, milliseconds
 
 PPC2_StopPolling = lib.PPC2_StopPolling
-PPC2_StopPolling.restype = None
+PPC2_StopPolling.restype = c_void_p
 PPC2_StopPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, channel
 
@@ -298,7 +298,7 @@ PPC_ClearMessageQueue.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PPC_Close = lib.PPC_Close
-PPC_Close.restype = None
+PPC_Close.restype = c_void_p
 PPC_Close.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -418,7 +418,7 @@ PPC_GetVoltageSource.argtypes = [POINTER(c_char)]
 # *serialNo
 
 PPC_Identify = lib.PPC_Identify
-PPC_Identify.restype = None
+PPC_Identify.restype = c_void_p
 PPC_Identify.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -454,7 +454,7 @@ PPC_PollingDuration.argtypes = [POINTER(c_char)]
 
 PPC_RegisterMessageCallback = lib.PPC_RegisterMessageCallback
 PPC_RegisterMessageCallback.restype = c_short
-PPC_RegisterMessageCallback.argtypes = [POINTER(c_char), None]
+PPC_RegisterMessageCallback.argtypes = [POINTER(c_char), c_void_p]
 # *serialNo, void
 
 PPC_RequestActualPosition = lib.PPC_RequestActualPosition
@@ -583,7 +583,7 @@ PPC_StartPolling.argtypes = [POINTER(c_char), c_int]
 # *serialNo, milliseconds
 
 PPC_StopPolling = lib.PPC_StopPolling
-PPC_StopPolling.restype = None
+PPC_StopPolling.restype = c_void_p
 PPC_StopPolling.argtypes = [POINTER(c_char)]
 # *serialNo
 
@@ -594,8 +594,7 @@ PPC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-TLI_BuildDeviceList.argtypes = [None, None]
-# , void
+#
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
@@ -634,10 +633,8 @@ TLI_GetDeviceListExt.argtypes = [POINTER(c_char), c_ulong]
 
 TLI_GetDeviceListSize = lib.TLI_GetDeviceListSize
 TLI_GetDeviceListSize.restype = c_short
-TLI_GetDeviceListSize.argtypes = [None]
 #
 
 TLI_InitializeSimulations = lib.TLI_InitializeSimulations
-TLI_InitializeSimulations.restype = None
-TLI_InitializeSimulations.argtypes = [None]
+TLI_InitializeSimulations.restype = c_void_p
 #

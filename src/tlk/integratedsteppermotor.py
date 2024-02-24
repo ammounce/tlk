@@ -97,23 +97,23 @@ ISC_GetBowIndex.argtypes = [POINTER(c_char)]
 
 ISC_GetButtonParams = lib.ISC_GetButtonParams
 ISC_GetButtonParams.restype = c_short
-ISC_GetButtonParams.argtypes = [MOT_ButtonModes, c_int, c_int, POINTER(c_char), c_short]
-# *buttonMode, *leftButtonPosition, *rightButtonPosition, *serialNo, *timeout
+ISC_GetButtonParams.argtypes = [POINTER(c_char), MOT_ButtonModes, c_int, c_int, c_short]
+# *serialNo, *buttonMode, *leftButtonPosition, *rightButtonPosition, *timeout
 
 ISC_GetButtonParamsBlock = lib.ISC_GetButtonParamsBlock
 ISC_GetButtonParamsBlock.restype = c_short
-ISC_GetButtonParamsBlock.argtypes = [MOT_ButtonParameters, POINTER(c_char)]
-# *buttonParams, *serialNo
+ISC_GetButtonParamsBlock.argtypes = [POINTER(c_char), MOT_ButtonParameters]
+# *serialNo, *buttonParams
 
 ISC_GetCalibrationFile = lib.ISC_GetCalibrationFile
 ISC_GetCalibrationFile.restype = c_bool
 ISC_GetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_short]
-# *filename, *serialNo, sizeOfBuffer
+# *serialNo, *filename, sizeOfBuffer
 
 ISC_GetDeviceUnitFromRealValue = lib.ISC_GetDeviceUnitFromRealValue
 ISC_GetDeviceUnitFromRealValue.restype = c_short
-ISC_GetDeviceUnitFromRealValue.argtypes = [c_int, POINTER(c_char), c_double, c_int]
-# *device_unit, *serialNo, real_unit, unitType
+ISC_GetDeviceUnitFromRealValue.argtypes = [POINTER(c_char), c_double, c_int, c_int]
+# *serialNo, real_unit, *device_unit, unitType
 
 ISC_GetFirmwareVersion = lib.ISC_GetFirmwareVersion
 ISC_GetFirmwareVersion.restype = c_ulong
@@ -123,27 +123,27 @@ ISC_GetFirmwareVersion.argtypes = [POINTER(c_char)]
 ISC_GetHardwareInfo = lib.ISC_GetHardwareInfo
 ISC_GetHardwareInfo.restype = c_short
 ISC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 ISC_GetHardwareInfoBlock = lib.ISC_GetHardwareInfoBlock
 ISC_GetHardwareInfoBlock.restype = c_short
-ISC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+ISC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 ISC_GetHomingParamsBlock = lib.ISC_GetHomingParamsBlock
 ISC_GetHomingParamsBlock.restype = c_short
-ISC_GetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+ISC_GetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 ISC_GetHomingVelocity = lib.ISC_GetHomingVelocity
 ISC_GetHomingVelocity.restype = c_uint
@@ -152,13 +152,13 @@ ISC_GetHomingVelocity.argtypes = [POINTER(c_char)]
 
 ISC_GetJogMode = lib.ISC_GetJogMode
 ISC_GetJogMode.restype = c_short
-ISC_GetJogMode.argtypes = [MOT_JogModes, POINTER(c_char), MOT_StopModes]
-# *mode, *serialNo, *stopMode
+ISC_GetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
+# *serialNo, *mode, *stopMode
 
 ISC_GetJogParamsBlock = lib.ISC_GetJogParamsBlock
 ISC_GetJogParamsBlock.restype = c_short
-ISC_GetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+ISC_GetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 ISC_GetJogStepSize = lib.ISC_GetJogStepSize
 ISC_GetJogStepSize.restype = c_uint
@@ -167,8 +167,8 @@ ISC_GetJogStepSize.argtypes = [POINTER(c_char)]
 
 ISC_GetJogVelParams = lib.ISC_GetJogVelParams
 ISC_GetJogVelParams.restype = c_short
-ISC_GetJogVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+ISC_GetJogVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 ISC_GetLEDswitches = lib.ISC_GetLEDswitches
 ISC_GetLEDswitches.restype = c_long
@@ -178,33 +178,33 @@ ISC_GetLEDswitches.argtypes = [POINTER(c_char)]
 ISC_GetLimitSwitchParams = lib.ISC_GetLimitSwitchParams
 ISC_GetLimitSwitchParams.restype = c_short
 ISC_GetLimitSwitchParams.argtypes = [
-    MOT_LimitSwitchModes,
-    c_uint,
-    MOT_LimitSwitchModes,
-    c_uint,
     POINTER(c_char),
+    MOT_LimitSwitchModes,
+    MOT_LimitSwitchModes,
+    c_uint,
+    c_uint,
     MOT_LimitSwitchSWModes]
-# *anticlockwiseHardwareLimit, *anticlockwisePosition, *clockwiseHardwareLimit, *clockwisePosition, *serialNo, *softLimitMode
+# *serialNo, *clockwiseHardwareLimit, *anticlockwiseHardwareLimit, *clockwisePosition, *anticlockwisePosition, *softLimitMode
 
 ISC_GetLimitSwitchParamsBlock = lib.ISC_GetLimitSwitchParamsBlock
 ISC_GetLimitSwitchParamsBlock.restype = c_short
-ISC_GetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char)]
-# *limitSwitchParams, *serialNo
+ISC_GetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), MOT_LimitSwitchParameters]
+# *serialNo, *limitSwitchParams
 
 ISC_GetMotorParams = lib.ISC_GetMotorParams
 ISC_GetMotorParams.restype = c_short
-ISC_GetMotorParams.argtypes = [c_long, c_float, POINTER(c_char), c_long]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+ISC_GetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 ISC_GetMotorParamsExt = lib.ISC_GetMotorParamsExt
 ISC_GetMotorParamsExt.restype = c_short
-ISC_GetMotorParamsExt.argtypes = [c_double, c_double, POINTER(c_char), c_double]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+ISC_GetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 ISC_GetMotorTravelLimits = lib.ISC_GetMotorTravelLimits
 ISC_GetMotorTravelLimits.restype = c_short
-ISC_GetMotorTravelLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxPosition, *minPosition, *serialNo
+ISC_GetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *minPosition, *maxPosition
 
 ISC_GetMotorTravelMode = lib.ISC_GetMotorTravelMode
 ISC_GetMotorTravelMode.restype = MOT_TravelModes
@@ -213,8 +213,8 @@ ISC_GetMotorTravelMode.argtypes = [POINTER(c_char)]
 
 ISC_GetMotorVelocityLimits = lib.ISC_GetMotorVelocityLimits
 ISC_GetMotorVelocityLimits.restype = c_short
-ISC_GetMotorVelocityLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxAcceleration, *maxVelocity, *serialNo
+ISC_GetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *maxVelocity, *maxAcceleration
 
 ISC_GetMoveAbsolutePosition = lib.ISC_GetMoveAbsolutePosition
 ISC_GetMoveAbsolutePosition.restype = c_int
@@ -228,8 +228,8 @@ ISC_GetMoveRelativeDistance.argtypes = [POINTER(c_char)]
 
 ISC_GetNextMessage = lib.ISC_GetNextMessage
 ISC_GetNextMessage.restype = c_bool
-ISC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+ISC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 ISC_GetNumberPositions = lib.ISC_GetNumberPositions
 ISC_GetNumberPositions.restype = c_int
@@ -248,23 +248,23 @@ ISC_GetPositionCounter.argtypes = [POINTER(c_char)]
 
 ISC_GetPotentiometerParams = lib.ISC_GetPotentiometerParams
 ISC_GetPotentiometerParams.restype = c_short
-ISC_GetPotentiometerParams.argtypes = [POINTER(c_char), c_long, c_ulong, c_short]
-# *serialNo, *thresholdDeflection, *velocity, index
+ISC_GetPotentiometerParams.argtypes = [POINTER(c_char), c_short, c_long, c_ulong]
+# *serialNo, index, *thresholdDeflection, *velocity
 
 ISC_GetPotentiometerParamsBlock = lib.ISC_GetPotentiometerParamsBlock
 ISC_GetPotentiometerParamsBlock.restype = c_short
-ISC_GetPotentiometerParamsBlock.argtypes = [MOT_PotentiometerSteps, POINTER(c_char)]
-# *potentiometerSteps, *serialNo
+ISC_GetPotentiometerParamsBlock.argtypes = [POINTER(c_char), MOT_PotentiometerSteps]
+# *serialNo, *potentiometerSteps
 
 ISC_GetPowerParams = lib.ISC_GetPowerParams
 ISC_GetPowerParams.restype = c_short
-ISC_GetPowerParams.argtypes = [MOT_PowerParameters, POINTER(c_char)]
-# *powerParams, *serialNo
+ISC_GetPowerParams.argtypes = [POINTER(c_char), MOT_PowerParameters]
+# *serialNo, *powerParams
 
 ISC_GetRealValueFromDeviceUnit = lib.ISC_GetRealValueFromDeviceUnit
 ISC_GetRealValueFromDeviceUnit.restype = c_short
-ISC_GetRealValueFromDeviceUnit.argtypes = [c_double, POINTER(c_char), c_int, c_int]
-# *real_unit, *serialNo, device_unit, unitType
+ISC_GetRealValueFromDeviceUnit.argtypes = [POINTER(c_char), c_int, c_double, c_int]
+# *serialNo, device_unit, *real_unit, unitType
 
 ISC_GetSoftLimitMode = lib.ISC_GetSoftLimitMode
 ISC_GetSoftLimitMode.restype = MOT_LimitsSoftwareApproachPolicy
@@ -298,8 +298,8 @@ ISC_GetTriggerSwitches.argtypes = [POINTER(c_char)]
 
 ISC_GetVelParams = lib.ISC_GetVelParams
 ISC_GetVelParams.restype = c_short
-ISC_GetVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+ISC_GetVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 ISC_GetVelParamsBlock = lib.ISC_GetVelParamsBlock
 ISC_GetVelParamsBlock.restype = c_short
@@ -503,13 +503,13 @@ ISC_SetButtonParams.argtypes = [POINTER(c_char), MOT_ButtonModes, c_int, c_int]
 
 ISC_SetButtonParamsBlock = lib.ISC_SetButtonParamsBlock
 ISC_SetButtonParamsBlock.restype = c_short
-ISC_SetButtonParamsBlock.argtypes = [MOT_ButtonParameters, POINTER(c_char)]
-# *buttonParams, *serialNo
+ISC_SetButtonParamsBlock.argtypes = [POINTER(c_char), MOT_ButtonParameters]
+# *serialNo, *buttonParams
 
 ISC_SetCalibrationFile = lib.ISC_SetCalibrationFile
 ISC_SetCalibrationFile.restype = c_void_p
 ISC_SetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_bool]
-# *filename, *serialNo, enabled
+# *serialNo, *filename, enabled
 
 ISC_SetDirection = lib.ISC_SetDirection
 ISC_SetDirection.restype = c_void_p
@@ -518,8 +518,8 @@ ISC_SetDirection.argtypes = [POINTER(c_char), c_bool]
 
 ISC_SetHomingParamsBlock = lib.ISC_SetHomingParamsBlock
 ISC_SetHomingParamsBlock.restype = c_short
-ISC_SetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+ISC_SetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 ISC_SetHomingVelocity = lib.ISC_SetHomingVelocity
 ISC_SetHomingVelocity.restype = c_short
@@ -533,8 +533,8 @@ ISC_SetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
 
 ISC_SetJogParamsBlock = lib.ISC_SetJogParamsBlock
 ISC_SetJogParamsBlock.restype = c_short
-ISC_SetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+ISC_SetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 ISC_SetJogStepSize = lib.ISC_SetJogStepSize
 ISC_SetJogStepSize.restype = c_short
@@ -556,16 +556,16 @@ ISC_SetLimitSwitchParams.restype = c_short
 ISC_SetLimitSwitchParams.argtypes = [
     POINTER(c_char),
     MOT_LimitSwitchModes,
-    c_uint,
     MOT_LimitSwitchModes,
     c_uint,
+    c_uint,
     MOT_LimitSwitchSWModes]
-# *serialNo, anticlockwiseHardwareLimit, anticlockwisePosition, clockwiseHardwareLimit, clockwisePosition, softLimitMode
+# *serialNo, clockwiseHardwareLimit, anticlockwiseHardwareLimit, clockwisePosition, anticlockwisePosition, softLimitMode
 
 ISC_SetLimitSwitchParamsBlock = lib.ISC_SetLimitSwitchParamsBlock
 ISC_SetLimitSwitchParamsBlock.restype = c_short
-ISC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char)]
-# *limitSwitchParams, *serialNo
+ISC_SetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), MOT_LimitSwitchParameters]
+# *serialNo, *limitSwitchParams
 
 ISC_SetLimitsSoftwareApproachPolicy = lib.ISC_SetLimitsSoftwareApproachPolicy
 ISC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
@@ -574,18 +574,18 @@ ISC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), MOT_LimitsSoftw
 
 ISC_SetMotorParams = lib.ISC_SetMotorParams
 ISC_SetMotorParams.restype = c_short
-ISC_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_float, c_long]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+ISC_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 ISC_SetMotorParamsExt = lib.ISC_SetMotorParamsExt
 ISC_SetMotorParamsExt.restype = c_short
 ISC_SetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 ISC_SetMotorTravelLimits = lib.ISC_SetMotorTravelLimits
 ISC_SetMotorTravelLimits.restype = c_short
 ISC_SetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 ISC_SetMotorTravelMode = lib.ISC_SetMotorTravelMode
 ISC_SetMotorTravelMode.restype = c_short
@@ -595,7 +595,7 @@ ISC_SetMotorTravelMode.argtypes = [POINTER(c_char), MOT_TravelModes]
 ISC_SetMotorVelocityLimits = lib.ISC_SetMotorVelocityLimits
 ISC_SetMotorVelocityLimits.restype = c_short
 ISC_SetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxAcceleration, maxVelocity
+# *serialNo, maxVelocity, maxAcceleration
 
 ISC_SetMoveAbsolutePosition = lib.ISC_SetMoveAbsolutePosition
 ISC_SetMoveAbsolutePosition.restype = c_short
@@ -619,23 +619,23 @@ ISC_SetPotentiometerParams.argtypes = [POINTER(c_char), c_short, c_long, c_ulong
 
 ISC_SetPotentiometerParamsBlock = lib.ISC_SetPotentiometerParamsBlock
 ISC_SetPotentiometerParamsBlock.restype = c_short
-ISC_SetPotentiometerParamsBlock.argtypes = [MOT_PotentiometerSteps, POINTER(c_char)]
-# *potentiometerSteps, *serialNo
+ISC_SetPotentiometerParamsBlock.argtypes = [POINTER(c_char), MOT_PotentiometerSteps]
+# *serialNo, *potentiometerSteps
 
 ISC_SetPowerParams = lib.ISC_SetPowerParams
 ISC_SetPowerParams.restype = c_short
-ISC_SetPowerParams.argtypes = [MOT_PowerParameters, POINTER(c_char)]
-# *powerParams, *serialNo
+ISC_SetPowerParams.argtypes = [POINTER(c_char), MOT_PowerParameters]
+# *serialNo, *powerParams
 
 ISC_SetRotationModes = lib.ISC_SetRotationModes
 ISC_SetRotationModes.restype = c_short
-ISC_SetRotationModes.argtypes = [POINTER(c_char), MOT_MovementDirections, MOT_MovementModes]
-# *serialNo, direction, mode
+ISC_SetRotationModes.argtypes = [POINTER(c_char), MOT_MovementModes, MOT_MovementDirections]
+# *serialNo, mode, direction
 
 ISC_SetStageAxisLimits = lib.ISC_SetStageAxisLimits
 ISC_SetStageAxisLimits.restype = c_short
 ISC_SetStageAxisLimits.argtypes = [POINTER(c_char), c_int, c_int]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 ISC_SetTriggerSwitches = lib.ISC_SetTriggerSwitches
 ISC_SetTriggerSwitches.restype = c_short
@@ -674,22 +674,23 @@ ISC_StopProfiled.argtypes = [POINTER(c_char)]
 
 ISC_TimeSinceLastMsgReceived = lib.ISC_TimeSinceLastMsgReceived
 ISC_TimeSinceLastMsgReceived.restype = c_bool
-ISC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+ISC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 ISC_WaitForMessage = lib.ISC_WaitForMessage
 ISC_WaitForMessage.restype = c_bool
-ISC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+ISC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -713,8 +714,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

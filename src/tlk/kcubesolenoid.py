@@ -55,13 +55,13 @@ SC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 
 SC_GetCycleParams = lib.SC_GetCycleParams
 SC_GetCycleParams.restype = c_short
-SC_GetCycleParams.argtypes = [c_uint, c_uint, c_uint, c_uint, c_uint, POINTER(c_char)]
-# *numCycles, *offTime, *onTime, *pClosedTime, *pOpenTime, *serialNo
+SC_GetCycleParams.argtypes = [POINTER(c_char), c_uint, c_uint, c_uint, c_uint, c_uint]
+# *serialNo, *onTime, *pOpenTime, *offTime, *pClosedTime, *numCycles
 
 SC_GetCycleParamsBlock = lib.SC_GetCycleParamsBlock
 SC_GetCycleParamsBlock.restype = c_short
-SC_GetCycleParamsBlock.argtypes = [SC_CycleParameters, POINTER(c_char)]
-# *cycleParams, *serialNo
+SC_GetCycleParamsBlock.argtypes = [POINTER(c_char), SC_CycleParameters]
+# *serialNo, *cycleParams
 
 SC_GetDigitalOutputs = lib.SC_GetDigitalOutputs
 SC_GetDigitalOutputs.restype = c_byte
@@ -71,22 +71,22 @@ SC_GetDigitalOutputs.argtypes = [POINTER(c_char)]
 SC_GetHardwareInfo = lib.SC_GetHardwareInfo
 SC_GetHardwareInfo.restype = c_short
 SC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 SC_GetHardwareInfoBlock = lib.SC_GetHardwareInfoBlock
 SC_GetHardwareInfoBlock.restype = c_short
-SC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+SC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 SC_GetHubBay = lib.SC_GetHubBay
 SC_GetHubBay.restype = POINTER(c_char)
@@ -100,23 +100,23 @@ SC_GetLEDswitches.argtypes = [POINTER(c_char)]
 
 SC_GetMMIParams = lib.SC_GetMMIParams
 SC_GetMMIParams.restype = c_short
-SC_GetMMIParams.argtypes = [c_int16, POINTER(c_char)]
-# *displayIntensity, *serialNo
+SC_GetMMIParams.argtypes = [POINTER(c_char), c_int16]
+# *serialNo, *displayIntensity
 
 SC_GetMMIParamsBlock = lib.SC_GetMMIParamsBlock
 SC_GetMMIParamsBlock.restype = c_short
-SC_GetMMIParamsBlock.argtypes = [KSC_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+SC_GetMMIParamsBlock.argtypes = [POINTER(c_char), KSC_MMIParams]
+# *serialNo, *mmiParams
 
 SC_GetMMIParamsExt = lib.SC_GetMMIParamsExt
 SC_GetMMIParamsExt.restype = c_short
-SC_GetMMIParamsExt.argtypes = [c_int16, c_int16, c_int16, POINTER(c_char)]
-# *displayDimIntensity, *displayIntensity, *displayTimeout, *serialNo
+SC_GetMMIParamsExt.argtypes = [POINTER(c_char), c_int16, c_int16, c_int16]
+# *serialNo, *displayIntensity, *displayTimeout, *displayDimIntensity
 
 SC_GetNextMessage = lib.SC_GetNextMessage
 SC_GetNextMessage.restype = c_bool
-SC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+SC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 SC_GetOperatingMode = lib.SC_GetOperatingMode
 SC_GetOperatingMode.restype = SC_OperatingModes
@@ -261,12 +261,12 @@ SC_RequestTriggerConfigParams.argtypes = [POINTER(c_char)]
 SC_SetCycleParams = lib.SC_SetCycleParams
 SC_SetCycleParams.restype = c_short
 SC_SetCycleParams.argtypes = [POINTER(c_char), c_uint, c_uint, c_uint, c_uint, c_uint]
-# *serialNo, closedTime, numCycles, offTime, onTime, openTime
+# *serialNo, onTime, openTime, offTime, closedTime, numCycles
 
 SC_SetCycleParamsBlock = lib.SC_SetCycleParamsBlock
 SC_SetCycleParamsBlock.restype = c_short
-SC_SetCycleParamsBlock.argtypes = [SC_CycleParameters, POINTER(c_char)]
-# *cycleParams, *serialNo
+SC_SetCycleParamsBlock.argtypes = [POINTER(c_char), SC_CycleParameters]
+# *serialNo, *cycleParams
 
 SC_SetDigitalOutputs = lib.SC_SetDigitalOutputs
 SC_SetDigitalOutputs.restype = c_short
@@ -285,13 +285,13 @@ SC_SetMMIParams.argtypes = [POINTER(c_char), c_int16]
 
 SC_SetMMIParamsBlock = lib.SC_SetMMIParamsBlock
 SC_SetMMIParamsBlock.restype = c_short
-SC_SetMMIParamsBlock.argtypes = [KSC_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+SC_SetMMIParamsBlock.argtypes = [POINTER(c_char), KSC_MMIParams]
+# *serialNo, *mmiParams
 
 SC_SetMMIParamsExt = lib.SC_SetMMIParamsExt
 SC_SetMMIParamsExt.restype = c_short
 SC_SetMMIParamsExt.argtypes = [POINTER(c_char), c_int16, c_int16, c_int16]
-# *serialNo, displayDimIntensity, displayIntensity, displayTimeout
+# *serialNo, displayIntensity, displayTimeout, displayDimIntensity
 
 SC_SetOperatingMode = lib.SC_SetOperatingMode
 SC_SetOperatingMode.restype = c_short
@@ -330,22 +330,23 @@ SC_StopPolling.argtypes = [POINTER(c_char)]
 
 SC_TimeSinceLastMsgReceived = lib.SC_TimeSinceLastMsgReceived
 SC_TimeSinceLastMsgReceived.restype = c_bool
-SC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+SC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 SC_WaitForMessage = lib.SC_WaitForMessage
 SC_WaitForMessage.restype = c_bool
-SC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+SC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -369,8 +370,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

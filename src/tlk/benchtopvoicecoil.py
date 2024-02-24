@@ -102,13 +102,13 @@ BVC_GetBacklash.argtypes = [POINTER(c_char)]
 
 BVC_GetDCPIDParams = lib.BVC_GetDCPIDParams
 BVC_GetDCPIDParams.restype = c_short
-BVC_GetDCPIDParams.argtypes = [MOT_DC_PIDParameters, POINTER(c_char)]
-# *DCproportionalIntegralDerivativeParams, *serialNo
+BVC_GetDCPIDParams.argtypes = [POINTER(c_char), MOT_DC_PIDParameters]
+# *serialNo, *DCproportionalIntegralDerivativeParams
 
 BVC_GetDeviceUnitFromRealValue = lib.BVC_GetDeviceUnitFromRealValue
 BVC_GetDeviceUnitFromRealValue.restype = c_short
-BVC_GetDeviceUnitFromRealValue.argtypes = [c_int, POINTER(c_char), c_double, c_int]
-# *device_unit, *serialNo, real_unit, unitType
+BVC_GetDeviceUnitFromRealValue.argtypes = [POINTER(c_char), c_double, c_int, c_int]
+# *serialNo, real_unit, *device_unit, unitType
 
 BVC_GetDigitalOutputs = lib.BVC_GetDigitalOutputs
 BVC_GetDigitalOutputs.restype = c_byte
@@ -128,27 +128,27 @@ BVC_GetFrontPanelLocked.argtypes = [POINTER(c_char)]
 BVC_GetHardwareInfo = lib.BVC_GetHardwareInfo
 BVC_GetHardwareInfo.restype = c_short
 BVC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 BVC_GetHardwareInfoBlock = lib.BVC_GetHardwareInfoBlock
 BVC_GetHardwareInfoBlock.restype = c_short
-BVC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+BVC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 BVC_GetHomingParamsBlock = lib.BVC_GetHomingParamsBlock
 BVC_GetHomingParamsBlock.restype = c_short
-BVC_GetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+BVC_GetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 BVC_GetHomingVelocity = lib.BVC_GetHomingVelocity
 BVC_GetHomingVelocity.restype = c_uint
@@ -162,13 +162,13 @@ BVC_GetHubBay.argtypes = [POINTER(c_char)]
 
 BVC_GetJogMode = lib.BVC_GetJogMode
 BVC_GetJogMode.restype = c_short
-BVC_GetJogMode.argtypes = [MOT_JogModes, POINTER(c_char), MOT_StopModes]
-# *mode, *serialNo, *stopMode
+BVC_GetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
+# *serialNo, *mode, *stopMode
 
 BVC_GetJogParamsBlock = lib.BVC_GetJogParamsBlock
 BVC_GetJogParamsBlock.restype = c_short
-BVC_GetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+BVC_GetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 BVC_GetJogStepSize = lib.BVC_GetJogStepSize
 BVC_GetJogStepSize.restype = c_uint
@@ -177,8 +177,8 @@ BVC_GetJogStepSize.argtypes = [POINTER(c_char)]
 
 BVC_GetJogVelParams = lib.BVC_GetJogVelParams
 BVC_GetJogVelParams.restype = c_short
-BVC_GetJogVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+BVC_GetJogVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 BVC_GetLEDswitches = lib.BVC_GetLEDswitches
 BVC_GetLEDswitches.restype = c_long
@@ -188,66 +188,66 @@ BVC_GetLEDswitches.argtypes = [POINTER(c_char)]
 BVC_GetLimitSwitchParams = lib.BVC_GetLimitSwitchParams
 BVC_GetLimitSwitchParams.restype = c_short
 BVC_GetLimitSwitchParams.argtypes = [
-    MOT_LimitSwitchModes,
-    c_uint,
-    MOT_LimitSwitchModes,
-    c_uint,
     POINTER(c_char),
+    MOT_LimitSwitchModes,
+    MOT_LimitSwitchModes,
+    c_uint,
+    c_uint,
     MOT_LimitSwitchSWModes]
-# *anticlockwiseHardwareLimit, *anticlockwisePosition, *clockwiseHardwareLimit, *clockwisePosition, *serialNo, *softLimitMode
+# *serialNo, *clockwiseHardwareLimit, *anticlockwiseHardwareLimit, *clockwisePosition, *anticlockwisePosition, *softLimitMode
 
 BVC_GetLimitSwitchParamsBlock = lib.BVC_GetLimitSwitchParamsBlock
 BVC_GetLimitSwitchParamsBlock.restype = c_short
-BVC_GetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char)]
-# *limitSwitchParams, *serialNo
+BVC_GetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), MOT_LimitSwitchParameters]
+# *serialNo, *limitSwitchParams
 
 BVC_GetMMIParams = lib.BVC_GetMMIParams
 BVC_GetMMIParams.restype = c_short
 BVC_GetMMIParams.argtypes = [
-    KMOT_WheelDirectionSense,
-    c_int16,
-    c_int32,
-    c_int32,
     POINTER(c_char),
+    KMOT_WheelMode,
     c_int32,
     c_int32,
-    KMOT_WheelMode]
-# *directionSense, *displayIntensity, *presetPosition1, *presetPosition2, *serialNo, *wheelAcceleration, *wheelMaxVelocity, *wheelMode
+    KMOT_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16]
+# *serialNo, *wheelMode, *wheelMaxVelocity, *wheelAcceleration, *directionSense, *presetPosition1, *presetPosition2, *displayIntensity
 
 BVC_GetMMIParamsBlock = lib.BVC_GetMMIParamsBlock
 BVC_GetMMIParamsBlock.restype = c_short
-BVC_GetMMIParamsBlock.argtypes = [KMOT_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+BVC_GetMMIParamsBlock.argtypes = [POINTER(c_char), KMOT_MMIParams]
+# *serialNo, *mmiParams
 
 BVC_GetMMIParamsExt = lib.BVC_GetMMIParamsExt
 BVC_GetMMIParamsExt.restype = c_short
 BVC_GetMMIParamsExt.argtypes = [
-    KMOT_WheelDirectionSense,
-    c_int16,
-    c_int16,
-    c_int16,
-    c_int32,
-    c_int32,
     POINTER(c_char),
+    KMOT_WheelMode,
     c_int32,
     c_int32,
-    KMOT_WheelMode]
-# *directionSense, *displayDimIntensity, *displayIntensity, *displayTimeout, *presetPosition1, *presetPosition2, *serialNo, *wheelAcceleration, *wheelMaxVelocity, *wheelMode
+    KMOT_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16,
+    c_int16,
+    c_int16]
+# *serialNo, *wheelMode, *wheelMaxVelocity, *wheelAcceleration, *directionSense, *presetPosition1, *presetPosition2, *displayIntensity, *displayTimeout, *displayDimIntensity
 
 BVC_GetMotorParams = lib.BVC_GetMotorParams
 BVC_GetMotorParams.restype = c_short
-BVC_GetMotorParams.argtypes = [c_long, c_float, POINTER(c_char), c_long]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+BVC_GetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 BVC_GetMotorParamsExt = lib.BVC_GetMotorParamsExt
 BVC_GetMotorParamsExt.restype = c_short
-BVC_GetMotorParamsExt.argtypes = [c_double, c_double, POINTER(c_char), c_double]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+BVC_GetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 BVC_GetMotorTravelLimits = lib.BVC_GetMotorTravelLimits
 BVC_GetMotorTravelLimits.restype = c_short
-BVC_GetMotorTravelLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxPosition, *minPosition, *serialNo
+BVC_GetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *minPosition, *maxPosition
 
 BVC_GetMotorTravelMode = lib.BVC_GetMotorTravelMode
 BVC_GetMotorTravelMode.restype = MOT_TravelModes
@@ -256,8 +256,8 @@ BVC_GetMotorTravelMode.argtypes = [POINTER(c_char)]
 
 BVC_GetMotorVelocityLimits = lib.BVC_GetMotorVelocityLimits
 BVC_GetMotorVelocityLimits.restype = c_short
-BVC_GetMotorVelocityLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxAcceleration, *maxVelocity, *serialNo
+BVC_GetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *maxVelocity, *maxAcceleration
 
 BVC_GetMoveAbsolutePosition = lib.BVC_GetMoveAbsolutePosition
 BVC_GetMoveAbsolutePosition.restype = c_int
@@ -271,8 +271,8 @@ BVC_GetMoveRelativeDistance.argtypes = [POINTER(c_char)]
 
 BVC_GetNextMessage = lib.BVC_GetNextMessage
 BVC_GetNextMessage.restype = c_bool
-BVC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+BVC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 BVC_GetNumberPositions = lib.BVC_GetNumberPositions
 BVC_GetNumberPositions.restype = c_int
@@ -291,13 +291,13 @@ BVC_GetPositionCounter.argtypes = [POINTER(c_char)]
 
 BVC_GetRealValueFromDeviceUnit = lib.BVC_GetRealValueFromDeviceUnit
 BVC_GetRealValueFromDeviceUnit.restype = c_short
-BVC_GetRealValueFromDeviceUnit.argtypes = [c_double, POINTER(c_char), c_int, c_int]
-# *real_unit, *serialNo, device_unit, unitType
+BVC_GetRealValueFromDeviceUnit.argtypes = [POINTER(c_char), c_int, c_double, c_int]
+# *serialNo, device_unit, *real_unit, unitType
 
 BVC_GetScanParams = lib.BVC_GetScanParams
 BVC_GetScanParams.restype = c_short
-BVC_GetScanParams.argtypes = [MOT_BVC_ScanParams, POINTER(c_char)]
-# *scanParameters, *serialNo
+BVC_GetScanParams.argtypes = [POINTER(c_char), MOT_BVC_ScanParams]
+# *serialNo, *scanParameters
 
 BVC_GetSoftLimitMode = lib.BVC_GetSoftLimitMode
 BVC_GetSoftLimitMode.restype = MOT_LimitsSoftwareApproachPolicy
@@ -342,7 +342,6 @@ BVC_GetTriggerConfigParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerConfig]
 BVC_GetTriggerParamsParams = lib.BVC_GetTriggerParamsParams
 BVC_GetTriggerParamsParams.restype = c_short
 BVC_GetTriggerParamsParams.argtypes = [
-    c_int32,
     POINTER(c_char),
     c_int32,
     c_int32,
@@ -350,8 +349,9 @@ BVC_GetTriggerParamsParams.argtypes = [
     c_int32,
     c_int32,
     c_int32,
+    c_int32,
     c_int32]
-# *cycleCount, *serialNo, *triggerIntervalFwd, *triggerIntervalRev, *triggerPulseCountFwd, *triggerPulseCountRev, *triggerPulseWidth, *triggerStartPositionFwd, *triggerStartPositionRev
+# *serialNo, *triggerStartPositionFwd, *triggerIntervalFwd, *triggerPulseCountFwd, *triggerStartPositionRev, *triggerIntervalRev, *triggerPulseCountRev, *triggerPulseWidth, *cycleCount
 
 BVC_GetTriggerParamsParamsBlock = lib.BVC_GetTriggerParamsParamsBlock
 BVC_GetTriggerParamsParamsBlock.restype = c_short
@@ -360,8 +360,8 @@ BVC_GetTriggerParamsParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerParams]
 
 BVC_GetVelParams = lib.BVC_GetVelParams
 BVC_GetVelParams.restype = c_short
-BVC_GetVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+BVC_GetVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 BVC_GetVelParamsBlock = lib.BVC_GetVelParamsBlock
 BVC_GetVelParamsBlock.restype = c_short
@@ -580,8 +580,8 @@ BVC_SetBacklash.argtypes = [POINTER(c_char), c_long]
 
 BVC_SetDCPIDParams = lib.BVC_SetDCPIDParams
 BVC_SetDCPIDParams.restype = c_short
-BVC_SetDCPIDParams.argtypes = [MOT_DC_PIDParameters, POINTER(c_char)]
-# *DCproportionalIntegralDerivativeParams, *serialNo
+BVC_SetDCPIDParams.argtypes = [POINTER(c_char), MOT_DC_PIDParameters]
+# *serialNo, *DCproportionalIntegralDerivativeParams
 
 BVC_SetDigitalOutputs = lib.BVC_SetDigitalOutputs
 BVC_SetDigitalOutputs.restype = c_short
@@ -605,8 +605,8 @@ BVC_SetFrontPanelLock.argtypes = [POINTER(c_char), c_bool]
 
 BVC_SetHomingParamsBlock = lib.BVC_SetHomingParamsBlock
 BVC_SetHomingParamsBlock.restype = c_short
-BVC_SetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+BVC_SetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 BVC_SetHomingVelocity = lib.BVC_SetHomingVelocity
 BVC_SetHomingVelocity.restype = c_short
@@ -620,8 +620,8 @@ BVC_SetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
 
 BVC_SetJogParamsBlock = lib.BVC_SetJogParamsBlock
 BVC_SetJogParamsBlock.restype = c_short
-BVC_SetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+BVC_SetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 BVC_SetJogStepSize = lib.BVC_SetJogStepSize
 BVC_SetJogStepSize.restype = c_short
@@ -643,16 +643,16 @@ BVC_SetLimitSwitchParams.restype = c_short
 BVC_SetLimitSwitchParams.argtypes = [
     POINTER(c_char),
     MOT_LimitSwitchModes,
-    c_uint,
     MOT_LimitSwitchModes,
     c_uint,
+    c_uint,
     MOT_LimitSwitchSWModes]
-# *serialNo, anticlockwiseHardwareLimit, anticlockwisePosition, clockwiseHardwareLimit, clockwisePosition, softLimitMode
+# *serialNo, clockwiseHardwareLimit, anticlockwiseHardwareLimit, clockwisePosition, anticlockwisePosition, softLimitMode
 
 BVC_SetLimitSwitchParamsBlock = lib.BVC_SetLimitSwitchParamsBlock
 BVC_SetLimitSwitchParamsBlock.restype = c_short
-BVC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char)]
-# *limitSwitchParams, *serialNo
+BVC_SetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), MOT_LimitSwitchParameters]
+# *serialNo, *limitSwitchParams
 
 BVC_SetLimitsSoftwareApproachPolicy = lib.BVC_SetLimitsSoftwareApproachPolicy
 BVC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
@@ -663,49 +663,49 @@ BVC_SetMMIParams = lib.BVC_SetMMIParams
 BVC_SetMMIParams.restype = c_short
 BVC_SetMMIParams.argtypes = [
     POINTER(c_char),
+    KMOT_WheelMode,
+    c_int32,
+    c_int32,
     KMOT_WheelDirectionSense,
-    c_int16,
     c_int32,
     c_int32,
-    c_int32,
-    c_int32,
-    KMOT_WheelMode]
-# *serialNo, directionSense, displayIntensity, presetPosition1, presetPosition2, wheelAcceleration, wheelMaxVelocity, wheelMode
+    c_int16]
+# *serialNo, wheelMode, wheelMaxVelocity, wheelAcceleration, directionSense, presetPosition1, presetPosition2, displayIntensity
 
 BVC_SetMMIParamsBlock = lib.BVC_SetMMIParamsBlock
 BVC_SetMMIParamsBlock.restype = c_short
-BVC_SetMMIParamsBlock.argtypes = [KMOT_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+BVC_SetMMIParamsBlock.argtypes = [POINTER(c_char), KMOT_MMIParams]
+# *serialNo, *mmiParams
 
 BVC_SetMMIParamsExt = lib.BVC_SetMMIParamsExt
 BVC_SetMMIParamsExt.restype = c_short
 BVC_SetMMIParamsExt.argtypes = [
     POINTER(c_char),
+    KMOT_WheelMode,
+    c_int32,
+    c_int32,
     KMOT_WheelDirectionSense,
+    c_int32,
+    c_int32,
     c_int16,
     c_int16,
-    c_int16,
-    c_int32,
-    c_int32,
-    c_int32,
-    c_int32,
-    KMOT_WheelMode]
-# *serialNo, directionSense, displayDimIntensity, displayIntensity, displayTimeout, presetPosition1, presetPosition2, wheelAcceleration, wheelMaxVelocity, wheelMode
+    c_int16]
+# *serialNo, wheelMode, wheelMaxVelocity, wheelAcceleration, directionSense, presetPosition1, presetPosition2, displayIntensity, displayTimeout, displayDimIntensity
 
 BVC_SetMotorParams = lib.BVC_SetMotorParams
 BVC_SetMotorParams.restype = c_short
-BVC_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_float, c_long]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+BVC_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 BVC_SetMotorParamsExt = lib.BVC_SetMotorParamsExt
 BVC_SetMotorParamsExt.restype = c_short
 BVC_SetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 BVC_SetMotorTravelLimits = lib.BVC_SetMotorTravelLimits
 BVC_SetMotorTravelLimits.restype = c_short
 BVC_SetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 BVC_SetMotorTravelMode = lib.BVC_SetMotorTravelMode
 BVC_SetMotorTravelMode.restype = c_short
@@ -715,7 +715,7 @@ BVC_SetMotorTravelMode.argtypes = [POINTER(c_char), MOT_TravelModes]
 BVC_SetMotorVelocityLimits = lib.BVC_SetMotorVelocityLimits
 BVC_SetMotorVelocityLimits.restype = c_short
 BVC_SetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxAcceleration, maxVelocity
+# *serialNo, maxVelocity, maxAcceleration
 
 BVC_SetMoveAbsolutePosition = lib.BVC_SetMoveAbsolutePosition
 BVC_SetMoveAbsolutePosition.restype = c_short
@@ -734,18 +734,18 @@ BVC_SetPositionCounter.argtypes = [POINTER(c_char), c_long]
 
 BVC_SetRotationModes = lib.BVC_SetRotationModes
 BVC_SetRotationModes.restype = c_short
-BVC_SetRotationModes.argtypes = [POINTER(c_char), MOT_MovementDirections, MOT_MovementModes]
-# *serialNo, direction, mode
+BVC_SetRotationModes.argtypes = [POINTER(c_char), MOT_MovementModes, MOT_MovementDirections]
+# *serialNo, mode, direction
 
 BVC_SetScanParams = lib.BVC_SetScanParams
 BVC_SetScanParams.restype = c_short
-BVC_SetScanParams.argtypes = [MOT_BVC_ScanParams, POINTER(c_char)]
-# *scanParameters, *serialNo
+BVC_SetScanParams.argtypes = [POINTER(c_char), MOT_BVC_ScanParams]
+# *serialNo, *scanParameters
 
 BVC_SetStageAxisLimits = lib.BVC_SetStageAxisLimits
 BVC_SetStageAxisLimits.restype = c_short
 BVC_SetStageAxisLimits.argtypes = [POINTER(c_char), c_int, c_int]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 BVC_SetTriggerConfigParams = lib.BVC_SetTriggerConfigParams
 BVC_SetTriggerConfigParams.restype = c_short
@@ -774,7 +774,7 @@ BVC_SetTriggerParamsParams.argtypes = [
     c_int32,
     c_int32,
     c_int32]
-# *serialNo, cycleCount, triggerIntervalFwd, triggerIntervalRev, triggerPulseCountFwd, triggerPulseCountRev, triggerPulseWidth, triggerStartPositionFwd, triggerStartPositionRev
+# *serialNo, triggerStartPositionFwd, triggerIntervalFwd, triggerPulseCountFwd, triggerStartPositionRev, triggerIntervalRev, triggerPulseCountRev, triggerPulseWidth, cycleCount
 
 BVC_SetTriggerParamsParamsBlock = lib.BVC_SetTriggerParamsParamsBlock
 BVC_SetTriggerParamsParamsBlock.restype = c_short
@@ -828,22 +828,23 @@ BVC_SuspendMoveMessages.argtypes = [POINTER(c_char)]
 
 BVC_TimeSinceLastMsgReceived = lib.BVC_TimeSinceLastMsgReceived
 BVC_TimeSinceLastMsgReceived.restype = c_bool
-BVC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+BVC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 BVC_WaitForMessage = lib.BVC_WaitForMessage
 BVC_WaitForMessage.restype = c_bool
-BVC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+BVC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -867,8 +868,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

@@ -103,13 +103,13 @@ BMC_GetBacklash.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetCurrentLoopParams = lib.BMC_GetCurrentLoopParams
 BMC_GetCurrentLoopParams.restype = c_short
-BMC_GetCurrentLoopParams.argtypes = [MOT_BrushlessCurrentLoopParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *currentLoopParams, *serialNo, *serialNo, channel
+BMC_GetCurrentLoopParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_BrushlessCurrentLoopParameters]
+# *serialNo, *serialNo, channel, *currentLoopParams
 
 BMC_GetDeviceUnitFromRealValue = lib.BMC_GetDeviceUnitFromRealValue
 BMC_GetDeviceUnitFromRealValue.restype = c_short
-BMC_GetDeviceUnitFromRealValue.argtypes = [c_int, POINTER(c_char), c_short, c_double, c_int]
-# *device_unit, *serialNo, channel, real_unit, unitType
+BMC_GetDeviceUnitFromRealValue.argtypes = [POINTER(c_char), c_short, c_double, c_int, c_int]
+# *serialNo, channel, real_unit, *device_unit, unitType
 
 BMC_GetDigitalOutputs = lib.BMC_GetDigitalOutputs
 BMC_GetDigitalOutputs.restype = c_byte
@@ -118,12 +118,9 @@ BMC_GetDigitalOutputs.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetElectricOutputParams = lib.BMC_GetElectricOutputParams
 BMC_GetElectricOutputParams.restype = c_short
-BMC_GetElectricOutputParams.argtypes = [
-    MOT_BrushlessElectricOutputParameters,
-    POINTER(c_char),
-    POINTER(c_char),
-    c_short]
-# *electricOutputParams, *serialNo, *serialNo, channel
+BMC_GetElectricOutputParams.argtypes = [POINTER(c_char), POINTER(
+    c_char), c_short, MOT_BrushlessElectricOutputParameters]
+# *serialNo, *serialNo, channel, *electricOutputParams
 
 BMC_GetEncoderCounter = lib.BMC_GetEncoderCounter
 BMC_GetEncoderCounter.restype = c_long
@@ -143,28 +140,28 @@ BMC_GetFrontPanelLocked.argtypes = [POINTER(c_char)]
 BMC_GetHardwareInfo = lib.BMC_GetHardwareInfo
 BMC_GetHardwareInfo.restype = c_short
 BMC_GetHardwareInfo.argtypes = [
-    c_ulong,
-    c_long,
-    POINTER(c_char),
-    c_long,
     POINTER(c_char),
     c_short,
     POINTER(c_char),
+    c_ulong,
     c_long,
     c_short,
+    POINTER(c_char),
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, channel, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, channel, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 BMC_GetHardwareInfoBlock = lib.BMC_GetHardwareInfoBlock
 BMC_GetHardwareInfoBlock.restype = c_short
-BMC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char), c_short]
-# *hardwareInfo, *serialNo, channel
+BMC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), c_short, TLI_HardwareInformation]
+# *serialNo, channel, *hardwareInfo
 
 BMC_GetHomingParamsBlock = lib.BMC_GetHomingParamsBlock
 BMC_GetHomingParamsBlock.restype = c_short
-BMC_GetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *homingParams, *serialNo, *serialNo, channel
+BMC_GetHomingParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_HomingParameters]
+# *serialNo, *serialNo, channel, *homingParams
 
 BMC_GetHomingVelocity = lib.BMC_GetHomingVelocity
 BMC_GetHomingVelocity.restype = c_uint
@@ -173,13 +170,13 @@ BMC_GetHomingVelocity.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetJogMode = lib.BMC_GetJogMode
 BMC_GetJogMode.restype = c_short
-BMC_GetJogMode.argtypes = [MOT_JogModes, POINTER(c_char), MOT_StopModes, c_short]
-# *mode, *serialNo, *stopMode, channel
+BMC_GetJogMode.argtypes = [POINTER(c_char), c_short, MOT_JogModes, MOT_StopModes]
+# *serialNo, channel, *mode, *stopMode
 
 BMC_GetJogParamsBlock = lib.BMC_GetJogParamsBlock
 BMC_GetJogParamsBlock.restype = c_short
-BMC_GetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *jogParams, *serialNo, *serialNo, channel
+BMC_GetJogParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_JogParameters]
+# *serialNo, *serialNo, channel, *jogParams
 
 BMC_GetJogStepSize = lib.BMC_GetJogStepSize
 BMC_GetJogStepSize.restype = c_uint
@@ -188,56 +185,56 @@ BMC_GetJogStepSize.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetJogVelParams = lib.BMC_GetJogVelParams
 BMC_GetJogVelParams.restype = c_short
-BMC_GetJogVelParams.argtypes = [c_int, c_int, POINTER(c_char), c_short]
-# *acceleration, *maxVelocity, *serialNo, channel
+BMC_GetJogVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, *acceleration, *maxVelocity
 
 BMC_GetMMIParams = lib.BMC_GetMMIParams
 BMC_GetMMIParams.restype = c_short
 BMC_GetMMIParams.argtypes = [
-    KMOT_WheelDirectionSense,
-    c_int16,
-    c_int32,
-    c_int32,
     POINTER(c_char),
+    KMOT_WheelMode,
     c_int32,
     c_int32,
-    KMOT_WheelMode]
-# *directionSense, *displayIntensity, *presetPosition1, *presetPosition2, *serialNo, *wheelAcceleration, *wheelMaxVelocity, *wheelMode
+    KMOT_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16]
+# *serialNo, *wheelMode, *wheelMaxVelocity, *wheelAcceleration, *directionSense, *presetPosition1, *presetPosition2, *displayIntensity
 
 BMC_GetMMIParamsBlock = lib.BMC_GetMMIParamsBlock
 BMC_GetMMIParamsBlock.restype = c_short
-BMC_GetMMIParamsBlock.argtypes = [KMOT_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+BMC_GetMMIParamsBlock.argtypes = [POINTER(c_char), KMOT_MMIParams]
+# *serialNo, *mmiParams
 
 BMC_GetMMIParamsExt = lib.BMC_GetMMIParamsExt
 BMC_GetMMIParamsExt.restype = c_short
 BMC_GetMMIParamsExt.argtypes = [
-    KMOT_WheelDirectionSense,
-    c_int16,
-    c_int16,
-    c_int16,
-    c_int32,
-    c_int32,
     POINTER(c_char),
+    KMOT_WheelMode,
     c_int32,
     c_int32,
-    KMOT_WheelMode]
-# *directionSense, *displayDimIntensity, *displayIntensity, *displayTimeout, *presetPosition1, *presetPosition2, *serialNo, *wheelAcceleration, *wheelMaxVelocity, *wheelMode
+    KMOT_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16,
+    c_int16,
+    c_int16]
+# *serialNo, *wheelMode, *wheelMaxVelocity, *wheelAcceleration, *directionSense, *presetPosition1, *presetPosition2, *displayIntensity, *displayTimeout, *displayDimIntensity
 
 BMC_GetMotorParams = lib.BMC_GetMotorParams
 BMC_GetMotorParams.restype = c_short
-BMC_GetMotorParams.argtypes = [c_long, POINTER(c_char), c_short]
-# *countsPerUnit, *serialNo, channel
+BMC_GetMotorParams.argtypes = [POINTER(c_char), c_short, c_long]
+# *serialNo, channel, *countsPerUnit
 
 BMC_GetMotorParamsExt = lib.BMC_GetMotorParamsExt
 BMC_GetMotorParamsExt.restype = c_short
-BMC_GetMotorParamsExt.argtypes = [c_double, POINTER(c_char), c_short]
-# *countsPerUnit, *serialNo, channel
+BMC_GetMotorParamsExt.argtypes = [POINTER(c_char), c_short, c_double]
+# *serialNo, channel, *countsPerUnit
 
 BMC_GetMotorTravelLimits = lib.BMC_GetMotorTravelLimits
 BMC_GetMotorTravelLimits.restype = c_short
-BMC_GetMotorTravelLimits.argtypes = [c_double, c_double, POINTER(c_char), c_short]
-# *maxPosition, *minPosition, *serialNo, channel
+BMC_GetMotorTravelLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
+# *serialNo, channel, *minPosition, *maxPosition
 
 BMC_GetMotorTravelMode = lib.BMC_GetMotorTravelMode
 BMC_GetMotorTravelMode.restype = MOT_TravelModes
@@ -246,8 +243,8 @@ BMC_GetMotorTravelMode.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetMotorVelocityLimits = lib.BMC_GetMotorVelocityLimits
 BMC_GetMotorVelocityLimits.restype = c_short
-BMC_GetMotorVelocityLimits.argtypes = [c_double, c_double, POINTER(c_char), c_short]
-# *maxAcceleration, *maxVelocity, *serialNo, channel
+BMC_GetMotorVelocityLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
+# *serialNo, channel, *maxVelocity, *maxAcceleration
 
 BMC_GetMoveAbsolutePosition = lib.BMC_GetMoveAbsolutePosition
 BMC_GetMoveAbsolutePosition.restype = c_int
@@ -261,8 +258,8 @@ BMC_GetMoveRelativeDistance.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetNextMessage = lib.BMC_GetNextMessage
 BMC_GetNextMessage.restype = c_bool
-BMC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_short]
-# *messageData, *messageID, *messageType, *serialNo, channel
+BMC_GetNextMessage.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 BMC_GetNumberPositions = lib.BMC_GetNumberPositions
 BMC_GetNumberPositions.restype = c_int
@@ -271,8 +268,8 @@ BMC_GetNumberPositions.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetPosLoopParams = lib.BMC_GetPosLoopParams
 BMC_GetPosLoopParams.restype = c_short
-BMC_GetPosLoopParams.argtypes = [MOT_BrushlessPositionLoopParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *positionLoopParams, *serialNo, *serialNo, channel
+BMC_GetPosLoopParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_BrushlessPositionLoopParameters]
+# *serialNo, *serialNo, channel, *positionLoopParams
 
 BMC_GetPosition = lib.BMC_GetPosition
 BMC_GetPosition.restype = c_int
@@ -286,8 +283,8 @@ BMC_GetPositionCounter.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetRealValueFromDeviceUnit = lib.BMC_GetRealValueFromDeviceUnit
 BMC_GetRealValueFromDeviceUnit.restype = c_short
-BMC_GetRealValueFromDeviceUnit.argtypes = [c_double, POINTER(c_char), c_short, c_int, c_int]
-# *real_unit, *serialNo, channel, device_unit, unitType
+BMC_GetRealValueFromDeviceUnit.argtypes = [POINTER(c_char), c_short, c_int, c_double, c_int]
+# *serialNo, channel, device_unit, *real_unit, unitType
 
 BMC_GetSoftLimitMode = lib.BMC_GetSoftLimitMode
 BMC_GetSoftLimitMode.restype = MOT_LimitsSoftwareApproachPolicy
@@ -312,26 +309,26 @@ BMC_GetStageAxisMinPos.argtypes = [POINTER(c_char), c_short]
 BMC_GetStageAxisParams = lib.BMC_GetStageAxisParams
 BMC_GetStageAxisParams.restype = c_short
 BMC_GetStageAxisParams.argtypes = [
-    c_long,
-    c_ulong,
-    c_int,
-    c_int,
-    c_int,
-    c_int,
-    c_int,
     POINTER(c_char),
     POINTER(c_char),
-    POINTER(c_char),
-    c_ulong,
-    c_long,
     c_short,
-    c_ulong]
-# *axisID, *countsPerUnit, *maxAcceleration, *maxDecceleration, *maxPosition, *maxVelocity, *minPosition, *partNumber, *serialNo, *serialNo, *serialNumber, *stageID, channel, size
+    c_long,
+    c_long,
+    POINTER(c_char),
+    c_ulong,
+    c_ulong,
+    c_ulong,
+    c_int,
+    c_int,
+    c_int,
+    c_int,
+    c_int]
+# *serialNo, *serialNo, channel, *stageID, *axisID, *partNumber, size, *serialNumber, *countsPerUnit, *minPosition, *maxPosition, *maxAcceleration, *maxDecceleration, *maxVelocity
 
 BMC_GetStageAxisParamsBlock = lib.BMC_GetStageAxisParamsBlock
 BMC_GetStageAxisParamsBlock.restype = c_short
-BMC_GetStageAxisParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), MOT_StageAxisParameters, c_short]
-# *serialNo, *serialNo, *stageAxisParams, channel
+BMC_GetStageAxisParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_StageAxisParameters]
+# *serialNo, *serialNo, channel, *stageAxisParams
 
 BMC_GetStatusBits = lib.BMC_GetStatusBits
 BMC_GetStatusBits.restype = c_ulong
@@ -340,8 +337,8 @@ BMC_GetStatusBits.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetTrackSettleParams = lib.BMC_GetTrackSettleParams
 BMC_GetTrackSettleParams.restype = c_short
-BMC_GetTrackSettleParams.argtypes = [POINTER(c_char), POINTER(c_char), MOT_BrushlessTrackSettleParameters, c_short]
-# *serialNo, *serialNo, *settleParams, channel
+BMC_GetTrackSettleParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_BrushlessTrackSettleParameters]
+# *serialNo, *serialNo, channel, *settleParams
 
 BMC_GetTriggerConfigParams = lib.BMC_GetTriggerConfigParams
 BMC_GetTriggerConfigParams.restype = c_short
@@ -361,7 +358,6 @@ BMC_GetTriggerConfigParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerConfig]
 BMC_GetTriggerParamsParams = lib.BMC_GetTriggerParamsParams
 BMC_GetTriggerParamsParams.restype = c_short
 BMC_GetTriggerParamsParams.argtypes = [
-    c_int32,
     POINTER(c_char),
     c_int32,
     c_int32,
@@ -369,8 +365,9 @@ BMC_GetTriggerParamsParams.argtypes = [
     c_int32,
     c_int32,
     c_int32,
+    c_int32,
     c_int32]
-# *cycleCount, *serialNo, *triggerIntervalFwd, *triggerIntervalRev, *triggerPulseCountFwd, *triggerPulseCountRev, *triggerPulseWidth, *triggerStartPositionFwd, *triggerStartPositionRev
+# *serialNo, *triggerStartPositionFwd, *triggerIntervalFwd, *triggerPulseCountFwd, *triggerStartPositionRev, *triggerIntervalRev, *triggerPulseCountRev, *triggerPulseWidth, *cycleCount
 
 BMC_GetTriggerParamsParamsBlock = lib.BMC_GetTriggerParamsParamsBlock
 BMC_GetTriggerParamsParamsBlock.restype = c_short
@@ -384,18 +381,18 @@ BMC_GetTriggerSwitches.argtypes = [POINTER(c_char), c_short]
 
 BMC_GetVelParams = lib.BMC_GetVelParams
 BMC_GetVelParams.restype = c_short
-BMC_GetVelParams.argtypes = [c_int, c_int, POINTER(c_char), c_short]
-# *acceleration, *maxVelocity, *serialNo, channel
+BMC_GetVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, *acceleration, *maxVelocity
 
 BMC_GetVelParamsBlock = lib.BMC_GetVelParamsBlock
 BMC_GetVelParamsBlock.restype = c_short
-BMC_GetVelParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), MOT_VelocityParameters, c_short]
-# *serialNo, *serialNo, *velocityParams, channel
+BMC_GetVelParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_VelocityParameters]
+# *serialNo, *serialNo, channel, *velocityParams
 
 BMC_GetVelocityProfileParams = lib.BMC_GetVelocityProfileParams
 BMC_GetVelocityProfileParams.restype = c_short
-BMC_GetVelocityProfileParams.argtypes = [POINTER(c_char), POINTER(c_char), MOT_VelocityProfileParameters, c_short]
-# *serialNo, *serialNo, *velocityProfileParams, channel
+BMC_GetVelocityProfileParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_VelocityProfileParameters]
+# *serialNo, *serialNo, channel, *velocityProfileParams
 
 BMC_HasLastMsgTimerOverrun = lib.BMC_HasLastMsgTimerOverrun
 BMC_HasLastMsgTimerOverrun.restype = c_bool
@@ -414,8 +411,8 @@ BMC_Identify.argtypes = [POINTER(c_char)]
 
 BMC_LoadNamedSettings = lib.BMC_LoadNamedSettings
 BMC_LoadNamedSettings.restype = c_bool
-BMC_LoadNamedSettings.argtypes = [POINTER(c_char), POINTER(c_char), c_short]
-# *serialNo, *settingsName, channel
+BMC_LoadNamedSettings.argtypes = [POINTER(c_char), c_short, POINTER(c_char)]
+# *serialNo, channel, *settingsName
 
 BMC_LoadSettings = lib.BMC_LoadSettings
 BMC_LoadSettings.restype = c_bool
@@ -619,8 +616,8 @@ BMC_SetBacklash.argtypes = [POINTER(c_char), c_short, c_long]
 
 BMC_SetCurrentLoopParams = lib.BMC_SetCurrentLoopParams
 BMC_SetCurrentLoopParams.restype = c_short
-BMC_SetCurrentLoopParams.argtypes = [MOT_BrushlessCurrentLoopParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *currentLoopParams, *serialNo, *serialNo, channel
+BMC_SetCurrentLoopParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_BrushlessCurrentLoopParameters]
+# *serialNo, *serialNo, channel, *currentLoopParams
 
 BMC_SetDigitalOutputs = lib.BMC_SetDigitalOutputs
 BMC_SetDigitalOutputs.restype = c_short
@@ -634,12 +631,9 @@ BMC_SetDirection.argtypes = [POINTER(c_char), c_short, c_bool]
 
 BMC_SetElectricOutputParams = lib.BMC_SetElectricOutputParams
 BMC_SetElectricOutputParams.restype = c_short
-BMC_SetElectricOutputParams.argtypes = [
-    MOT_BrushlessElectricOutputParameters,
-    POINTER(c_char),
-    POINTER(c_char),
-    c_short]
-# *electricOutputParams, *serialNo, *serialNo, channel
+BMC_SetElectricOutputParams.argtypes = [POINTER(c_char), POINTER(
+    c_char), c_short, MOT_BrushlessElectricOutputParameters]
+# *serialNo, *serialNo, channel, *electricOutputParams
 
 BMC_SetEncoderCounter = lib.BMC_SetEncoderCounter
 BMC_SetEncoderCounter.restype = c_short
@@ -653,8 +647,8 @@ BMC_SetFrontPanelLock.argtypes = [POINTER(c_char), c_bool]
 
 BMC_SetHomingParamsBlock = lib.BMC_SetHomingParamsBlock
 BMC_SetHomingParamsBlock.restype = c_short
-BMC_SetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *homingParams, *serialNo, *serialNo, channel
+BMC_SetHomingParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_HomingParameters]
+# *serialNo, *serialNo, channel, *homingParams
 
 BMC_SetHomingVelocity = lib.BMC_SetHomingVelocity
 BMC_SetHomingVelocity.restype = c_short
@@ -668,8 +662,8 @@ BMC_SetJogMode.argtypes = [POINTER(c_char), c_short, MOT_JogModes, MOT_StopModes
 
 BMC_SetJogParamsBlock = lib.BMC_SetJogParamsBlock
 BMC_SetJogParamsBlock.restype = c_short
-BMC_SetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *jogParams, *serialNo, *serialNo, channel
+BMC_SetJogParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_JogParameters]
+# *serialNo, *serialNo, channel, *jogParams
 
 BMC_SetJogStepSize = lib.BMC_SetJogStepSize
 BMC_SetJogStepSize.restype = c_short
@@ -678,8 +672,8 @@ BMC_SetJogStepSize.argtypes = [POINTER(c_char), c_short, c_uint]
 
 BMC_SetJogVelParams = lib.BMC_SetJogVelParams
 BMC_SetJogVelParams.restype = c_short
-BMC_SetJogVelParams.argtypes = [POINTER(c_char), c_int, c_short, c_int]
-# *serialNo, acceleration, channel, maxVelocity
+BMC_SetJogVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, acceleration, maxVelocity
 
 BMC_SetLimitsSoftwareApproachPolicy = lib.BMC_SetLimitsSoftwareApproachPolicy
 BMC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
@@ -690,34 +684,34 @@ BMC_SetMMIParams = lib.BMC_SetMMIParams
 BMC_SetMMIParams.restype = c_short
 BMC_SetMMIParams.argtypes = [
     POINTER(c_char),
+    KMOT_WheelMode,
+    c_int32,
+    c_int32,
     KMOT_WheelDirectionSense,
-    c_int16,
     c_int32,
     c_int32,
-    c_int32,
-    c_int32,
-    KMOT_WheelMode]
-# *serialNo, directionSense, displayIntensity, presetPosition1, presetPosition2, wheelAcceleration, wheelMaxVelocity, wheelMode
+    c_int16]
+# *serialNo, wheelMode, wheelMaxVelocity, wheelAcceleration, directionSense, presetPosition1, presetPosition2, displayIntensity
 
 BMC_SetMMIParamsBlock = lib.BMC_SetMMIParamsBlock
 BMC_SetMMIParamsBlock.restype = c_short
-BMC_SetMMIParamsBlock.argtypes = [KMOT_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+BMC_SetMMIParamsBlock.argtypes = [POINTER(c_char), KMOT_MMIParams]
+# *serialNo, *mmiParams
 
 BMC_SetMMIParamsExt = lib.BMC_SetMMIParamsExt
 BMC_SetMMIParamsExt.restype = c_short
 BMC_SetMMIParamsExt.argtypes = [
     POINTER(c_char),
+    KMOT_WheelMode,
+    c_int32,
+    c_int32,
     KMOT_WheelDirectionSense,
+    c_int32,
+    c_int32,
     c_int16,
     c_int16,
-    c_int16,
-    c_int32,
-    c_int32,
-    c_int32,
-    c_int32,
-    KMOT_WheelMode]
-# *serialNo, directionSense, displayDimIntensity, displayIntensity, displayTimeout, presetPosition1, presetPosition2, wheelAcceleration, wheelMaxVelocity, wheelMode
+    c_int16]
+# *serialNo, wheelMode, wheelMaxVelocity, wheelAcceleration, directionSense, presetPosition1, presetPosition2, displayIntensity, displayTimeout, displayDimIntensity
 
 BMC_SetMotorParams = lib.BMC_SetMotorParams
 BMC_SetMotorParams.restype = c_short
@@ -732,7 +726,7 @@ BMC_SetMotorParamsExt.argtypes = [POINTER(c_char), c_short, c_double]
 BMC_SetMotorTravelLimits = lib.BMC_SetMotorTravelLimits
 BMC_SetMotorTravelLimits.restype = c_short
 BMC_SetMotorTravelLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
-# *serialNo, channel, maxPosition, minPosition
+# *serialNo, channel, minPosition, maxPosition
 
 BMC_SetMotorTravelMode = lib.BMC_SetMotorTravelMode
 BMC_SetMotorTravelMode.restype = c_short
@@ -742,7 +736,7 @@ BMC_SetMotorTravelMode.argtypes = [POINTER(c_char), c_short, MOT_TravelModes]
 BMC_SetMotorVelocityLimits = lib.BMC_SetMotorVelocityLimits
 BMC_SetMotorVelocityLimits.restype = c_short
 BMC_SetMotorVelocityLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
-# *serialNo, channel, maxAcceleration, maxVelocity
+# *serialNo, channel, maxVelocity, maxAcceleration
 
 BMC_SetMoveAbsolutePosition = lib.BMC_SetMoveAbsolutePosition
 BMC_SetMoveAbsolutePosition.restype = c_short
@@ -756,8 +750,8 @@ BMC_SetMoveRelativeDistance.argtypes = [POINTER(c_char), c_short, c_int]
 
 BMC_SetPosLoopParams = lib.BMC_SetPosLoopParams
 BMC_SetPosLoopParams.restype = c_short
-BMC_SetPosLoopParams.argtypes = [MOT_BrushlessPositionLoopParameters, POINTER(c_char), POINTER(c_char), c_short]
-# *positionLoopParams, *serialNo, *serialNo, channel
+BMC_SetPosLoopParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_BrushlessPositionLoopParameters]
+# *serialNo, *serialNo, channel, *positionLoopParams
 
 BMC_SetPositionCounter = lib.BMC_SetPositionCounter
 BMC_SetPositionCounter.restype = c_short
@@ -766,18 +760,18 @@ BMC_SetPositionCounter.argtypes = [POINTER(c_char), c_short, c_long]
 
 BMC_SetRotationModes = lib.BMC_SetRotationModes
 BMC_SetRotationModes.restype = c_short
-BMC_SetRotationModes.argtypes = [POINTER(c_char), c_short, MOT_MovementDirections, MOT_MovementModes]
-# *serialNo, channel, direction, mode
+BMC_SetRotationModes.argtypes = [POINTER(c_char), c_short, MOT_MovementModes, MOT_MovementDirections]
+# *serialNo, channel, mode, direction
 
 BMC_SetStageAxisLimits = lib.BMC_SetStageAxisLimits
 BMC_SetStageAxisLimits.restype = c_short
 BMC_SetStageAxisLimits.argtypes = [POINTER(c_char), c_short, c_int, c_int]
-# *serialNo, channel, maxPosition, minPosition
+# *serialNo, channel, minPosition, maxPosition
 
 BMC_SetTrackSettleParams = lib.BMC_SetTrackSettleParams
 BMC_SetTrackSettleParams.restype = c_short
-BMC_SetTrackSettleParams.argtypes = [POINTER(c_char), POINTER(c_char), MOT_BrushlessTrackSettleParameters, c_short]
-# *serialNo, *serialNo, *settleParams, channel
+BMC_SetTrackSettleParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_BrushlessTrackSettleParameters]
+# *serialNo, *serialNo, channel, *settleParams
 
 BMC_SetTriggerConfigParams = lib.BMC_SetTriggerConfigParams
 BMC_SetTriggerConfigParams.restype = c_short
@@ -806,7 +800,7 @@ BMC_SetTriggerParamsParams.argtypes = [
     c_int32,
     c_int32,
     c_int32]
-# *serialNo, cycleCount, triggerIntervalFwd, triggerIntervalRev, triggerPulseCountFwd, triggerPulseCountRev, triggerPulseWidth, triggerStartPositionFwd, triggerStartPositionRev
+# *serialNo, triggerStartPositionFwd, triggerIntervalFwd, triggerPulseCountFwd, triggerStartPositionRev, triggerIntervalRev, triggerPulseCountRev, triggerPulseWidth, cycleCount
 
 BMC_SetTriggerParamsParamsBlock = lib.BMC_SetTriggerParamsParamsBlock
 BMC_SetTriggerParamsParamsBlock.restype = c_short
@@ -820,18 +814,18 @@ BMC_SetTriggerSwitches.argtypes = [POINTER(c_char), c_short, c_byte]
 
 BMC_SetVelParams = lib.BMC_SetVelParams
 BMC_SetVelParams.restype = c_short
-BMC_SetVelParams.argtypes = [POINTER(c_char), c_int, c_short, c_int]
-# *serialNo, acceleration, channel, maxVelocity
+BMC_SetVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, acceleration, maxVelocity
 
 BMC_SetVelParamsBlock = lib.BMC_SetVelParamsBlock
 BMC_SetVelParamsBlock.restype = c_short
-BMC_SetVelParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), MOT_VelocityParameters, c_short]
-# *serialNo, *serialNo, *velocityParams, channel
+BMC_SetVelParamsBlock.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_VelocityParameters]
+# *serialNo, *serialNo, channel, *velocityParams
 
 BMC_SetVelocityProfileParams = lib.BMC_SetVelocityProfileParams
 BMC_SetVelocityProfileParams.restype = c_short
-BMC_SetVelocityProfileParams.argtypes = [POINTER(c_char), POINTER(c_char), MOT_VelocityProfileParameters, c_short]
-# *serialNo, *serialNo, *velocityProfileParams, channel
+BMC_SetVelocityProfileParams.argtypes = [POINTER(c_char), POINTER(c_char), c_short, MOT_VelocityProfileParameters]
+# *serialNo, *serialNo, channel, *velocityProfileParams
 
 BMC_StartPolling = lib.BMC_StartPolling
 BMC_StartPolling.restype = c_bool
@@ -860,22 +854,23 @@ BMC_SuspendMoveMessages.argtypes = [POINTER(c_char), c_short]
 
 BMC_TimeSinceLastMsgReceived = lib.BMC_TimeSinceLastMsgReceived
 BMC_TimeSinceLastMsgReceived.restype = c_bool
-BMC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char), c_short]
-# &lastUpdateTimeMS, *serialNo, channel
+BMC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_short, c_int64]
+# *serialNo, channel, &lastUpdateTimeMS
 
 BMC_WaitForMessage = lib.BMC_WaitForMessage
 BMC_WaitForMessage.restype = c_bool
-BMC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_short]
-# *messageData, *messageID, *messageType, *serialNo, channel
+BMC_WaitForMessage.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -899,8 +894,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

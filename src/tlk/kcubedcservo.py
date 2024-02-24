@@ -94,13 +94,13 @@ KVS_GetBacklash.argtypes = [POINTER(c_char)]
 
 KVS_GetDCPIDParams = lib.KVS_GetDCPIDParams
 KVS_GetDCPIDParams.restype = c_short
-KVS_GetDCPIDParams.argtypes = [MOT_DC_PIDParameters, POINTER(c_char)]
-# *DCproportionalIntegralDerivativeParams, *serialNo
+KVS_GetDCPIDParams.argtypes = [POINTER(c_char), MOT_DC_PIDParameters]
+# *serialNo, *DCproportionalIntegralDerivativeParams
 
 KVS_GetDeviceUnitFromRealValue = lib.KVS_GetDeviceUnitFromRealValue
 KVS_GetDeviceUnitFromRealValue.restype = c_short
-KVS_GetDeviceUnitFromRealValue.argtypes = [c_int, POINTER(c_char), c_double, c_int]
-# *device_unit, *serialNo, real_unit, unitType
+KVS_GetDeviceUnitFromRealValue.argtypes = [POINTER(c_char), c_double, c_int, c_int]
+# *serialNo, real_unit, *device_unit, unitType
 
 KVS_GetDigitalOutputs = lib.KVS_GetDigitalOutputs
 KVS_GetDigitalOutputs.restype = c_byte
@@ -114,8 +114,8 @@ KVS_GetEncoderCounter.argtypes = [POINTER(c_char)]
 
 KVS_GetEncoderResolutionParams = lib.KVS_GetEncoderResolutionParams
 KVS_GetEncoderResolutionParams.restype = c_short
-KVS_GetEncoderResolutionParams.argtypes = [MOT_EncoderResolutionParams, POINTER(c_char)]
-# *resolutionParams, *serialNo
+KVS_GetEncoderResolutionParams.argtypes = [POINTER(c_char), MOT_EncoderResolutionParams]
+# *serialNo, *resolutionParams
 
 KVS_GetFrontPanelLocked = lib.KVS_GetFrontPanelLocked
 KVS_GetFrontPanelLocked.restype = c_bool
@@ -125,27 +125,27 @@ KVS_GetFrontPanelLocked.argtypes = [POINTER(c_char)]
 KVS_GetHardwareInfo = lib.KVS_GetHardwareInfo
 KVS_GetHardwareInfo.restype = c_short
 KVS_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 KVS_GetHardwareInfoBlock = lib.KVS_GetHardwareInfoBlock
 KVS_GetHardwareInfoBlock.restype = c_short
-KVS_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+KVS_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 KVS_GetHomingParamsBlock = lib.KVS_GetHomingParamsBlock
 KVS_GetHomingParamsBlock.restype = c_short
-KVS_GetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+KVS_GetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 KVS_GetHomingVelocity = lib.KVS_GetHomingVelocity
 KVS_GetHomingVelocity.restype = c_uint
@@ -159,13 +159,13 @@ KVS_GetHubBay.argtypes = [POINTER(c_char)]
 
 KVS_GetJogMode = lib.KVS_GetJogMode
 KVS_GetJogMode.restype = c_short
-KVS_GetJogMode.argtypes = [MOT_JogModes, POINTER(c_char), MOT_StopModes]
-# *mode, *serialNo, *stopMode
+KVS_GetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
+# *serialNo, *mode, *stopMode
 
 KVS_GetJogParamsBlock = lib.KVS_GetJogParamsBlock
 KVS_GetJogParamsBlock.restype = c_short
-KVS_GetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+KVS_GetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 KVS_GetJogStepSize = lib.KVS_GetJogStepSize
 KVS_GetJogStepSize.restype = c_uint
@@ -174,8 +174,8 @@ KVS_GetJogStepSize.argtypes = [POINTER(c_char)]
 
 KVS_GetJogVelParams = lib.KVS_GetJogVelParams
 KVS_GetJogVelParams.restype = c_short
-KVS_GetJogVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+KVS_GetJogVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 KVS_GetLEDswitches = lib.KVS_GetLEDswitches
 KVS_GetLEDswitches.restype = c_long
@@ -184,18 +184,18 @@ KVS_GetLEDswitches.argtypes = [POINTER(c_char)]
 
 KVS_GetMotorParams = lib.KVS_GetMotorParams
 KVS_GetMotorParams.restype = c_short
-KVS_GetMotorParams.argtypes = [c_long, c_float, POINTER(c_char), c_long]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+KVS_GetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 KVS_GetMotorParamsExt = lib.KVS_GetMotorParamsExt
 KVS_GetMotorParamsExt.restype = c_short
-KVS_GetMotorParamsExt.argtypes = [c_double, c_double, POINTER(c_char), c_double]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+KVS_GetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 KVS_GetMotorTravelLimits = lib.KVS_GetMotorTravelLimits
 KVS_GetMotorTravelLimits.restype = c_short
-KVS_GetMotorTravelLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxPosition, *minPosition, *serialNo
+KVS_GetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *minPosition, *maxPosition
 
 KVS_GetMotorTravelMode = lib.KVS_GetMotorTravelMode
 KVS_GetMotorTravelMode.restype = MOT_TravelModes
@@ -204,8 +204,8 @@ KVS_GetMotorTravelMode.argtypes = [POINTER(c_char)]
 
 KVS_GetMotorVelocityLimits = lib.KVS_GetMotorVelocityLimits
 KVS_GetMotorVelocityLimits.restype = c_short
-KVS_GetMotorVelocityLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxAcceleration, *maxVelocity, *serialNo
+KVS_GetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *maxVelocity, *maxAcceleration
 
 KVS_GetMoveAbsolutePosition = lib.KVS_GetMoveAbsolutePosition
 KVS_GetMoveAbsolutePosition.restype = c_int
@@ -219,8 +219,8 @@ KVS_GetMoveRelativeDistance.argtypes = [POINTER(c_char)]
 
 KVS_GetNextMessage = lib.KVS_GetNextMessage
 KVS_GetNextMessage.restype = c_bool
-KVS_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+KVS_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 KVS_GetNumberPositions = lib.KVS_GetNumberPositions
 KVS_GetNumberPositions.restype = c_int
@@ -239,8 +239,8 @@ KVS_GetPositionCounter.argtypes = [POINTER(c_char)]
 
 KVS_GetRealValueFromDeviceUnit = lib.KVS_GetRealValueFromDeviceUnit
 KVS_GetRealValueFromDeviceUnit.restype = c_short
-KVS_GetRealValueFromDeviceUnit.argtypes = [c_double, POINTER(c_char), c_int, c_int]
-# *real_unit, *serialNo, device_unit, unitType
+KVS_GetRealValueFromDeviceUnit.argtypes = [POINTER(c_char), c_int, c_double, c_int]
+# *serialNo, device_unit, *real_unit, unitType
 
 KVS_GetSoftLimitMode = lib.KVS_GetSoftLimitMode
 KVS_GetSoftLimitMode.restype = MOT_LimitsSoftwareApproachPolicy
@@ -290,7 +290,6 @@ KVS_GetTriggerConfigParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerConfig]
 KVS_GetTriggerParamsParams = lib.KVS_GetTriggerParamsParams
 KVS_GetTriggerParamsParams.restype = c_short
 KVS_GetTriggerParamsParams.argtypes = [
-    c_int32,
     POINTER(c_char),
     c_int32,
     c_int32,
@@ -298,8 +297,9 @@ KVS_GetTriggerParamsParams.argtypes = [
     c_int32,
     c_int32,
     c_int32,
+    c_int32,
     c_int32]
-# *cycleCount, *serialNo, *triggerIntervalFwd, *triggerIntervalRev, *triggerPulseCountFwd, *triggerPulseCountRev, *triggerPulseWidth, *triggerStartPositionFwd, *triggerStartPositionRev
+# *serialNo, *triggerStartPositionFwd, *triggerIntervalFwd, *triggerPulseCountFwd, *triggerStartPositionRev, *triggerIntervalRev, *triggerPulseCountRev, *triggerPulseWidth, *cycleCount
 
 KVS_GetTriggerParamsParamsBlock = lib.KVS_GetTriggerParamsParamsBlock
 KVS_GetTriggerParamsParamsBlock.restype = c_short
@@ -308,8 +308,8 @@ KVS_GetTriggerParamsParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerParams]
 
 KVS_GetVelParams = lib.KVS_GetVelParams
 KVS_GetVelParams.restype = c_short
-KVS_GetVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+KVS_GetVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 KVS_GetVelParamsBlock = lib.KVS_GetVelParamsBlock
 KVS_GetVelParamsBlock.restype = c_short
@@ -508,8 +508,8 @@ KVS_SetBacklash.argtypes = [POINTER(c_char), c_long]
 
 KVS_SetDCPIDParams = lib.KVS_SetDCPIDParams
 KVS_SetDCPIDParams.restype = c_short
-KVS_SetDCPIDParams.argtypes = [MOT_DC_PIDParameters, POINTER(c_char)]
-# *DCproportionalIntegralDerivativeParams, *serialNo
+KVS_SetDCPIDParams.argtypes = [POINTER(c_char), MOT_DC_PIDParameters]
+# *serialNo, *DCproportionalIntegralDerivativeParams
 
 KVS_SetDigitalOutputs = lib.KVS_SetDigitalOutputs
 KVS_SetDigitalOutputs.restype = c_short
@@ -533,8 +533,8 @@ KVS_SetFrontPanelLock.argtypes = [POINTER(c_char), c_bool]
 
 KVS_SetHomingParamsBlock = lib.KVS_SetHomingParamsBlock
 KVS_SetHomingParamsBlock.restype = c_short
-KVS_SetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+KVS_SetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 KVS_SetHomingVelocity = lib.KVS_SetHomingVelocity
 KVS_SetHomingVelocity.restype = c_short
@@ -548,8 +548,8 @@ KVS_SetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
 
 KVS_SetJogParamsBlock = lib.KVS_SetJogParamsBlock
 KVS_SetJogParamsBlock.restype = c_short
-KVS_SetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+KVS_SetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 KVS_SetJogStepSize = lib.KVS_SetJogStepSize
 KVS_SetJogStepSize.restype = c_short
@@ -573,18 +573,18 @@ KVS_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), MOT_LimitsSoftw
 
 KVS_SetMotorParams = lib.KVS_SetMotorParams
 KVS_SetMotorParams.restype = c_short
-KVS_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_float, c_long]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+KVS_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 KVS_SetMotorParamsExt = lib.KVS_SetMotorParamsExt
 KVS_SetMotorParamsExt.restype = c_short
 KVS_SetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 KVS_SetMotorTravelLimits = lib.KVS_SetMotorTravelLimits
 KVS_SetMotorTravelLimits.restype = c_short
 KVS_SetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 KVS_SetMotorTravelMode = lib.KVS_SetMotorTravelMode
 KVS_SetMotorTravelMode.restype = c_short
@@ -594,7 +594,7 @@ KVS_SetMotorTravelMode.argtypes = [POINTER(c_char), MOT_TravelModes]
 KVS_SetMotorVelocityLimits = lib.KVS_SetMotorVelocityLimits
 KVS_SetMotorVelocityLimits.restype = c_short
 KVS_SetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxAcceleration, maxVelocity
+# *serialNo, maxVelocity, maxAcceleration
 
 KVS_SetMoveAbsolutePosition = lib.KVS_SetMoveAbsolutePosition
 KVS_SetMoveAbsolutePosition.restype = c_short
@@ -614,7 +614,7 @@ KVS_SetPositionCounter.argtypes = [POINTER(c_char), c_long]
 KVS_SetStageAxisLimits = lib.KVS_SetStageAxisLimits
 KVS_SetStageAxisLimits.restype = c_short
 KVS_SetStageAxisLimits.argtypes = [POINTER(c_char), c_int, c_int]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 KVS_SetTrackSettleParams = lib.KVS_SetTrackSettleParams
 KVS_SetTrackSettleParams.restype = c_short
@@ -648,7 +648,7 @@ KVS_SetTriggerParamsParams.argtypes = [
     c_int32,
     c_int32,
     c_int32]
-# *serialNo, cycleCount, triggerIntervalFwd, triggerIntervalRev, triggerPulseCountFwd, triggerPulseCountRev, triggerPulseWidth, triggerStartPositionFwd, triggerStartPositionRev
+# *serialNo, triggerStartPositionFwd, triggerIntervalFwd, triggerPulseCountFwd, triggerStartPositionRev, triggerIntervalRev, triggerPulseCountRev, triggerPulseWidth, cycleCount
 
 KVS_SetTriggerParamsParamsBlock = lib.KVS_SetTriggerParamsParamsBlock
 KVS_SetTriggerParamsParamsBlock.restype = c_short
@@ -692,22 +692,23 @@ KVS_SuspendMoveMessages.argtypes = [POINTER(c_char)]
 
 KVS_TimeSinceLastMsgReceived = lib.KVS_TimeSinceLastMsgReceived
 KVS_TimeSinceLastMsgReceived.restype = c_bool
-KVS_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+KVS_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 KVS_WaitForMessage = lib.KVS_WaitForMessage
 KVS_WaitForMessage.restype = c_bool
-KVS_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+KVS_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -731,8 +732,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

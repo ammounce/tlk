@@ -108,22 +108,22 @@ LD_GetFrontPanelLocked.argtypes = [POINTER(c_char)]
 LD_GetHardwareInfo = lib.LD_GetHardwareInfo
 LD_GetHardwareInfo.restype = c_short
 LD_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 LD_GetHardwareInfoBlock = lib.LD_GetHardwareInfoBlock
 LD_GetHardwareInfoBlock.restype = c_short
-LD_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+LD_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 LD_GetInterlockState = lib.LD_GetInterlockState
 LD_GetInterlockState.restype = c_byte
@@ -157,8 +157,8 @@ LD_GetMaxCurrentDigPot.argtypes = [POINTER(c_char)]
 
 LD_GetNextMessage = lib.LD_GetNextMessage
 LD_GetNextMessage.restype = c_bool
-LD_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+LD_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 LD_GetPhotoCurrentReading = lib.LD_GetPhotoCurrentReading
 LD_GetPhotoCurrentReading.restype = c_long
@@ -367,13 +367,13 @@ LD_StopPolling.argtypes = [POINTER(c_char)]
 
 LD_TimeSinceLastMsgReceived = lib.LD_TimeSinceLastMsgReceived
 LD_TimeSinceLastMsgReceived.restype = c_bool
-LD_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+LD_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 LD_WaitForMessage = lib.LD_WaitForMessage
 LD_WaitForMessage.restype = c_bool
-LD_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+LD_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 LS_GetMMIParams = lib.LS_GetMMIParams
 LS_GetMMIParams.restype = c_short
@@ -382,27 +382,27 @@ LS_GetMMIParams.argtypes = [POINTER(c_char)]
 
 LS_GetMMIParamsBlock = lib.LS_GetMMIParamsBlock
 LS_GetMMIParamsBlock.restype = c_short
-LS_GetMMIParamsBlock.argtypes = [KLD_MMIParams, KLS_MMIParams, POINTER(c_char)]
-# *params, *params, *serialNo
+LS_GetMMIParamsBlock.argtypes = [POINTER(c_char), KLD_MMIParams, KLS_MMIParams]
+# *serialNo, *params, *params
 
 LS_GetTrigIOParams = lib.LS_GetTrigIOParams
 LS_GetTrigIOParams.restype = c_short
 LS_GetTrigIOParams.argtypes = [
-    KLD_TriggerMode,
-    KLS_TriggerMode,
+    POINTER(c_char),
     KLD_TriggerMode,
     KLS_TriggerMode,
     KLD_TrigPolarity,
     KLS_TrigPolarity,
+    KLD_TriggerMode,
+    KLS_TriggerMode,
     KLD_TrigPolarity,
-    KLS_TrigPolarity,
-    POINTER(c_char)]
-# *mode1, *mode1, *mode2, *mode2, *polarity1, *polarity1, *polarity2, *polarity2, *serialNo
+    KLS_TrigPolarity]
+# *serialNo, *mode1, *mode1, *polarity1, *polarity1, *mode2, *mode2, *polarity2, *polarity2
 
 LS_GetTrigIOParamsBlock = lib.LS_GetTrigIOParamsBlock
 LS_GetTrigIOParamsBlock.restype = c_short
-LS_GetTrigIOParamsBlock.argtypes = [KLD_TrigIOParams, KLS_TrigIOParams, POINTER(c_char)]
-# *params, *params, *serialNo
+LS_GetTrigIOParamsBlock.argtypes = [POINTER(c_char), KLD_TrigIOParams, KLS_TrigIOParams]
+# *serialNo, *params, *params
 
 LS_RequestMMIParams = lib.LS_RequestMMIParams
 LS_RequestMMIParams.restype = c_short
@@ -421,8 +421,8 @@ LS_SetMMIParams.argtypes = [POINTER(c_char), c_short]
 
 LS_SetMMIParamsBlock = lib.LS_SetMMIParamsBlock
 LS_SetMMIParamsBlock.restype = c_short
-LS_SetMMIParamsBlock.argtypes = [KLD_MMIParams, KLS_MMIParams, POINTER(c_char)]
-# *params, *params, *serialNo
+LS_SetMMIParamsBlock.argtypes = [POINTER(c_char), KLD_MMIParams, KLS_MMIParams]
+# *serialNo, *params, *params
 
 LS_SetTrigIOParams = lib.LS_SetTrigIOParams
 LS_SetTrigIOParams.restype = c_short
@@ -430,27 +430,28 @@ LS_SetTrigIOParams.argtypes = [
     POINTER(c_char),
     KLD_TriggerMode,
     KLS_TriggerMode,
+    KLD_TrigPolarity,
+    KLS_TrigPolarity,
     KLD_TriggerMode,
     KLS_TriggerMode,
     KLD_TrigPolarity,
-    KLS_TrigPolarity,
-    KLD_TrigPolarity,
     KLS_TrigPolarity]
-# *serialNo, mode1, mode1, mode2, mode2, polarity1, polarity1, polarity2, polarity2
+# *serialNo, mode1, mode1, polarity1, polarity1, mode2, mode2, polarity2, polarity2
 
 LS_SetTrigIOParamsBlock = lib.LS_SetTrigIOParamsBlock
 LS_SetTrigIOParamsBlock.restype = c_short
-LS_SetTrigIOParamsBlock.argtypes = [KLD_TrigIOParams, KLS_TrigIOParams, POINTER(c_char)]
-# *params, *params, *serialNo
+LS_SetTrigIOParamsBlock.argtypes = [POINTER(c_char), KLD_TrigIOParams, KLS_TrigIOParams]
+# *serialNo, *params, *params
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -474,8 +475,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

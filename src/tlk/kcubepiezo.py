@@ -86,13 +86,13 @@ PCC_GetDigitalOutputs.argtypes = [POINTER(c_char)]
 
 PCC_GetFeedbackLoopPIconsts = lib.PCC_GetFeedbackLoopPIconsts
 PCC_GetFeedbackLoopPIconsts.restype = c_short
-PCC_GetFeedbackLoopPIconsts.argtypes = [c_short, c_short, POINTER(c_char)]
-# *integralTerm, *proportionalTerm, *serialNo
+PCC_GetFeedbackLoopPIconsts.argtypes = [POINTER(c_char), c_short, c_short]
+# *serialNo, *proportionalTerm, *integralTerm
 
 PCC_GetFeedbackLoopPIconstsBlock = lib.PCC_GetFeedbackLoopPIconstsBlock
 PCC_GetFeedbackLoopPIconstsBlock.restype = c_short
-PCC_GetFeedbackLoopPIconstsBlock.argtypes = [PZ_FeedbackLoopConstants, POINTER(c_char)]
-# *proportionalAndIntegralConstants, *serialNo
+PCC_GetFeedbackLoopPIconstsBlock.argtypes = [POINTER(c_char), PZ_FeedbackLoopConstants]
+# *serialNo, *proportionalAndIntegralConstants
 
 PCC_GetFirmwareVersion = lib.PCC_GetFirmwareVersion
 PCC_GetFirmwareVersion.restype = c_ulong
@@ -107,22 +107,22 @@ PCC_GetFrontPanelLocked.argtypes = [POINTER(c_char)]
 PCC_GetHardwareInfo = lib.PCC_GetHardwareInfo
 PCC_GetHardwareInfo.restype = c_short
 PCC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 PCC_GetHardwareInfoBlock = lib.PCC_GetHardwareInfoBlock
 PCC_GetHardwareInfoBlock.restype = c_short
-PCC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+PCC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 PCC_GetHubAnalogInput = lib.PCC_GetHubAnalogInput
 PCC_GetHubAnalogInput.restype = HubAnalogueModes
@@ -142,26 +142,35 @@ PCC_GetLEDBrightness.argtypes = [POINTER(c_char)]
 PCC_GetMMIParams = lib.PCC_GetMMIParams
 PCC_GetMMIParams.restype = c_short
 PCC_GetMMIParams.argtypes = [
-    KPZ_WheelDirectionSense,
-    c_int16,
-    c_int32,
-    c_int32,
     POINTER(c_char),
+    KPZ_WheelMode,
     KPZ_WheelChangeRate,
     c_int32,
-    KPZ_WheelMode]
-# *directionSense, *displayIntensity, *presetVoltage1, *presetVoltage2, *serialNo, *voltageAdjustRate, *voltageStep, *wheelMode
+    KPZ_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16]
+# *serialNo, *wheelMode, *voltageAdjustRate, *voltageStep, *directionSense, *presetVoltage1, *presetVoltage2, *displayIntensity
 
 PCC_GetMMIParamsBlock = lib.PCC_GetMMIParamsBlock
 PCC_GetMMIParamsBlock.restype = c_short
-PCC_GetMMIParamsBlock.argtypes = [KPZ_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+PCC_GetMMIParamsBlock.argtypes = [POINTER(c_char), KPZ_MMIParams]
+# *serialNo, *mmiParams
 
 PCC_GetMMIParamsExt = lib.PCC_GetMMIParamsExt
 PCC_GetMMIParamsExt.restype = c_short
-PCC_GetMMIParamsExt.argtypes = [KPZ_WheelDirectionSense, c_int16, c_int16, c_int16,
-                                c_int32, c_int32, POINTER(c_char), KPZ_WheelChangeRate, c_int32, KPZ_WheelMode]
-# *directionSense, *displayDimIntensity, *displayIntensity, *displayTimeout, *presetVoltage1, *presetVoltage2, *serialNo, *voltageAdjustRate, *voltageStep, *wheelMode
+PCC_GetMMIParamsExt.argtypes = [
+    POINTER(c_char),
+    KPZ_WheelMode,
+    KPZ_WheelChangeRate,
+    c_int32,
+    KPZ_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16,
+    c_int16,
+    c_int16]
+# *serialNo, *wheelMode, *voltageAdjustRate, *voltageStep, *directionSense, *presetVoltage1, *presetVoltage2, *displayIntensity, *displayTimeout, *displayDimIntensity
 
 PCC_GetMaxOutputVoltage = lib.PCC_GetMaxOutputVoltage
 PCC_GetMaxOutputVoltage.restype = c_short
@@ -170,8 +179,8 @@ PCC_GetMaxOutputVoltage.argtypes = [POINTER(c_char)]
 
 PCC_GetNextMessage = lib.PCC_GetNextMessage
 PCC_GetNextMessage.restype = c_bool
-PCC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+PCC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 PCC_GetOutputVoltage = lib.PCC_GetOutputVoltage
 PCC_GetOutputVoltage.restype = c_short
@@ -351,12 +360,12 @@ PCC_SetDigitalOutputs.argtypes = [POINTER(c_char), c_byte]
 PCC_SetFeedbackLoopPIconsts = lib.PCC_SetFeedbackLoopPIconsts
 PCC_SetFeedbackLoopPIconsts.restype = c_short
 PCC_SetFeedbackLoopPIconsts.argtypes = [POINTER(c_char), c_short, c_short]
-# *serialNo, integralTerm, proportionalTerm
+# *serialNo, proportionalTerm, integralTerm
 
 PCC_SetFeedbackLoopPIconstsBlock = lib.PCC_SetFeedbackLoopPIconstsBlock
 PCC_SetFeedbackLoopPIconstsBlock.restype = c_short
-PCC_SetFeedbackLoopPIconstsBlock.argtypes = [PZ_FeedbackLoopConstants, POINTER(c_char)]
-# *proportionalAndIntegralConstants, *serialNo
+PCC_SetFeedbackLoopPIconstsBlock.argtypes = [POINTER(c_char), PZ_FeedbackLoopConstants]
+# *serialNo, *proportionalAndIntegralConstants
 
 PCC_SetFrontPanelLock = lib.PCC_SetFrontPanelLock
 PCC_SetFrontPanelLock.restype = c_short
@@ -380,8 +389,8 @@ PCC_SetLEDBrightness.argtypes = [POINTER(c_char), c_short]
 
 PCC_SetLUTwaveParams = lib.PCC_SetLUTwaveParams
 PCC_SetLUTwaveParams.restype = c_short
-PCC_SetLUTwaveParams.argtypes = [PZ_LUTWaveParameters, POINTER(c_char)]
-# *LUTwaveParams, *serialNo
+PCC_SetLUTwaveParams.argtypes = [POINTER(c_char), PZ_LUTWaveParameters]
+# *serialNo, *LUTwaveParams
 
 PCC_SetLUTwaveSample = lib.PCC_SetLUTwaveSample
 PCC_SetLUTwaveSample.restype = c_short
@@ -392,34 +401,34 @@ PCC_SetMMIParams = lib.PCC_SetMMIParams
 PCC_SetMMIParams.restype = c_short
 PCC_SetMMIParams.argtypes = [
     POINTER(c_char),
-    KPZ_WheelDirectionSense,
-    c_int16,
-    c_int32,
-    c_int32,
+    KPZ_WheelMode,
     KPZ_WheelChangeRate,
     c_int32,
-    KPZ_WheelMode]
-# *serialNo, directionSense, displayIntensity, presetVoltage1, presetVoltage2, voltageAdjustRate, voltageStep, wheelMode
+    KPZ_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16]
+# *serialNo, wheelMode, voltageAdjustRate, voltageStep, directionSense, presetVoltage1, presetVoltage2, displayIntensity
 
 PCC_SetMMIParamsBlock = lib.PCC_SetMMIParamsBlock
 PCC_SetMMIParamsBlock.restype = c_short
-PCC_SetMMIParamsBlock.argtypes = [KPZ_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+PCC_SetMMIParamsBlock.argtypes = [POINTER(c_char), KPZ_MMIParams]
+# *serialNo, *mmiParams
 
 PCC_SetMMIParamsExt = lib.PCC_SetMMIParamsExt
 PCC_SetMMIParamsExt.restype = c_short
 PCC_SetMMIParamsExt.argtypes = [
     POINTER(c_char),
-    KPZ_WheelDirectionSense,
-    c_int16,
-    c_int16,
-    c_int16,
-    c_int32,
-    c_int32,
+    KPZ_WheelMode,
     KPZ_WheelChangeRate,
     c_int32,
-    KPZ_WheelMode]
-# *serialNo, directionSense, displayDimIntensity, displayIntensity, displayTimeout, presetVoltage1, presetVoltage2, voltageAdjustRate, voltageStep, wheelMode
+    KPZ_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16,
+    c_int16,
+    c_int16]
+# *serialNo, wheelMode, voltageAdjustRate, voltageStep, directionSense, presetVoltage1, presetVoltage2, displayIntensity, displayTimeout, displayDimIntensity
 
 PCC_SetMaxOutputVoltage = lib.PCC_SetMaxOutputVoltage
 PCC_SetMaxOutputVoltage.restype = c_short
@@ -493,22 +502,23 @@ PCC_StopPolling.argtypes = [POINTER(c_char)]
 
 PCC_TimeSinceLastMsgReceived = lib.PCC_TimeSinceLastMsgReceived
 PCC_TimeSinceLastMsgReceived.restype = c_bool
-PCC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+PCC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 PCC_WaitForMessage = lib.PCC_WaitForMessage
 PCC_WaitForMessage.restype = c_bool
-PCC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+PCC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -532,8 +542,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

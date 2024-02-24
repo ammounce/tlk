@@ -69,22 +69,22 @@ TC_GetHWDisplayMode.argtypes = [POINTER(c_char)]
 TC_GetHardwareInfo = lib.TC_GetHardwareInfo
 TC_GetHardwareInfo.restype = c_short
 TC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 TC_GetHardwareInfoBlock = lib.TC_GetHardwareInfoBlock
 TC_GetHardwareInfoBlock.restype = c_short
-TC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+TC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 TC_GetLEDBrightness = lib.TC_GetLEDBrightness
 TC_GetLEDBrightness.restype = c_short
@@ -93,8 +93,8 @@ TC_GetLEDBrightness.argtypes = [POINTER(c_char)]
 
 TC_GetNextMessage = lib.TC_GetNextMessage
 TC_GetNextMessage.restype = c_bool
-TC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+TC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TC_GetSensorType = lib.TC_GetSensorType
 TC_GetSensorType.restype = TC_SensorTypes
@@ -113,8 +113,8 @@ TC_GetStatusBits.argtypes = [POINTER(c_char)]
 
 TC_GetTempLoopParams = lib.TC_GetTempLoopParams
 TC_GetTempLoopParams.restype = c_short
-TC_GetTempLoopParams.argtypes = [TC_LoopParameters, POINTER(c_char)]
-# *proportionalIntegralDerivativeParams, *serialNo
+TC_GetTempLoopParams.argtypes = [POINTER(c_char), TC_LoopParameters]
+# *serialNo, *proportionalIntegralDerivativeParams
 
 TC_GetTemperatureReading = lib.TC_GetTemperatureReading
 TC_GetTemperatureReading.restype = c_short
@@ -248,8 +248,8 @@ TC_SetSensorType.argtypes = [POINTER(c_char), TC_SensorTypes]
 
 TC_SetTempLoopParams = lib.TC_SetTempLoopParams
 TC_SetTempLoopParams.restype = c_short
-TC_SetTempLoopParams.argtypes = [TC_LoopParameters, POINTER(c_char)]
-# *proportionalIntegralDerivativeParams, *serialNo
+TC_SetTempLoopParams.argtypes = [POINTER(c_char), TC_LoopParameters]
+# *serialNo, *proportionalIntegralDerivativeParams
 
 TC_SetTemperature = lib.TC_SetTemperature
 TC_SetTemperature.restype = c_short
@@ -268,22 +268,23 @@ TC_StopPolling.argtypes = [POINTER(c_char)]
 
 TC_TimeSinceLastMsgReceived = lib.TC_TimeSinceLastMsgReceived
 TC_TimeSinceLastMsgReceived.restype = c_bool
-TC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+TC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 TC_WaitForMessage = lib.TC_WaitForMessage
 TC_WaitForMessage.restype = c_bool
-TC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+TC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -307,8 +308,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

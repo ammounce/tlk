@@ -34,28 +34,28 @@ PPC2_EnableChannel.argtypes = [POINTER(c_char), c_int]
 PPC2_GetHardwareInfo = lib.PPC2_GetHardwareInfo
 PPC2_GetHardwareInfo.restype = c_short
 PPC2_GetHardwareInfo.argtypes = [
-    c_ulong,
-    c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_int,
+    POINTER(c_char),
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, channel, sizeOfModelNo, sizeOfNotes
+    c_long,
+    c_long,
+    POINTER(c_char),
+    c_ulong,
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, channel, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 PPC2_GetHardwareInfoBlock = lib.PPC2_GetHardwareInfoBlock
 PPC2_GetHardwareInfoBlock.restype = c_short
-PPC2_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char), c_int]
-# *hardwareInfo, *serialNo, channel
+PPC2_GetHardwareInfoBlock.argtypes = [POINTER(c_char), c_int, TLI_HardwareInformation]
+# *serialNo, channel, *hardwareInfo
 
 PPC2_GetIOSettings = lib.PPC2_GetIOSettings
 PPC2_GetIOSettings.restype = c_short
-PPC2_GetIOSettings.argtypes = [PPC_IOSettings, POINTER(c_char), c_int]
-# *ioSettings, *serialNo, channel
+PPC2_GetIOSettings.argtypes = [POINTER(c_char), c_int, PPC_IOSettings]
+# *serialNo, channel, *ioSettings
 
 PPC2_GetMaxOutputVoltage = lib.PPC2_GetMaxOutputVoltage
 PPC2_GetMaxOutputVoltage.restype = c_short
@@ -74,13 +74,13 @@ PPC2_GetMinOutputVoltage.argtypes = [POINTER(c_char), c_int]
 
 PPC2_GetNextMessage = lib.PPC2_GetNextMessage
 PPC2_GetNextMessage.restype = c_bool
-PPC2_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_int]
-# *messageData, *messageID, *messageType, *serialNo, channel
+PPC2_GetNextMessage.argtypes = [POINTER(c_char), c_int, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 PPC2_GetNotchParams = lib.PPC2_GetNotchParams
 PPC2_GetNotchParams.restype = c_short
-PPC2_GetNotchParams.argtypes = [PPC_NotchParams, POINTER(c_char), c_int]
-# *notchParams, *serialNo, channel
+PPC2_GetNotchParams.argtypes = [POINTER(c_char), c_int, PPC_NotchParams]
+# *serialNo, channel, *notchParams
 
 PPC2_GetOutputVoltage = lib.PPC2_GetOutputVoltage
 PPC2_GetOutputVoltage.restype = c_short
@@ -89,8 +89,8 @@ PPC2_GetOutputVoltage.argtypes = [POINTER(c_char), c_int]
 
 PPC2_GetPIDConsts = lib.PPC2_GetPIDConsts
 PPC2_GetPIDConsts.restype = c_short
-PPC2_GetPIDConsts.argtypes = [PPC_PIDConsts, POINTER(c_char), c_int]
-# *pidConsts, *serialNo, channel
+PPC2_GetPIDConsts.argtypes = [POINTER(c_char), c_int, PPC_PIDConsts]
+# *serialNo, channel, *pidConsts
 
 PPC2_GetPosition = lib.PPC2_GetPosition
 PPC2_GetPosition.restype = c_short
@@ -129,8 +129,8 @@ PPC2_Identify.argtypes = [POINTER(c_char), c_int]
 
 PPC2_LoadNamedSettings = lib.PPC2_LoadNamedSettings
 PPC2_LoadNamedSettings.restype = c_bool
-PPC2_LoadNamedSettings.argtypes = [POINTER(c_char), POINTER(c_char), c_short]
-# *serialNo, *settingsName, channel
+PPC2_LoadNamedSettings.argtypes = [POINTER(c_char), c_short, POINTER(c_char)]
+# *serialNo, channel, *settingsName
 
 PPC2_LoadSettings = lib.PPC2_LoadSettings
 PPC2_LoadSettings.restype = c_bool
@@ -219,8 +219,8 @@ PPC2_ResetParameters.argtypes = [POINTER(c_char), c_int]
 
 PPC2_SetIOSettings = lib.PPC2_SetIOSettings
 PPC2_SetIOSettings.restype = c_short
-PPC2_SetIOSettings.argtypes = [PPC_IOSettings, POINTER(c_char), c_int]
-# *ioSettings, *serialNo, channel
+PPC2_SetIOSettings.argtypes = [POINTER(c_char), c_int, PPC_IOSettings]
+# *serialNo, channel, *ioSettings
 
 PPC2_SetMaxOutputVoltage = lib.PPC2_SetMaxOutputVoltage
 PPC2_SetMaxOutputVoltage.restype = c_short
@@ -229,8 +229,8 @@ PPC2_SetMaxOutputVoltage.argtypes = [POINTER(c_char), c_int, c_short]
 
 PPC2_SetNotchParams = lib.PPC2_SetNotchParams
 PPC2_SetNotchParams.restype = c_short
-PPC2_SetNotchParams.argtypes = [PPC_NotchParams, POINTER(c_char), c_int]
-# *notchParams, *serialNo, channel
+PPC2_SetNotchParams.argtypes = [POINTER(c_char), c_int, PPC_NotchParams]
+# *serialNo, channel, *notchParams
 
 PPC2_SetOutputVoltage = lib.PPC2_SetOutputVoltage
 PPC2_SetOutputVoltage.restype = c_short
@@ -239,8 +239,8 @@ PPC2_SetOutputVoltage.argtypes = [POINTER(c_char), c_int, c_short]
 
 PPC2_SetPIDConsts = lib.PPC2_SetPIDConsts
 PPC2_SetPIDConsts.restype = c_short
-PPC2_SetPIDConsts.argtypes = [PPC_PIDConsts, POINTER(c_char), c_int]
-# *pidConsts, *serialNo, channel
+PPC2_SetPIDConsts.argtypes = [POINTER(c_char), c_int, PPC_PIDConsts]
+# *serialNo, channel, *pidConsts
 
 PPC2_SetPosition = lib.PPC2_SetPosition
 PPC2_SetPosition.restype = c_short
@@ -284,8 +284,8 @@ PPC2_StopPolling.argtypes = [POINTER(c_char), c_int]
 
 PPC2_WaitForMessage = lib.PPC2_WaitForMessage
 PPC2_WaitForMessage.restype = c_bool
-PPC2_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_int]
-# *messageData, *messageID, *messageType, *serialNo, channel
+PPC2_WaitForMessage.argtypes = [POINTER(c_char), c_int, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 PPC_CheckConnection = lib.PPC_CheckConnection
 PPC_CheckConnection.restype = c_bool
@@ -325,27 +325,27 @@ PPC_GetFirmwareVersion.argtypes = [POINTER(c_char)]
 PPC_GetHardwareInfo = lib.PPC_GetHardwareInfo
 PPC_GetHardwareInfo.restype = c_short
 PPC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 PPC_GetHardwareInfoBlock = lib.PPC_GetHardwareInfoBlock
 PPC_GetHardwareInfoBlock.restype = c_short
-PPC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+PPC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 PPC_GetIOSettings = lib.PPC_GetIOSettings
 PPC_GetIOSettings.restype = c_short
-PPC_GetIOSettings.argtypes = [PPC_IOSettings, POINTER(c_char)]
-# *ioSettings, *serialNo
+PPC_GetIOSettings.argtypes = [POINTER(c_char), PPC_IOSettings]
+# *serialNo, *ioSettings
 
 PPC_GetMaxOutputVoltage = lib.PPC_GetMaxOutputVoltage
 PPC_GetMaxOutputVoltage.restype = c_short
@@ -364,13 +364,13 @@ PPC_GetMinOutputVoltage.argtypes = [POINTER(c_char)]
 
 PPC_GetNextMessage = lib.PPC_GetNextMessage
 PPC_GetNextMessage.restype = c_bool
-PPC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+PPC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 PPC_GetNotchParams = lib.PPC_GetNotchParams
 PPC_GetNotchParams.restype = c_short
-PPC_GetNotchParams.argtypes = [PPC_NotchParams, POINTER(c_char)]
-# *notchParams, *serialNo
+PPC_GetNotchParams.argtypes = [POINTER(c_char), PPC_NotchParams]
+# *serialNo, *notchParams
 
 PPC_GetOutputVoltage = lib.PPC_GetOutputVoltage
 PPC_GetOutputVoltage.restype = c_short
@@ -379,8 +379,8 @@ PPC_GetOutputVoltage.argtypes = [POINTER(c_char)]
 
 PPC_GetPIDConsts = lib.PPC_GetPIDConsts
 PPC_GetPIDConsts.restype = c_short
-PPC_GetPIDConsts.argtypes = [PPC_PIDConsts, POINTER(c_char)]
-# *pidConsts, *serialNo
+PPC_GetPIDConsts.argtypes = [POINTER(c_char), PPC_PIDConsts]
+# *serialNo, *pidConsts
 
 PPC_GetPosition = lib.PPC_GetPosition
 PPC_GetPosition.restype = c_short
@@ -524,8 +524,8 @@ PPC_ResetParameters.argtypes = [POINTER(c_char)]
 
 PPC_SetIOSettings = lib.PPC_SetIOSettings
 PPC_SetIOSettings.restype = c_short
-PPC_SetIOSettings.argtypes = [PPC_IOSettings, POINTER(c_char)]
-# *ioSettings, *serialNo
+PPC_SetIOSettings.argtypes = [POINTER(c_char), PPC_IOSettings]
+# *serialNo, *ioSettings
 
 PPC_SetMaxOutputVoltage = lib.PPC_SetMaxOutputVoltage
 PPC_SetMaxOutputVoltage.restype = c_short
@@ -534,8 +534,8 @@ PPC_SetMaxOutputVoltage.argtypes = [POINTER(c_char), c_short]
 
 PPC_SetNotchParams = lib.PPC_SetNotchParams
 PPC_SetNotchParams.restype = c_short
-PPC_SetNotchParams.argtypes = [PPC_NotchParams, POINTER(c_char)]
-# *notchParams, *serialNo
+PPC_SetNotchParams.argtypes = [POINTER(c_char), PPC_NotchParams]
+# *serialNo, *notchParams
 
 PPC_SetOutputVoltage = lib.PPC_SetOutputVoltage
 PPC_SetOutputVoltage.restype = c_short
@@ -544,8 +544,8 @@ PPC_SetOutputVoltage.argtypes = [POINTER(c_char), c_short]
 
 PPC_SetPIDConsts = lib.PPC_SetPIDConsts
 PPC_SetPIDConsts.restype = c_short
-PPC_SetPIDConsts.argtypes = [PPC_PIDConsts, POINTER(c_char)]
-# *pidConsts, *serialNo
+PPC_SetPIDConsts.argtypes = [POINTER(c_char), PPC_PIDConsts]
+# *serialNo, *pidConsts
 
 PPC_SetPosition = lib.PPC_SetPosition
 PPC_SetPosition.restype = c_short
@@ -589,17 +589,18 @@ PPC_StopPolling.argtypes = [POINTER(c_char)]
 
 PPC_WaitForMessage = lib.PPC_WaitForMessage
 PPC_WaitForMessage.restype = c_bool
-PPC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+PPC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -623,8 +624,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

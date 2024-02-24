@@ -94,18 +94,18 @@ BDC_GetBacklash.argtypes = [POINTER(c_char), c_short]
 
 BDC_GetCalibrationFile = lib.BDC_GetCalibrationFile
 BDC_GetCalibrationFile.restype = c_bool
-BDC_GetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_short, c_short]
-# *filename, *serialNo, channel, sizeOfBuffer
+BDC_GetCalibrationFile.argtypes = [POINTER(c_char), c_short, POINTER(c_char), c_short]
+# *serialNo, channel, *filename, sizeOfBuffer
 
 BDC_GetDCPIDParams = lib.BDC_GetDCPIDParams
 BDC_GetDCPIDParams.restype = c_short
-BDC_GetDCPIDParams.argtypes = [MOT_DC_PIDParameters, POINTER(c_char), c_short]
-# *DCproportionalIntegralDerivativeParams, *serialNo, channel
+BDC_GetDCPIDParams.argtypes = [POINTER(c_char), MOT_DC_PIDParameters, c_short]
+# *serialNo, *DCproportionalIntegralDerivativeParams, channel
 
 BDC_GetDeviceUnitFromRealValue = lib.BDC_GetDeviceUnitFromRealValue
 BDC_GetDeviceUnitFromRealValue.restype = c_short
-BDC_GetDeviceUnitFromRealValue.argtypes = [c_int, POINTER(c_char), c_short, c_double, c_int]
-# *device_unit, *serialNo, channel, real_unit, unitType
+BDC_GetDeviceUnitFromRealValue.argtypes = [POINTER(c_char), c_short, c_double, c_int, c_int]
+# *serialNo, channel, real_unit, *device_unit, unitType
 
 BDC_GetDigitalOutputs = lib.BDC_GetDigitalOutputs
 BDC_GetDigitalOutputs.restype = c_byte
@@ -119,8 +119,8 @@ BDC_GetEncoderCounter.argtypes = [POINTER(c_char), c_short]
 
 BDC_GetEncoderResolutionParams = lib.BDC_GetEncoderResolutionParams
 BDC_GetEncoderResolutionParams.restype = c_short
-BDC_GetEncoderResolutionParams.argtypes = [MOT_EncoderResolutionParams, POINTER(c_char), c_short]
-# *resolutionParams, *serialNo, channel
+BDC_GetEncoderResolutionParams.argtypes = [POINTER(c_char), c_short, MOT_EncoderResolutionParams]
+# *serialNo, channel, *resolutionParams
 
 BDC_GetFirmwareVersion = lib.BDC_GetFirmwareVersion
 BDC_GetFirmwareVersion.restype = c_ulong
@@ -130,28 +130,28 @@ BDC_GetFirmwareVersion.argtypes = [POINTER(c_char), c_short]
 BDC_GetHardwareInfo = lib.BDC_GetHardwareInfo
 BDC_GetHardwareInfo.restype = c_short
 BDC_GetHardwareInfo.argtypes = [
-    c_ulong,
-    c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_short,
+    POINTER(c_char),
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, channel, sizeOfModelNo, sizeOfNotes
+    c_long,
+    c_long,
+    POINTER(c_char),
+    c_ulong,
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, channel, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 BDC_GetHardwareInfoBlock = lib.BDC_GetHardwareInfoBlock
 BDC_GetHardwareInfoBlock.restype = c_short
-BDC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char), c_short]
-# *hardwareInfo, *serialNo, channel
+BDC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), c_short, TLI_HardwareInformation]
+# *serialNo, channel, *hardwareInfo
 
 BDC_GetHomingParamsBlock = lib.BDC_GetHomingParamsBlock
 BDC_GetHomingParamsBlock.restype = c_short
-BDC_GetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char), c_short]
-# *homingParams, *serialNo, channel
+BDC_GetHomingParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_HomingParameters]
+# *serialNo, channel, *homingParams
 
 BDC_GetHomingVelocity = lib.BDC_GetHomingVelocity
 BDC_GetHomingVelocity.restype = c_uint
@@ -165,13 +165,13 @@ BDC_GetInputVoltage.argtypes = [POINTER(c_char), c_short]
 
 BDC_GetJogMode = lib.BDC_GetJogMode
 BDC_GetJogMode.restype = c_short
-BDC_GetJogMode.argtypes = [MOT_JogModes, POINTER(c_char), MOT_StopModes, c_short]
-# *mode, *serialNo, *stopMode, channel
+BDC_GetJogMode.argtypes = [POINTER(c_char), c_short, MOT_JogModes, MOT_StopModes]
+# *serialNo, channel, *mode, *stopMode
 
 BDC_GetJogParamsBlock = lib.BDC_GetJogParamsBlock
 BDC_GetJogParamsBlock.restype = c_short
-BDC_GetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char), c_short]
-# *jogParams, *serialNo, channel
+BDC_GetJogParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_JogParameters]
+# *serialNo, channel, *jogParams
 
 BDC_GetJogStepSize = lib.BDC_GetJogStepSize
 BDC_GetJogStepSize.restype = c_uint
@@ -180,40 +180,40 @@ BDC_GetJogStepSize.argtypes = [POINTER(c_char), c_short]
 
 BDC_GetJogVelParams = lib.BDC_GetJogVelParams
 BDC_GetJogVelParams.restype = c_short
-BDC_GetJogVelParams.argtypes = [c_int, c_int, POINTER(c_char), c_short]
-# *acceleration, *maxVelocity, *serialNo, channel
+BDC_GetJogVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, *acceleration, *maxVelocity
 
 BDC_GetLimitSwitchParams = lib.BDC_GetLimitSwitchParams
 BDC_GetLimitSwitchParams.restype = c_short
 BDC_GetLimitSwitchParams.argtypes = [
-    MOT_LimitSwitchModes,
-    c_uint,
-    MOT_LimitSwitchModes,
-    c_uint,
     POINTER(c_char),
-    MOT_LimitSwitchSWModes,
-    c_short]
-# *anticlockwiseHardwareLimit, *anticlockwisePosition, *clockwiseHardwareLimit, *clockwisePosition, *serialNo, *softLimitMode, channel
+    c_short,
+    MOT_LimitSwitchModes,
+    MOT_LimitSwitchModes,
+    c_uint,
+    c_uint,
+    MOT_LimitSwitchSWModes]
+# *serialNo, channel, *clockwiseHardwareLimit, *anticlockwiseHardwareLimit, *clockwisePosition, *anticlockwisePosition, *softLimitMode
 
 BDC_GetLimitSwitchParamsBlock = lib.BDC_GetLimitSwitchParamsBlock
 BDC_GetLimitSwitchParamsBlock.restype = c_short
-BDC_GetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char), c_short]
-# *limitSwitchParams, *serialNo, channel
+BDC_GetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_LimitSwitchParameters]
+# *serialNo, channel, *limitSwitchParams
 
 BDC_GetMotorParams = lib.BDC_GetMotorParams
 BDC_GetMotorParams.restype = c_short
-BDC_GetMotorParams.argtypes = [c_long, c_float, POINTER(c_char), c_long, c_short]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev, channel
+BDC_GetMotorParams.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_float]
+# *serialNo, channel, *stepsPerRev, *gearBoxRatio, *pitch
 
 BDC_GetMotorParamsExt = lib.BDC_GetMotorParamsExt
 BDC_GetMotorParamsExt.restype = c_short
-BDC_GetMotorParamsExt.argtypes = [c_double, c_double, POINTER(c_char), c_double, c_short]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev, channel
+BDC_GetMotorParamsExt.argtypes = [POINTER(c_char), c_short, c_double, c_double, c_double]
+# *serialNo, channel, *stepsPerRev, *gearBoxRatio, *pitch
 
 BDC_GetMotorTravelLimits = lib.BDC_GetMotorTravelLimits
 BDC_GetMotorTravelLimits.restype = c_short
-BDC_GetMotorTravelLimits.argtypes = [c_double, c_double, POINTER(c_char), c_short]
-# *maxPosition, *minPosition, *serialNo, channel
+BDC_GetMotorTravelLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
+# *serialNo, channel, *minPosition, *maxPosition
 
 BDC_GetMotorTravelMode = lib.BDC_GetMotorTravelMode
 BDC_GetMotorTravelMode.restype = MOT_TravelModes
@@ -222,8 +222,8 @@ BDC_GetMotorTravelMode.argtypes = [POINTER(c_char), c_short]
 
 BDC_GetMotorVelocityLimits = lib.BDC_GetMotorVelocityLimits
 BDC_GetMotorVelocityLimits.restype = c_short
-BDC_GetMotorVelocityLimits.argtypes = [c_double, c_double, POINTER(c_char), c_short]
-# *maxAcceleration, *maxVelocity, *serialNo, channel
+BDC_GetMotorVelocityLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
+# *serialNo, channel, *maxVelocity, *maxAcceleration
 
 BDC_GetMoveAbsolutePosition = lib.BDC_GetMoveAbsolutePosition
 BDC_GetMoveAbsolutePosition.restype = c_int
@@ -237,8 +237,8 @@ BDC_GetMoveRelativeDistance.argtypes = [POINTER(c_char), c_short]
 
 BDC_GetNextMessage = lib.BDC_GetNextMessage
 BDC_GetNextMessage.restype = c_bool
-BDC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_short]
-# *messageData, *messageID, *messageType, *serialNo, channel
+BDC_GetNextMessage.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 BDC_GetNumChannels = lib.BDC_GetNumChannels
 BDC_GetNumChannels.restype = c_short
@@ -272,8 +272,8 @@ BDC_GetRackStatusBits.argtypes = [POINTER(c_char)]
 
 BDC_GetRealValueFromDeviceUnit = lib.BDC_GetRealValueFromDeviceUnit
 BDC_GetRealValueFromDeviceUnit.restype = c_short
-BDC_GetRealValueFromDeviceUnit.argtypes = [c_double, POINTER(c_char), c_short, c_int, c_int]
-# *real_unit, *serialNo, channel, device_unit, unitType
+BDC_GetRealValueFromDeviceUnit.argtypes = [POINTER(c_char), c_short, c_int, c_double, c_int]
+# *serialNo, channel, device_unit, *real_unit, unitType
 
 BDC_GetSoftLimitMode = lib.BDC_GetSoftLimitMode
 BDC_GetSoftLimitMode.restype = MOT_LimitsSoftwareApproachPolicy
@@ -304,23 +304,23 @@ BDC_GetTriggerConfigParams = lib.BDC_GetTriggerConfigParams
 BDC_GetTriggerConfigParams.restype = c_short
 BDC_GetTriggerConfigParams.argtypes = [
     POINTER(c_char),
+    c_short,
     KMOT_TriggerPortMode,
     KMOT_TriggerPortPolarity,
     KMOT_TriggerPortMode,
-    KMOT_TriggerPortPolarity,
-    c_short]
-# *serialNo, *trigger1Mode, *trigger1Polarity, *trigger2Mode, *trigger2Polarity, channel
+    KMOT_TriggerPortPolarity]
+# *serialNo, channel, *trigger1Mode, *trigger1Polarity, *trigger2Mode, *trigger2Polarity
 
 BDC_GetTriggerConfigParamsBlock = lib.BDC_GetTriggerConfigParamsBlock
 BDC_GetTriggerConfigParamsBlock.restype = c_short
-BDC_GetTriggerConfigParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerConfig, c_short]
-# *serialNo, *triggerConfigParams, channel
+BDC_GetTriggerConfigParamsBlock.argtypes = [POINTER(c_char), c_short, KMOT_TriggerConfig]
+# *serialNo, channel, *triggerConfigParams
 
 BDC_GetTriggerParams = lib.BDC_GetTriggerParams
 BDC_GetTriggerParams.restype = c_short
 BDC_GetTriggerParams.argtypes = [
-    c_int32,
     POINTER(c_char),
+    c_short,
     c_int32,
     c_int32,
     c_int32,
@@ -328,13 +328,13 @@ BDC_GetTriggerParams.argtypes = [
     c_int32,
     c_int32,
     c_int32,
-    c_short]
-# *cycleCount, *serialNo, *triggerIntervalFwd, *triggerIntervalRev, *triggerPulseCountFwd, *triggerPulseCountRev, *triggerPulseWidth, *triggerStartPositionFwd, *triggerStartPositionRev, channel
+    c_int32]
+# *serialNo, channel, *triggerStartPositionFwd, *triggerIntervalFwd, *triggerPulseCountFwd, *triggerStartPositionRev, *triggerIntervalRev, *triggerPulseCountRev, *triggerPulseWidth, *cycleCount
 
 BDC_GetTriggerParamsBlock = lib.BDC_GetTriggerParamsBlock
 BDC_GetTriggerParamsBlock.restype = c_short
-BDC_GetTriggerParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerParams, c_short]
-# *serialNo, *triggerParams, channel
+BDC_GetTriggerParamsBlock.argtypes = [POINTER(c_char), c_short, KMOT_TriggerParams]
+# *serialNo, channel, *triggerParams
 
 BDC_GetTriggerSwitches = lib.BDC_GetTriggerSwitches
 BDC_GetTriggerSwitches.restype = c_byte
@@ -343,13 +343,13 @@ BDC_GetTriggerSwitches.argtypes = [POINTER(c_char), c_short]
 
 BDC_GetVelParams = lib.BDC_GetVelParams
 BDC_GetVelParams.restype = c_short
-BDC_GetVelParams.argtypes = [c_int, c_int, POINTER(c_char), c_short]
-# *acceleration, *maxVelocity, *serialNo, channel
+BDC_GetVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, *acceleration, *maxVelocity
 
 BDC_GetVelParamsBlock = lib.BDC_GetVelParamsBlock
 BDC_GetVelParamsBlock.restype = c_short
-BDC_GetVelParamsBlock.argtypes = [POINTER(c_char), MOT_VelocityParameters, c_short]
-# *serialNo, *velocityParams, channel
+BDC_GetVelParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_VelocityParameters]
+# *serialNo, channel, *velocityParams
 
 BDC_HasLastMsgTimerOverrun = lib.BDC_HasLastMsgTimerOverrun
 BDC_HasLastMsgTimerOverrun.restype = c_bool
@@ -378,8 +378,8 @@ BDC_IsChannelValid.argtypes = [POINTER(c_char), c_short]
 
 BDC_LoadNamedSettings = lib.BDC_LoadNamedSettings
 BDC_LoadNamedSettings.restype = c_bool
-BDC_LoadNamedSettings.argtypes = [POINTER(c_char), POINTER(c_char), c_short]
-# *serialNo, *settingsName, channel
+BDC_LoadNamedSettings.argtypes = [POINTER(c_char), c_short, POINTER(c_char)]
+# *serialNo, channel, *settingsName
 
 BDC_LoadSettings = lib.BDC_LoadSettings
 BDC_LoadSettings.restype = c_bool
@@ -568,13 +568,13 @@ BDC_SetBacklash.argtypes = [POINTER(c_char), c_short, c_long]
 
 BDC_SetCalibrationFile = lib.BDC_SetCalibrationFile
 BDC_SetCalibrationFile.restype = c_void_p
-BDC_SetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_short, c_bool]
-# *filename, *serialNo, channel, enabled
+BDC_SetCalibrationFile.argtypes = [POINTER(c_char), c_short, POINTER(c_char), c_bool]
+# *serialNo, channel, *filename, enabled
 
 BDC_SetDCPIDParams = lib.BDC_SetDCPIDParams
 BDC_SetDCPIDParams.restype = c_short
-BDC_SetDCPIDParams.argtypes = [MOT_DC_PIDParameters, POINTER(c_char), c_short]
-# *DCproportionalIntegralDerivativeParams, *serialNo, channel
+BDC_SetDCPIDParams.argtypes = [POINTER(c_char), MOT_DC_PIDParameters, c_short]
+# *serialNo, *DCproportionalIntegralDerivativeParams, channel
 
 BDC_SetDigitalOutputs = lib.BDC_SetDigitalOutputs
 BDC_SetDigitalOutputs.restype = c_short
@@ -593,8 +593,8 @@ BDC_SetEncoderCounter.argtypes = [POINTER(c_char), c_short, c_long]
 
 BDC_SetHomingParamsBlock = lib.BDC_SetHomingParamsBlock
 BDC_SetHomingParamsBlock.restype = c_short
-BDC_SetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char), c_short]
-# *homingParams, *serialNo, channel
+BDC_SetHomingParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_HomingParameters]
+# *serialNo, channel, *homingParams
 
 BDC_SetHomingVelocity = lib.BDC_SetHomingVelocity
 BDC_SetHomingVelocity.restype = c_short
@@ -608,8 +608,8 @@ BDC_SetJogMode.argtypes = [POINTER(c_char), c_short, MOT_JogModes, MOT_StopModes
 
 BDC_SetJogParamsBlock = lib.BDC_SetJogParamsBlock
 BDC_SetJogParamsBlock.restype = c_short
-BDC_SetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char), c_short]
-# *jogParams, *serialNo, channel
+BDC_SetJogParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_JogParameters]
+# *serialNo, channel, *jogParams
 
 BDC_SetJogStepSize = lib.BDC_SetJogStepSize
 BDC_SetJogStepSize.restype = c_short
@@ -618,25 +618,25 @@ BDC_SetJogStepSize.argtypes = [POINTER(c_char), c_short, c_uint]
 
 BDC_SetJogVelParams = lib.BDC_SetJogVelParams
 BDC_SetJogVelParams.restype = c_short
-BDC_SetJogVelParams.argtypes = [POINTER(c_char), c_int, c_short, c_int]
-# *serialNo, acceleration, channel, maxVelocity
+BDC_SetJogVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, acceleration, maxVelocity
 
 BDC_SetLimitSwitchParams = lib.BDC_SetLimitSwitchParams
 BDC_SetLimitSwitchParams.restype = c_short
 BDC_SetLimitSwitchParams.argtypes = [
     POINTER(c_char),
-    MOT_LimitSwitchModes,
-    c_uint,
     c_short,
     MOT_LimitSwitchModes,
+    MOT_LimitSwitchModes,
+    c_uint,
     c_uint,
     MOT_LimitSwitchSWModes]
-# *serialNo, anticlockwiseHardwareLimit, anticlockwisePosition, channel, clockwiseHardwareLimit, clockwisePosition, softLimitMode
+# *serialNo, channel, clockwiseHardwareLimit, anticlockwiseHardwareLimit, clockwisePosition, anticlockwisePosition, softLimitMode
 
 BDC_SetLimitSwitchParamsBlock = lib.BDC_SetLimitSwitchParamsBlock
 BDC_SetLimitSwitchParamsBlock.restype = c_short
-BDC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char), c_short]
-# *limitSwitchParams, *serialNo, channel
+BDC_SetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_LimitSwitchParameters]
+# *serialNo, channel, *limitSwitchParams
 
 BDC_SetLimitsSoftwareApproachPolicy = lib.BDC_SetLimitsSoftwareApproachPolicy
 BDC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
@@ -645,18 +645,18 @@ BDC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), c_short, MOT_Li
 
 BDC_SetMotorParams = lib.BDC_SetMotorParams
 BDC_SetMotorParams.restype = c_short
-BDC_SetMotorParams.argtypes = [POINTER(c_char), c_short, c_long, c_float, c_long]
-# *serialNo, channel, gearBoxRatio, pitch, stepsPerRev
+BDC_SetMotorParams.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_float]
+# *serialNo, channel, stepsPerRev, gearBoxRatio, pitch
 
 BDC_SetMotorParamsExt = lib.BDC_SetMotorParamsExt
 BDC_SetMotorParamsExt.restype = c_short
 BDC_SetMotorParamsExt.argtypes = [POINTER(c_char), c_short, c_double, c_double, c_double]
-# *serialNo, channel, gearBoxRatio, pitch, stepsPerRev
+# *serialNo, channel, stepsPerRev, gearBoxRatio, pitch
 
 BDC_SetMotorTravelLimits = lib.BDC_SetMotorTravelLimits
 BDC_SetMotorTravelLimits.restype = c_short
 BDC_SetMotorTravelLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
-# *serialNo, channel, maxPosition, minPosition
+# *serialNo, channel, minPosition, maxPosition
 
 BDC_SetMotorTravelMode = lib.BDC_SetMotorTravelMode
 BDC_SetMotorTravelMode.restype = c_short
@@ -666,7 +666,7 @@ BDC_SetMotorTravelMode.argtypes = [POINTER(c_char), c_short, MOT_TravelModes]
 BDC_SetMotorVelocityLimits = lib.BDC_SetMotorVelocityLimits
 BDC_SetMotorVelocityLimits.restype = c_short
 BDC_SetMotorVelocityLimits.argtypes = [POINTER(c_char), c_short, c_double, c_double]
-# *serialNo, channel, maxAcceleration, maxVelocity
+# *serialNo, channel, maxVelocity, maxAcceleration
 
 BDC_SetMoveAbsolutePosition = lib.BDC_SetMoveAbsolutePosition
 BDC_SetMoveAbsolutePosition.restype = c_short
@@ -690,13 +690,13 @@ BDC_SetRackDigitalOutputs.argtypes = [POINTER(c_char), c_byte]
 
 BDC_SetRotationModes = lib.BDC_SetRotationModes
 BDC_SetRotationModes.restype = c_short
-BDC_SetRotationModes.argtypes = [POINTER(c_char), c_short, MOT_MovementDirections, MOT_MovementModes]
-# *serialNo, channel, direction, mode
+BDC_SetRotationModes.argtypes = [POINTER(c_char), c_short, MOT_MovementModes, MOT_MovementDirections]
+# *serialNo, channel, mode, direction
 
 BDC_SetStageAxisLimits = lib.BDC_SetStageAxisLimits
 BDC_SetStageAxisLimits.restype = c_short
 BDC_SetStageAxisLimits.argtypes = [POINTER(c_char), c_short, c_int, c_int]
-# *serialNo, channel, maxPosition, minPosition
+# *serialNo, channel, minPosition, maxPosition
 
 BDC_SetTriggerConfigParams = lib.BDC_SetTriggerConfigParams
 BDC_SetTriggerConfigParams.restype = c_short
@@ -711,8 +711,8 @@ BDC_SetTriggerConfigParams.argtypes = [
 
 BDC_SetTriggerConfigParamsBlock = lib.BDC_SetTriggerConfigParamsBlock
 BDC_SetTriggerConfigParamsBlock.restype = c_short
-BDC_SetTriggerConfigParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerConfig, c_short]
-# *serialNo, *triggerConfigParams, channel
+BDC_SetTriggerConfigParamsBlock.argtypes = [POINTER(c_char), c_short, KMOT_TriggerConfig]
+# *serialNo, channel, *triggerConfigParams
 
 BDC_SetTriggerParams = lib.BDC_SetTriggerParams
 BDC_SetTriggerParams.restype = c_short
@@ -727,12 +727,12 @@ BDC_SetTriggerParams.argtypes = [
     c_int32,
     c_int32,
     c_int32]
-# *serialNo, channel, cycleCount, triggerIntervalFwd, triggerIntervalRev, triggerPulseCountFwd, triggerPulseCountRev, triggerPulseWidth, triggerStartPositionFwd, triggerStartPositionRev
+# *serialNo, channel, triggerStartPositionFwd, triggerIntervalFwd, triggerPulseCountFwd, triggerStartPositionRev, triggerIntervalRev, triggerPulseCountRev, triggerPulseWidth, cycleCount
 
 BDC_SetTriggerParamsBlock = lib.BDC_SetTriggerParamsBlock
 BDC_SetTriggerParamsBlock.restype = c_short
-BDC_SetTriggerParamsBlock.argtypes = [POINTER(c_char), KMOT_TriggerParams, c_short]
-# *serialNo, *triggerParams, channel
+BDC_SetTriggerParamsBlock.argtypes = [POINTER(c_char), c_short, KMOT_TriggerParams]
+# *serialNo, channel, *triggerParams
 
 BDC_SetTriggerSwitches = lib.BDC_SetTriggerSwitches
 BDC_SetTriggerSwitches.restype = c_short
@@ -741,13 +741,13 @@ BDC_SetTriggerSwitches.argtypes = [POINTER(c_char), c_short, c_byte]
 
 BDC_SetVelParams = lib.BDC_SetVelParams
 BDC_SetVelParams.restype = c_short
-BDC_SetVelParams.argtypes = [POINTER(c_char), c_int, c_short, c_int]
-# *serialNo, acceleration, channel, maxVelocity
+BDC_SetVelParams.argtypes = [POINTER(c_char), c_short, c_int, c_int]
+# *serialNo, channel, acceleration, maxVelocity
 
 BDC_SetVelParamsBlock = lib.BDC_SetVelParamsBlock
 BDC_SetVelParamsBlock.restype = c_short
-BDC_SetVelParamsBlock.argtypes = [POINTER(c_char), MOT_VelocityParameters, c_short]
-# *serialNo, *velocityParams, channel
+BDC_SetVelParamsBlock.argtypes = [POINTER(c_char), c_short, MOT_VelocityParameters]
+# *serialNo, channel, *velocityParams
 
 BDC_StartPolling = lib.BDC_StartPolling
 BDC_StartPolling.restype = c_bool
@@ -776,22 +776,23 @@ BDC_SuspendMoveMessages.argtypes = [POINTER(c_char), c_short]
 
 BDC_TimeSinceLastMsgReceived = lib.BDC_TimeSinceLastMsgReceived
 BDC_TimeSinceLastMsgReceived.restype = c_bool
-BDC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char), c_short]
-# &lastUpdateTimeMS, *serialNo, channel
+BDC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_short, c_int64]
+# *serialNo, channel, &lastUpdateTimeMS
 
 BDC_WaitForMessage = lib.BDC_WaitForMessage
 BDC_WaitForMessage.restype = c_bool
-BDC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_short]
-# *messageData, *messageID, *messageType, *serialNo, channel
+BDC_WaitForMessage.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -815,8 +816,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

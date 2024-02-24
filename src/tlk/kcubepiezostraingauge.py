@@ -87,13 +87,13 @@ KPC_GetDigitalOutputs.argtypes = [POINTER(c_char)]
 
 KPC_GetFeedbackLoopPIconsts = lib.KPC_GetFeedbackLoopPIconsts
 KPC_GetFeedbackLoopPIconsts.restype = c_short
-KPC_GetFeedbackLoopPIconsts.argtypes = [c_short, c_short, POINTER(c_char)]
-# *integralTerm, *proportionalTerm, *serialNo
+KPC_GetFeedbackLoopPIconsts.argtypes = [POINTER(c_char), c_short, c_short]
+# *serialNo, *proportionalTerm, *integralTerm
 
 KPC_GetFeedbackLoopPIconstsBlock = lib.KPC_GetFeedbackLoopPIconstsBlock
 KPC_GetFeedbackLoopPIconstsBlock.restype = c_short
-KPC_GetFeedbackLoopPIconstsBlock.argtypes = [PZ_FeedbackLoopConstants, POINTER(c_char)]
-# *proportionalAndIntegralConstants, *serialNo
+KPC_GetFeedbackLoopPIconstsBlock.argtypes = [POINTER(c_char), PZ_FeedbackLoopConstants]
+# *serialNo, *proportionalAndIntegralConstants
 
 KPC_GetFirmwareVersion = lib.KPC_GetFirmwareVersion
 KPC_GetFirmwareVersion.restype = c_ulong
@@ -108,22 +108,22 @@ KPC_GetFrontPanelLocked.argtypes = [POINTER(c_char)]
 KPC_GetHardwareInfo = lib.KPC_GetHardwareInfo
 KPC_GetHardwareInfo.restype = c_short
 KPC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 KPC_GetHardwareInfoBlock = lib.KPC_GetHardwareInfoBlock
 KPC_GetHardwareInfoBlock.restype = c_short
-KPC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+KPC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 KPC_GetHardwareMaxOutputVoltage = lib.KPC_GetHardwareMaxOutputVoltage
 KPC_GetHardwareMaxOutputVoltage.restype = c_short
@@ -148,27 +148,32 @@ KPC_GetLEDBrightness.argtypes = [POINTER(c_char)]
 KPC_GetMMIParams = lib.KPC_GetMMIParams
 KPC_GetMMIParams.restype = c_short
 KPC_GetMMIParams.argtypes = [
+    POINTER(c_char),
+    KPZ_WheelMode,
+    KPZ_WheelChangeRate,
+    c_int16,
+    c_int16,
     KPZ_WheelDirectionSense,
     c_int16,
     c_int16,
     c_int16,
     c_int16,
-    c_int16,
-    c_int16,
-    POINTER(c_char),
-    KPZ_WheelChangeRate,
-    c_int16,
-    KPZ_WheelMode]
-# *directionSense, *displayIntensity, *positionStep, *presetPosition1, *presetPosition2, *presetVoltage1, *presetVoltage2, *serialNo, *voltageAdjustRate, *voltageStep, *wheelMode
+    c_int16]
+# *serialNo, *wheelMode, *voltageAdjustRate, *voltageStep, *positionStep, *directionSense, *presetVoltage1, *presetVoltage2, *presetPosition1, *presetPosition2, *displayIntensity
 
 KPC_GetMMIParamsBlock = lib.KPC_GetMMIParamsBlock
 KPC_GetMMIParamsBlock.restype = c_short
-KPC_GetMMIParamsBlock.argtypes = [KPC_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+KPC_GetMMIParamsBlock.argtypes = [POINTER(c_char), KPC_MMIParams]
+# *serialNo, *mmiParams
 
 KPC_GetMMIParamsExt = lib.KPC_GetMMIParamsExt
 KPC_GetMMIParamsExt.restype = c_short
 KPC_GetMMIParamsExt.argtypes = [
+    POINTER(c_char),
+    KPZ_WheelMode,
+    KPZ_WheelChangeRate,
+    c_int16,
+    c_int16,
     KPZ_WheelDirectionSense,
     c_int16,
     c_int16,
@@ -176,13 +181,8 @@ KPC_GetMMIParamsExt.argtypes = [
     c_int16,
     c_int16,
     c_int16,
-    c_int16,
-    c_int16,
-    POINTER(c_char),
-    KPZ_WheelChangeRate,
-    c_int16,
-    KPZ_WheelMode]
-# *directionSense, *displayDimIntensity, *displayIntensity, *displayTimeout, *positionStep, *presetPosition1, *presetPosition2, *presetVoltage1, *presetVoltage2, *serialNo, *voltageAdjustRate, *voltageStep, *wheelMode
+    c_int16]
+# *serialNo, *wheelMode, *voltageAdjustRate, *voltageStep, *positionStep, *directionSense, *presetVoltage1, *presetVoltage2, *presetPosition1, *presetPosition2, *displayIntensity, *displayTimeout, *displayDimIntensity
 
 KPC_GetMaxOutputVoltage = lib.KPC_GetMaxOutputVoltage
 KPC_GetMaxOutputVoltage.restype = c_short
@@ -196,8 +196,8 @@ KPC_GetMaximumTravel.argtypes = [POINTER(c_char)]
 
 KPC_GetNextMessage = lib.KPC_GetNextMessage
 KPC_GetNextMessage.restype = c_bool
-KPC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+KPC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 KPC_GetOutputVoltage = lib.KPC_GetOutputVoltage
 KPC_GetOutputVoltage.restype = c_short
@@ -227,18 +227,18 @@ KPC_GetStatusBits.argtypes = [POINTER(c_char)]
 KPC_GetTriggerConfigParams = lib.KPC_GetTriggerConfigParams
 KPC_GetTriggerConfigParams.restype = c_short
 KPC_GetTriggerConfigParams.argtypes = [
+    POINTER(c_char),
+    KPC_TriggerPortMode,
+    KPC_TriggerPortPolarity,
+    KPC_TriggerPortMode,
+    KPC_TriggerPortPolarity,
+    c_int32,
     c_int32,
     c_int16,
     KPC_MonitorOutputMode,
     c_int16,
-    POINTER(c_char),
-    c_int16,
-    KPC_TriggerPortMode,
-    KPC_TriggerPortPolarity,
-    KPC_TriggerPortMode,
-    KPC_TriggerPortPolarity,
-    c_int32]
-# *lowerLimit, *monitorFilterFrequency, *monitorOutput, *monitorOutputSoftwareValue, *serialNo, *smoothingSamples, *trigger1Mode, *trigger1Polarity, *trigger2Mode, *trigger2Polarity, *upperLimit
+    c_int16]
+# *serialNo, *trigger1Mode, *trigger1Polarity, *trigger2Mode, *trigger2Polarity, *lowerLimit, *upperLimit, *smoothingSamples, *monitorOutput, *monitorFilterFrequency, *monitorOutputSoftwareValue
 
 KPC_GetTriggerConfigParamsBlock = lib.KPC_GetTriggerConfigParamsBlock
 KPC_GetTriggerConfigParamsBlock.restype = c_short
@@ -398,12 +398,12 @@ KPC_SetDigitalOutputs.argtypes = [POINTER(c_char), c_byte]
 KPC_SetFeedbackLoopPIconsts = lib.KPC_SetFeedbackLoopPIconsts
 KPC_SetFeedbackLoopPIconsts.restype = c_short
 KPC_SetFeedbackLoopPIconsts.argtypes = [POINTER(c_char), c_short, c_short]
-# *serialNo, integralTerm, proportionalTerm
+# *serialNo, proportionalTerm, integralTerm
 
 KPC_SetFeedbackLoopPIconstsBlock = lib.KPC_SetFeedbackLoopPIconstsBlock
 KPC_SetFeedbackLoopPIconstsBlock.restype = c_short
-KPC_SetFeedbackLoopPIconstsBlock.argtypes = [PZ_FeedbackLoopConstants, POINTER(c_char)]
-# *proportionalAndIntegralConstants, *serialNo
+KPC_SetFeedbackLoopPIconstsBlock.argtypes = [POINTER(c_char), PZ_FeedbackLoopConstants]
+# *serialNo, *proportionalAndIntegralConstants
 
 KPC_SetFrontPanelLock = lib.KPC_SetFrontPanelLock
 KPC_SetFrontPanelLock.restype = c_short
@@ -432,8 +432,8 @@ KPC_SetLEDBrightness.argtypes = [POINTER(c_char), c_short]
 
 KPC_SetLUTwaveParams = lib.KPC_SetLUTwaveParams
 KPC_SetLUTwaveParams.restype = c_short
-KPC_SetLUTwaveParams.argtypes = [PZ_LUTWaveParameters, POINTER(c_char)]
-# *LUTwaveParams, *serialNo
+KPC_SetLUTwaveParams.argtypes = [POINTER(c_char), PZ_LUTWaveParameters]
+# *serialNo, *LUTwaveParams
 
 KPC_SetLUTwaveSample = lib.KPC_SetLUTwaveSample
 KPC_SetLUTwaveSample.restype = c_short
@@ -444,27 +444,30 @@ KPC_SetMMIParams = lib.KPC_SetMMIParams
 KPC_SetMMIParams.restype = c_short
 KPC_SetMMIParams.argtypes = [
     POINTER(c_char),
+    KPZ_WheelMode,
+    KPZ_WheelChangeRate,
+    c_int16,
+    c_int16,
     KPZ_WheelDirectionSense,
     c_int16,
     c_int16,
     c_int16,
     c_int16,
-    c_int16,
-    c_int16,
-    KPZ_WheelChangeRate,
-    c_int16,
-    KPZ_WheelMode]
-# *serialNo, directionSense, displayIntensity, positionStep, presetPosition1, presetPosition2, presetVoltage1, presetVoltage2, voltageAdjustRate, voltageStep, wheelMode
+    c_int16]
+# *serialNo, wheelMode, voltageAdjustRate, voltageStep, positionStep, directionSense, presetVoltage1, presetVoltage2, presetPosition1, presetPosition2, displayIntensity
 
 KPC_SetMMIParamsBlock = lib.KPC_SetMMIParamsBlock
 KPC_SetMMIParamsBlock.restype = c_short
-KPC_SetMMIParamsBlock.argtypes = [KPC_MMIParams, POINTER(c_char)]
-# *mmiParams, *serialNo
+KPC_SetMMIParamsBlock.argtypes = [POINTER(c_char), KPC_MMIParams]
+# *serialNo, *mmiParams
 
 KPC_SetMMIParamsExt = lib.KPC_SetMMIParamsExt
 KPC_SetMMIParamsExt.restype = c_short
 KPC_SetMMIParamsExt.argtypes = [
     POINTER(c_char),
+    KPZ_WheelMode,
+    KPZ_WheelChangeRate,
+    c_int16,
     c_int16,
     KPZ_WheelDirectionSense,
     c_int16,
@@ -473,11 +476,8 @@ KPC_SetMMIParamsExt.argtypes = [
     c_int16,
     c_int16,
     c_int16,
-    c_int16,
-    KPZ_WheelChangeRate,
-    c_int16,
-    KPZ_WheelMode]
-# *serialNo, PositionStep, directionSense, displayDimIntensity, displayIntensity, displayTimeout, presetPositiion1, presetPosition2, presetVoltage1, presetVoltage2, voltageAdjustRate, voltageStep, wheelMode
+    c_int16]
+# *serialNo, wheelMode, voltageAdjustRate, voltageStep, PositionStep, directionSense, presetVoltage1, presetVoltage2, presetPositiion1, presetPosition2, displayIntensity, displayTimeout, displayDimIntensity
 
 KPC_SetMaxOutputVoltage = lib.KPC_SetMaxOutputVoltage
 KPC_SetMaxOutputVoltage.restype = c_short
@@ -508,17 +508,17 @@ KPC_SetTriggerConfigParams = lib.KPC_SetTriggerConfigParams
 KPC_SetTriggerConfigParams.restype = c_short
 KPC_SetTriggerConfigParams.argtypes = [
     POINTER(c_char),
+    KPC_TriggerPortMode,
+    KPC_TriggerPortPolarity,
+    KPC_TriggerPortMode,
+    KPC_TriggerPortPolarity,
+    c_int32,
     c_int32,
     c_int16,
     KPC_MonitorOutputMode,
     c_int16,
-    c_int16,
-    KPC_TriggerPortMode,
-    KPC_TriggerPortPolarity,
-    KPC_TriggerPortMode,
-    KPC_TriggerPortPolarity,
-    c_int32]
-# *serialNo, lowerLimit, monitorFilterFrequency, monitorOutput, monitorOutputSoftwareValue, smoothingSamples, trigger1Mode, trigger1Polarity, trigger2Mode, trigger2Polarity, upperLimit
+    c_int16]
+# *serialNo, trigger1Mode, trigger1Polarity, trigger2Mode, trigger2Polarity, lowerLimit, upperLimit, smoothingSamples, monitorOutput, monitorFilterFrequency, monitorOutputSoftwareValue
 
 KPC_SetTriggerConfigParamsBlock = lib.KPC_SetTriggerConfigParamsBlock
 KPC_SetTriggerConfigParamsBlock.restype = c_short
@@ -557,22 +557,23 @@ KPC_StopPolling.argtypes = [POINTER(c_char)]
 
 KPC_TimeSinceLastMsgReceived = lib.KPC_TimeSinceLastMsgReceived
 KPC_TimeSinceLastMsgReceived.restype = c_bool
-KPC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+KPC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 KPC_WaitForMessage = lib.KPC_WaitForMessage
 KPC_WaitForMessage.restype = c_bool
-KPC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+KPC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -596,8 +597,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

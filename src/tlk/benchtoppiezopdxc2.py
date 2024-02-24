@@ -64,13 +64,13 @@ PDXC2_GetAbnormalMoveDetectionEnabled.argtypes = [POINTER(c_char)]
 
 PDXC2_GetAmpOutParams = lib.PDXC2_GetAmpOutParams
 PDXC2_GetAmpOutParams.restype = c_short
-PDXC2_GetAmpOutParams.argtypes = [PZ_AmpOutParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_GetAmpOutParams.argtypes = [POINTER(c_char), PZ_AmpOutParameters]
+# *serialNo, *params
 
 PDXC2_GetClosedLoopParams = lib.PDXC2_GetClosedLoopParams
 PDXC2_GetClosedLoopParams.restype = c_short
-PDXC2_GetClosedLoopParams.argtypes = [PDXC2_ClosedLoopParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_GetClosedLoopParams.argtypes = [POINTER(c_char), PDXC2_ClosedLoopParameters]
+# *serialNo, *params
 
 PDXC2_GetClosedLoopTarget = lib.PDXC2_GetClosedLoopTarget
 PDXC2_GetClosedLoopTarget.restype = c_int
@@ -84,8 +84,8 @@ PDXC2_GetExternalTriggerConfig.argtypes = [POINTER(c_char)]
 
 PDXC2_GetExternalTriggerParams = lib.PDXC2_GetExternalTriggerParams
 PDXC2_GetExternalTriggerParams.restype = c_short
-PDXC2_GetExternalTriggerParams.argtypes = [PDXC2_TriggerParams, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_GetExternalTriggerParams.argtypes = [POINTER(c_char), PDXC2_TriggerParams]
+# *serialNo, *params
 
 PDXC2_GetExternalTriggerTarget = lib.PDXC2_GetExternalTriggerTarget
 PDXC2_GetExternalTriggerTarget.restype = c_int
@@ -100,42 +100,42 @@ PDXC2_GetFirmwareVersion.argtypes = [POINTER(c_char)]
 PDXC2_GetHardwareInfo = lib.PDXC2_GetHardwareInfo
 PDXC2_GetHardwareInfo.restype = c_short
 PDXC2_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 PDXC2_GetHardwareInfoBlock = lib.PDXC2_GetHardwareInfoBlock
 PDXC2_GetHardwareInfoBlock.restype = c_short
-PDXC2_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+PDXC2_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 PDXC2_GetJogParams = lib.PDXC2_GetJogParams
 PDXC2_GetJogParams.restype = c_short
-PDXC2_GetJogParams.argtypes = [PDXC2_JogParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_GetJogParams.argtypes = [POINTER(c_char), PDXC2_JogParameters]
+# *serialNo, *params
 
 PDXC2_GetNextMessage = lib.PDXC2_GetNextMessage
 PDXC2_GetNextMessage.restype = c_bool
-PDXC2_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+PDXC2_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 PDXC2_GetOpenLoopMoveParams = lib.PDXC2_GetOpenLoopMoveParams
 PDXC2_GetOpenLoopMoveParams.restype = c_short
-PDXC2_GetOpenLoopMoveParams.argtypes = [PDXC2_OpenLoopMoveParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_GetOpenLoopMoveParams.argtypes = [POINTER(c_char), PDXC2_OpenLoopMoveParameters]
+# *serialNo, *params
 
 PDXC2_GetPosition = lib.PDXC2_GetPosition
 PDXC2_GetPosition.restype = c_short
-PDXC2_GetPosition.argtypes = [c_int32, POINTER(c_char)]
-# *position, *serialNo
+PDXC2_GetPosition.argtypes = [POINTER(c_char), c_int32]
+# *serialNo, *position
 
 PDXC2_GetPositionControlMode = lib.PDXC2_GetPositionControlMode
 PDXC2_GetPositionControlMode.restype = PZ_ControlModeTypes
@@ -149,8 +149,8 @@ PDXC2_GetSoftwareVersion.argtypes = [POINTER(c_char)]
 
 PDXC2_GetStageAxisParams = lib.PDXC2_GetStageAxisParams
 PDXC2_GetStageAxisParams.restype = c_short
-PDXC2_GetStageAxisParams.argtypes = [PZ_StageAxisParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_GetStageAxisParams.argtypes = [POINTER(c_char), PZ_StageAxisParameters]
+# *serialNo, *params
 
 PDXC2_GetStatusBits = lib.PDXC2_GetStatusBits
 PDXC2_GetStatusBits.restype = c_ulong
@@ -314,13 +314,13 @@ PDXC2_SetAbnormalMoveDetectionEnabled.argtypes = [POINTER(c_char), c_bool]
 
 PDXC2_SetAmpOutParams = lib.PDXC2_SetAmpOutParams
 PDXC2_SetAmpOutParams.restype = c_short
-PDXC2_SetAmpOutParams.argtypes = [PZ_AmpOutParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_SetAmpOutParams.argtypes = [POINTER(c_char), PZ_AmpOutParameters]
+# *serialNo, *params
 
 PDXC2_SetClosedLoopParams = lib.PDXC2_SetClosedLoopParams
 PDXC2_SetClosedLoopParams.restype = c_short
-PDXC2_SetClosedLoopParams.argtypes = [PDXC2_ClosedLoopParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_SetClosedLoopParams.argtypes = [POINTER(c_char), PDXC2_ClosedLoopParameters]
+# *serialNo, *params
 
 PDXC2_SetClosedLoopTarget = lib.PDXC2_SetClosedLoopTarget
 PDXC2_SetClosedLoopTarget.restype = c_short
@@ -334,18 +334,18 @@ PDXC2_SetExternalTriggerConfig.argtypes = [POINTER(c_char), PDXC2_TriggerModes]
 
 PDXC2_SetExternalTriggerParams = lib.PDXC2_SetExternalTriggerParams
 PDXC2_SetExternalTriggerParams.restype = c_short
-PDXC2_SetExternalTriggerParams.argtypes = [PDXC2_TriggerParams, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_SetExternalTriggerParams.argtypes = [POINTER(c_char), PDXC2_TriggerParams]
+# *serialNo, *params
 
 PDXC2_SetJogParams = lib.PDXC2_SetJogParams
 PDXC2_SetJogParams.restype = c_short
-PDXC2_SetJogParams.argtypes = [PDXC2_JogParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_SetJogParams.argtypes = [POINTER(c_char), PDXC2_JogParameters]
+# *serialNo, *params
 
 PDXC2_SetOpenLoopMoveParams = lib.PDXC2_SetOpenLoopMoveParams
 PDXC2_SetOpenLoopMoveParams.restype = c_short
-PDXC2_SetOpenLoopMoveParams.argtypes = [PDXC2_OpenLoopMoveParameters, POINTER(c_char)]
-# *params, *serialNo
+PDXC2_SetOpenLoopMoveParams.argtypes = [POINTER(c_char), PDXC2_OpenLoopMoveParameters]
+# *serialNo, *params
 
 PDXC2_SetPositionControlMode = lib.PDXC2_SetPositionControlMode
 PDXC2_SetPositionControlMode.restype = c_short
@@ -364,22 +364,23 @@ PDXC2_StopPolling.argtypes = [POINTER(c_char)]
 
 PDXC2_TimeSinceLastMsgReceived = lib.PDXC2_TimeSinceLastMsgReceived
 PDXC2_TimeSinceLastMsgReceived.restype = c_bool
-PDXC2_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+PDXC2_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 PDXC2_WaitForMessage = lib.PDXC2_WaitForMessage
 PDXC2_WaitForMessage.restype = c_bool
-PDXC2_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+PDXC2_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -403,8 +404,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short
@@ -421,5 +422,5 @@ TLI_InitializeSimulations.restype = c_void_p
 
 TLI_ScanEthernetRange = lib.TLI_ScanEthernetRange
 TLI_ScanEthernetRange.restype = c_short
-TLI_ScanEthernetRange.argtypes = [POINTER(c_char), POINTER(c_char), POINTER(c_char), c_int, c_int, c_ulong]
-# *endIPAddress, *foundAddressesBuffer, *startIPAddress, openTimeout, portNo, sizeOfBuffer
+TLI_ScanEthernetRange.argtypes = [POINTER(c_char), POINTER(c_char), c_int, c_int, POINTER(c_char), c_ulong]
+# *startIPAddress, *endIPAddress, portNo, openTimeout, *foundAddressesBuffer, sizeOfBuffer

@@ -42,8 +42,8 @@ QD_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 
 QD_GetDemandedPosition = lib.QD_GetDemandedPosition
 QD_GetDemandedPosition.restype = c_short
-QD_GetDemandedPosition.argtypes = [QD_Position, POINTER(c_char)]
-# *position, *serialNo
+QD_GetDemandedPosition.argtypes = [POINTER(c_char), QD_Position]
+# *serialNo, *position
 
 QD_GetFirmwareVersion = lib.QD_GetFirmwareVersion
 QD_GetFirmwareVersion.restype = c_ulong
@@ -53,22 +53,22 @@ QD_GetFirmwareVersion.argtypes = [POINTER(c_char)]
 QD_GetHardwareInfo = lib.QD_GetHardwareInfo
 QD_GetHardwareInfo.restype = c_short
 QD_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 QD_GetHardwareInfoBlock = lib.QD_GetHardwareInfoBlock
 QD_GetHardwareInfoBlock.restype = c_short
-QD_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+QD_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 QD_GetLEDBrightness = lib.QD_GetLEDBrightness
 QD_GetLEDBrightness.restype = c_long
@@ -77,23 +77,23 @@ QD_GetLEDBrightness.argtypes = [POINTER(c_char)]
 
 QD_GetLoopPIDparams = lib.QD_GetLoopPIDparams
 QD_GetLoopPIDparams.restype = c_short
-QD_GetLoopPIDparams.argtypes = [QD_LoopParameters, POINTER(c_char)]
-# *loopParams, *serialNo
+QD_GetLoopPIDparams.argtypes = [POINTER(c_char), QD_LoopParameters]
+# *serialNo, *loopParams
 
 QD_GetLowPassFilterparams = lib.QD_GetLowPassFilterparams
 QD_GetLowPassFilterparams.restype = c_short
-QD_GetLowPassFilterparams.argtypes = [QD_LowPassFilterParameters, POINTER(c_char)]
-# *lowPassParams, *serialNo
+QD_GetLowPassFilterparams.argtypes = [POINTER(c_char), QD_LowPassFilterParameters]
+# *serialNo, *lowPassParams
 
 QD_GetNextMessage = lib.QD_GetNextMessage
 QD_GetNextMessage.restype = c_bool
-QD_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+QD_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 QD_GetNotchFilterparams = lib.QD_GetNotchFilterparams
 QD_GetNotchFilterparams.restype = c_short
-QD_GetNotchFilterparams.argtypes = [QD_NotchFilterParameters, POINTER(c_char)]
-# *notchParams, *serialNo
+QD_GetNotchFilterparams.argtypes = [POINTER(c_char), QD_NotchFilterParameters]
+# *serialNo, *notchParams
 
 QD_GetOperatingMode = lib.QD_GetOperatingMode
 QD_GetOperatingMode.restype = QD_OperatingMode
@@ -102,18 +102,18 @@ QD_GetOperatingMode.argtypes = [POINTER(c_char)]
 
 QD_GetPIDparams = lib.QD_GetPIDparams
 QD_GetPIDparams.restype = c_short
-QD_GetPIDparams.argtypes = [QD_PIDParameters, POINTER(c_char)]
-# *proportionalIntegralDerivativeParams, *serialNo
+QD_GetPIDparams.argtypes = [POINTER(c_char), QD_PIDParameters]
+# *serialNo, *proportionalIntegralDerivativeParams
 
 QD_GetPosDemandParams = lib.QD_GetPosDemandParams
 QD_GetPosDemandParams.restype = c_short
-QD_GetPosDemandParams.argtypes = [QD_PositionDemandParameters, POINTER(c_char)]
-# *demandParams, *serialNo
+QD_GetPosDemandParams.argtypes = [POINTER(c_char), QD_PositionDemandParameters]
+# *serialNo, *demandParams
 
 QD_GetReading = lib.QD_GetReading
 QD_GetReading.restype = c_short
-QD_GetReading.argtypes = [QD_Readings, POINTER(c_char)]
-# *reading, *serialNo
+QD_GetReading.argtypes = [POINTER(c_char), QD_Readings]
+# *serialNo, *reading
 
 QD_GetSoftwareVersion = lib.QD_GetSoftwareVersion
 QD_GetSoftwareVersion.restype = c_ulong
@@ -217,38 +217,38 @@ QD_SetLEDBrightness.argtypes = [POINTER(c_char), c_short]
 
 QD_SetLoopPIDparams = lib.QD_SetLoopPIDparams
 QD_SetLoopPIDparams.restype = c_short
-QD_SetLoopPIDparams.argtypes = [QD_LoopParameters, POINTER(c_char)]
-# *loopParams, *serialNo
+QD_SetLoopPIDparams.argtypes = [POINTER(c_char), QD_LoopParameters]
+# *serialNo, *loopParams
 
 QD_SetLowPassFilterparams = lib.QD_SetLowPassFilterparams
 QD_SetLowPassFilterparams.restype = c_short
-QD_SetLowPassFilterparams.argtypes = [QD_LowPassFilterParameters, POINTER(c_char)]
-# *lowPassParams, *serialNo
+QD_SetLowPassFilterparams.argtypes = [POINTER(c_char), QD_LowPassFilterParameters]
+# *serialNo, *lowPassParams
 
 QD_SetNotchFilterparams = lib.QD_SetNotchFilterparams
 QD_SetNotchFilterparams.restype = c_short
-QD_SetNotchFilterparams.argtypes = [QD_NotchFilterParameters, POINTER(c_char)]
-# *proportionalIntegralDerivativeParams, *serialNo
+QD_SetNotchFilterparams.argtypes = [POINTER(c_char), QD_NotchFilterParameters]
+# *serialNo, *proportionalIntegralDerivativeParams
 
 QD_SetOperatingMode = lib.QD_SetOperatingMode
 QD_SetOperatingMode.restype = c_short
-QD_SetOperatingMode.argtypes = [POINTER(c_char), c_bool, QD_OperatingMode]
-# *serialNo, autoOpenCloseLoop, mode
+QD_SetOperatingMode.argtypes = [POINTER(c_char), QD_OperatingMode, c_bool]
+# *serialNo, mode, autoOpenCloseLoop
 
 QD_SetPIDparams = lib.QD_SetPIDparams
 QD_SetPIDparams.restype = c_short
-QD_SetPIDparams.argtypes = [QD_PIDParameters, POINTER(c_char)]
-# *proportionalIntegralDerivativeParams, *serialNo
+QD_SetPIDparams.argtypes = [POINTER(c_char), QD_PIDParameters]
+# *serialNo, *proportionalIntegralDerivativeParams
 
 QD_SetPosDemandParams = lib.QD_SetPosDemandParams
 QD_SetPosDemandParams.restype = c_short
-QD_SetPosDemandParams.argtypes = [QD_PositionDemandParameters, POINTER(c_char)]
-# *demandParams, *serialNo
+QD_SetPosDemandParams.argtypes = [POINTER(c_char), QD_PositionDemandParameters]
+# *serialNo, *demandParams
 
 QD_SetPosition = lib.QD_SetPosition
 QD_SetPosition.restype = c_short
-QD_SetPosition.argtypes = [QD_Position, POINTER(c_char)]
-# *position, *serialNo
+QD_SetPosition.argtypes = [POINTER(c_char), QD_Position]
+# *serialNo, *position
 
 QD_StartPolling = lib.QD_StartPolling
 QD_StartPolling.restype = c_bool
@@ -262,22 +262,23 @@ QD_StopPolling.argtypes = [POINTER(c_char)]
 
 QD_TimeSinceLastMsgReceived = lib.QD_TimeSinceLastMsgReceived
 QD_TimeSinceLastMsgReceived.restype = c_bool
-QD_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+QD_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 QD_WaitForMessage = lib.QD_WaitForMessage
 QD_WaitForMessage.restype = c_bool
-QD_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+QD_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -301,8 +302,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

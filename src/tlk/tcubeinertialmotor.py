@@ -55,13 +55,13 @@ TIM_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_bool, c_int32]
 
 TIM_GetButtonParameters = lib.TIM_GetButtonParameters
 TIM_GetButtonParameters.restype = c_short
-TIM_GetButtonParameters.argtypes = [TIM_ButtonsMode, c_int32, c_int32, POINTER(c_char), TIM_Channels]
-# &buttonMode, &position1, &position2, *serialNo, channel
+TIM_GetButtonParameters.argtypes = [POINTER(c_char), TIM_Channels, TIM_ButtonsMode, c_int32, c_int32]
+# *serialNo, channel, &buttonMode, &position1, &position2
 
 TIM_GetButtonParametersStruct = lib.TIM_GetButtonParametersStruct
 TIM_GetButtonParametersStruct.restype = c_short
-TIM_GetButtonParametersStruct.argtypes = [TIM_ButtonParameters, POINTER(c_char), TIM_Channels]
-# &buttonParameters, *serialNo, channel
+TIM_GetButtonParametersStruct.argtypes = [POINTER(c_char), TIM_Channels, TIM_ButtonParameters]
+# *serialNo, channel, &buttonParameters
 
 TIM_GetCurrentPosition = lib.TIM_GetCurrentPosition
 TIM_GetCurrentPosition.restype = c_int32
@@ -70,13 +70,13 @@ TIM_GetCurrentPosition.argtypes = [POINTER(c_char), TIM_Channels]
 
 TIM_GetDriveOPParameters = lib.TIM_GetDriveOPParameters
 TIM_GetDriveOPParameters.restype = c_short
-TIM_GetDriveOPParameters.argtypes = [c_int16, c_int32, c_int32, POINTER(c_char), TIM_Channels]
-# &maxVoltage, &stepAcceleration, &stepRate, *serialNo, channel
+TIM_GetDriveOPParameters.argtypes = [POINTER(c_char), TIM_Channels, c_int16, c_int32, c_int32]
+# *serialNo, channel, &maxVoltage, &stepRate, &stepAcceleration
 
 TIM_GetDriveOPParametersStruct = lib.TIM_GetDriveOPParametersStruct
 TIM_GetDriveOPParametersStruct.restype = c_short
-TIM_GetDriveOPParametersStruct.argtypes = [TIM_DriveOPParameters, POINTER(c_char), TIM_Channels]
-# &driveOPParameters, *serialNo, channel
+TIM_GetDriveOPParametersStruct.argtypes = [POINTER(c_char), TIM_Channels, TIM_DriveOPParameters]
+# *serialNo, channel, &driveOPParameters
 
 TIM_GetFirmwareVersion = lib.TIM_GetFirmwareVersion
 TIM_GetFirmwareVersion.restype = c_ulong
@@ -86,32 +86,32 @@ TIM_GetFirmwareVersion.argtypes = [POINTER(c_char)]
 TIM_GetHardwareInfo = lib.TIM_GetHardwareInfo
 TIM_GetHardwareInfo.restype = c_short
 TIM_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 TIM_GetHardwareInfoBlock = lib.TIM_GetHardwareInfoBlock
 TIM_GetHardwareInfoBlock.restype = c_short
-TIM_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+TIM_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 TIM_GetJogParameters = lib.TIM_GetJogParameters
 TIM_GetJogParameters.restype = c_short
-TIM_GetJogParameters.argtypes = [TIM_JogMode, c_int32, c_int32, c_int32, POINTER(c_char), TIM_Channels]
-# &jogMode, &jogStepAcceleration, &jogStepRate, &jogStepSize, *serialNo, channel
+TIM_GetJogParameters.argtypes = [POINTER(c_char), TIM_Channels, TIM_JogMode, c_int32, c_int32, c_int32]
+# *serialNo, channel, &jogMode, &jogStepSize, &jogStepRate, &jogStepAcceleration
 
 TIM_GetJogParametersStruct = lib.TIM_GetJogParametersStruct
 TIM_GetJogParametersStruct.restype = c_short
-TIM_GetJogParametersStruct.argtypes = [TIM_JogParameters, POINTER(c_char), TIM_Channels]
-# &jogParameters, *serialNo, channel
+TIM_GetJogParametersStruct.argtypes = [POINTER(c_char), TIM_Channels, TIM_JogParameters]
+# *serialNo, channel, &jogParameters
 
 TIM_GetLEDBrightness = lib.TIM_GetLEDBrightness
 TIM_GetLEDBrightness.restype = c_short
@@ -125,8 +125,8 @@ TIM_GetMaxPotStepRate.argtypes = [POINTER(c_char), TIM_Channels]
 
 TIM_GetNextMessage = lib.TIM_GetNextMessage
 TIM_GetNextMessage.restype = c_bool
-TIM_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+TIM_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TIM_GetSoftwareVersion = lib.TIM_GetSoftwareVersion
 TIM_GetSoftwareVersion.restype = c_ulong
@@ -250,33 +250,33 @@ TIM_Reset.argtypes = [POINTER(c_char)]
 
 TIM_SetButtonParameters = lib.TIM_SetButtonParameters
 TIM_SetButtonParameters.restype = c_short
-TIM_SetButtonParameters.argtypes = [POINTER(c_char), TIM_ButtonsMode, TIM_Channels, c_int32, c_int32]
-# *serialNo, buttonMode, channel, position1, position2
+TIM_SetButtonParameters.argtypes = [POINTER(c_char), TIM_Channels, TIM_ButtonsMode, c_int32, c_int32]
+# *serialNo, channel, buttonMode, position1, position2
 
 TIM_SetButtonParametersStruct = lib.TIM_SetButtonParametersStruct
 TIM_SetButtonParametersStruct.restype = c_short
-TIM_SetButtonParametersStruct.argtypes = [TIM_ButtonParameters, POINTER(c_char), TIM_Channels]
-# &buttonParameters, *serialNo, channel
+TIM_SetButtonParametersStruct.argtypes = [POINTER(c_char), TIM_Channels, TIM_ButtonParameters]
+# *serialNo, channel, &buttonParameters
 
 TIM_SetDriveOPParameters = lib.TIM_SetDriveOPParameters
 TIM_SetDriveOPParameters.restype = c_short
 TIM_SetDriveOPParameters.argtypes = [POINTER(c_char), TIM_Channels, c_int16, c_int32, c_int32]
-# *serialNo, channel, maxVoltage, stepAcceleration, stepRate
+# *serialNo, channel, maxVoltage, stepRate, stepAcceleration
 
 TIM_SetDriveOPParametersStruct = lib.TIM_SetDriveOPParametersStruct
 TIM_SetDriveOPParametersStruct.restype = c_short
-TIM_SetDriveOPParametersStruct.argtypes = [TIM_DriveOPParameters, POINTER(c_char), TIM_Channels]
-# &driveOPParameters, *serialNo, channel
+TIM_SetDriveOPParametersStruct.argtypes = [POINTER(c_char), TIM_Channels, TIM_DriveOPParameters]
+# *serialNo, channel, &driveOPParameters
 
 TIM_SetJogParameters = lib.TIM_SetJogParameters
 TIM_SetJogParameters.restype = c_short
 TIM_SetJogParameters.argtypes = [POINTER(c_char), TIM_Channels, TIM_JogMode, c_int32, c_int32, c_int32]
-# *serialNo, channel, jogMode, jogStepAcceleration, jogStepRate, jogStepSize
+# *serialNo, channel, jogMode, jogStepSize, jogStepRate, jogStepAcceleration
 
 TIM_SetJogParametersStruct = lib.TIM_SetJogParametersStruct
 TIM_SetJogParametersStruct.restype = c_short
-TIM_SetJogParametersStruct.argtypes = [TIM_JogParameters, POINTER(c_char), TIM_Channels]
-# &jogParameters, *serialNo, channel
+TIM_SetJogParametersStruct.argtypes = [POINTER(c_char), TIM_Channels, TIM_JogParameters]
+# *serialNo, channel, &jogParameters
 
 TIM_SetLEDBrightness = lib.TIM_SetLEDBrightness
 TIM_SetLEDBrightness.restype = c_short
@@ -305,22 +305,23 @@ TIM_StopPolling.argtypes = [POINTER(c_char)]
 
 TIM_TimeSinceLastMsgReceived = lib.TIM_TimeSinceLastMsgReceived
 TIM_TimeSinceLastMsgReceived.restype = c_bool
-TIM_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+TIM_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 TIM_WaitForMessage = lib.TIM_WaitForMessage
 TIM_WaitForMessage.restype = c_bool
-TIM_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+TIM_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -344,8 +345,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

@@ -98,23 +98,23 @@ SCC_GetBowIndex.argtypes = [POINTER(c_char)]
 
 SCC_GetButtonParams = lib.SCC_GetButtonParams
 SCC_GetButtonParams.restype = c_short
-SCC_GetButtonParams.argtypes = [MOT_ButtonModes, c_int, c_int, POINTER(c_char), c_short]
-# *buttonMode, *leftButtonPosition, *rightButtonPosition, *serialNo, *timeout
+SCC_GetButtonParams.argtypes = [POINTER(c_char), MOT_ButtonModes, c_int, c_int, c_short]
+# *serialNo, *buttonMode, *leftButtonPosition, *rightButtonPosition, *timeout
 
 SCC_GetButtonParamsBlock = lib.SCC_GetButtonParamsBlock
 SCC_GetButtonParamsBlock.restype = c_short
-SCC_GetButtonParamsBlock.argtypes = [MOT_ButtonParameters, POINTER(c_char)]
-# *buttonParams, *serialNo
+SCC_GetButtonParamsBlock.argtypes = [POINTER(c_char), MOT_ButtonParameters]
+# *serialNo, *buttonParams
 
 SCC_GetCalibrationFile = lib.SCC_GetCalibrationFile
 SCC_GetCalibrationFile.restype = c_bool
 SCC_GetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_short]
-# *filename, *serialNo, sizeOfBuffer
+# *serialNo, *filename, sizeOfBuffer
 
 SCC_GetDeviceUnitFromRealValue = lib.SCC_GetDeviceUnitFromRealValue
 SCC_GetDeviceUnitFromRealValue.restype = c_short
-SCC_GetDeviceUnitFromRealValue.argtypes = [c_int, POINTER(c_char), c_double, c_int]
-# *device_unit, *serialNo, real_unit, unitType
+SCC_GetDeviceUnitFromRealValue.argtypes = [POINTER(c_char), c_double, c_int, c_int]
+# *serialNo, real_unit, *device_unit, unitType
 
 SCC_GetEncoderCounter = lib.SCC_GetEncoderCounter
 SCC_GetEncoderCounter.restype = c_long
@@ -124,27 +124,27 @@ SCC_GetEncoderCounter.argtypes = [POINTER(c_char)]
 SCC_GetHardwareInfo = lib.SCC_GetHardwareInfo
 SCC_GetHardwareInfo.restype = c_short
 SCC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 SCC_GetHardwareInfoBlock = lib.SCC_GetHardwareInfoBlock
 SCC_GetHardwareInfoBlock.restype = c_short
-SCC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+SCC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 SCC_GetHomingParamsBlock = lib.SCC_GetHomingParamsBlock
 SCC_GetHomingParamsBlock.restype = c_short
-SCC_GetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+SCC_GetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 SCC_GetHomingVelocity = lib.SCC_GetHomingVelocity
 SCC_GetHomingVelocity.restype = c_uint
@@ -158,13 +158,13 @@ SCC_GetHubBay.argtypes = [POINTER(c_char)]
 
 SCC_GetJogMode = lib.SCC_GetJogMode
 SCC_GetJogMode.restype = c_short
-SCC_GetJogMode.argtypes = [MOT_JogModes, POINTER(c_char), MOT_StopModes]
-# *mode, *serialNo, *stopMode
+SCC_GetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
+# *serialNo, *mode, *stopMode
 
 SCC_GetJogParamsBlock = lib.SCC_GetJogParamsBlock
 SCC_GetJogParamsBlock.restype = c_short
-SCC_GetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+SCC_GetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 SCC_GetJogStepSize = lib.SCC_GetJogStepSize
 SCC_GetJogStepSize.restype = c_uint
@@ -173,8 +173,8 @@ SCC_GetJogStepSize.argtypes = [POINTER(c_char)]
 
 SCC_GetJogVelParams = lib.SCC_GetJogVelParams
 SCC_GetJogVelParams.restype = c_short
-SCC_GetJogVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+SCC_GetJogVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 SCC_GetLEDswitches = lib.SCC_GetLEDswitches
 SCC_GetLEDswitches.restype = c_long
@@ -184,33 +184,33 @@ SCC_GetLEDswitches.argtypes = [POINTER(c_char)]
 SCC_GetLimitSwitchParams = lib.SCC_GetLimitSwitchParams
 SCC_GetLimitSwitchParams.restype = c_short
 SCC_GetLimitSwitchParams.argtypes = [
-    MOT_LimitSwitchModes,
-    c_uint,
-    MOT_LimitSwitchModes,
-    c_uint,
     POINTER(c_char),
+    MOT_LimitSwitchModes,
+    MOT_LimitSwitchModes,
+    c_uint,
+    c_uint,
     MOT_LimitSwitchSWModes]
-# *anticlockwiseHardwareLimit, *anticlockwisePosition, *clockwiseHardwareLimit, *clockwisePosition, *serialNo, *softLimitMode
+# *serialNo, *clockwiseHardwareLimit, *anticlockwiseHardwareLimit, *clockwisePosition, *anticlockwisePosition, *softLimitMode
 
 SCC_GetLimitSwitchParamsBlock = lib.SCC_GetLimitSwitchParamsBlock
 SCC_GetLimitSwitchParamsBlock.restype = c_short
-SCC_GetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char)]
-# *limitSwitchParams, *serialNo
+SCC_GetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), MOT_LimitSwitchParameters]
+# *serialNo, *limitSwitchParams
 
 SCC_GetMotorParams = lib.SCC_GetMotorParams
 SCC_GetMotorParams.restype = c_short
-SCC_GetMotorParams.argtypes = [c_long, c_float, POINTER(c_char), c_long]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+SCC_GetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 SCC_GetMotorParamsExt = lib.SCC_GetMotorParamsExt
 SCC_GetMotorParamsExt.restype = c_short
-SCC_GetMotorParamsExt.argtypes = [c_double, c_double, POINTER(c_char), c_double]
-# *gearBoxRatio, *pitch, *serialNo, *stepsPerRev
+SCC_GetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
+# *serialNo, *stepsPerRev, *gearBoxRatio, *pitch
 
 SCC_GetMotorTravelLimits = lib.SCC_GetMotorTravelLimits
 SCC_GetMotorTravelLimits.restype = c_short
-SCC_GetMotorTravelLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxPosition, *minPosition, *serialNo
+SCC_GetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *minPosition, *maxPosition
 
 SCC_GetMotorTravelMode = lib.SCC_GetMotorTravelMode
 SCC_GetMotorTravelMode.restype = MOT_TravelModes
@@ -219,8 +219,8 @@ SCC_GetMotorTravelMode.argtypes = [POINTER(c_char)]
 
 SCC_GetMotorVelocityLimits = lib.SCC_GetMotorVelocityLimits
 SCC_GetMotorVelocityLimits.restype = c_short
-SCC_GetMotorVelocityLimits.argtypes = [c_double, c_double, POINTER(c_char)]
-# *maxAcceleration, *maxVelocity, *serialNo
+SCC_GetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
+# *serialNo, *maxVelocity, *maxAcceleration
 
 SCC_GetMoveAbsolutePosition = lib.SCC_GetMoveAbsolutePosition
 SCC_GetMoveAbsolutePosition.restype = c_int
@@ -234,8 +234,8 @@ SCC_GetMoveRelativeDistance.argtypes = [POINTER(c_char)]
 
 SCC_GetNextMessage = lib.SCC_GetNextMessage
 SCC_GetNextMessage.restype = c_bool
-SCC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+SCC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 SCC_GetNumberPositions = lib.SCC_GetNumberPositions
 SCC_GetNumberPositions.restype = c_int
@@ -254,23 +254,23 @@ SCC_GetPositionCounter.argtypes = [POINTER(c_char)]
 
 SCC_GetPotentiometerParams = lib.SCC_GetPotentiometerParams
 SCC_GetPotentiometerParams.restype = c_short
-SCC_GetPotentiometerParams.argtypes = [POINTER(c_char), c_long, c_ulong, c_short]
-# *serialNo, *thresholdDeflection, *velocity, index
+SCC_GetPotentiometerParams.argtypes = [POINTER(c_char), c_short, c_long, c_ulong]
+# *serialNo, index, *thresholdDeflection, *velocity
 
 SCC_GetPotentiometerParamsBlock = lib.SCC_GetPotentiometerParamsBlock
 SCC_GetPotentiometerParamsBlock.restype = c_short
-SCC_GetPotentiometerParamsBlock.argtypes = [MOT_PotentiometerSteps, POINTER(c_char)]
-# *potentiometerSteps, *serialNo
+SCC_GetPotentiometerParamsBlock.argtypes = [POINTER(c_char), MOT_PotentiometerSteps]
+# *serialNo, *potentiometerSteps
 
 SCC_GetPowerParams = lib.SCC_GetPowerParams
 SCC_GetPowerParams.restype = c_short
-SCC_GetPowerParams.argtypes = [MOT_PowerParameters, POINTER(c_char)]
-# *powerParams, *serialNo
+SCC_GetPowerParams.argtypes = [POINTER(c_char), MOT_PowerParameters]
+# *serialNo, *powerParams
 
 SCC_GetRealValueFromDeviceUnit = lib.SCC_GetRealValueFromDeviceUnit
 SCC_GetRealValueFromDeviceUnit.restype = c_short
-SCC_GetRealValueFromDeviceUnit.argtypes = [c_double, POINTER(c_char), c_int, c_int]
-# *real_unit, *serialNo, device_unit, unitType
+SCC_GetRealValueFromDeviceUnit.argtypes = [POINTER(c_char), c_int, c_double, c_int]
+# *serialNo, device_unit, *real_unit, unitType
 
 SCC_GetSoftLimitMode = lib.SCC_GetSoftLimitMode
 SCC_GetSoftLimitMode.restype = MOT_LimitsSoftwareApproachPolicy
@@ -299,8 +299,8 @@ SCC_GetStatusBits.argtypes = [POINTER(c_char)]
 
 SCC_GetVelParams = lib.SCC_GetVelParams
 SCC_GetVelParams.restype = c_short
-SCC_GetVelParams.argtypes = [c_int, c_int, POINTER(c_char)]
-# *acceleration, *maxVelocity, *serialNo
+SCC_GetVelParams.argtypes = [POINTER(c_char), c_int, c_int]
+# *serialNo, *acceleration, *maxVelocity
 
 SCC_GetVelParamsBlock = lib.SCC_GetVelParamsBlock
 SCC_GetVelParamsBlock.restype = c_short
@@ -504,13 +504,13 @@ SCC_SetButtonParams.argtypes = [POINTER(c_char), MOT_ButtonModes, c_int, c_int]
 
 SCC_SetButtonParamsBlock = lib.SCC_SetButtonParamsBlock
 SCC_SetButtonParamsBlock.restype = c_short
-SCC_SetButtonParamsBlock.argtypes = [MOT_ButtonParameters, POINTER(c_char)]
-# *buttonParams, *serialNo
+SCC_SetButtonParamsBlock.argtypes = [POINTER(c_char), MOT_ButtonParameters]
+# *serialNo, *buttonParams
 
 SCC_SetCalibrationFile = lib.SCC_SetCalibrationFile
 SCC_SetCalibrationFile.restype = c_void_p
 SCC_SetCalibrationFile.argtypes = [POINTER(c_char), POINTER(c_char), c_bool]
-# *filename, *serialNo, enabled
+# *serialNo, *filename, enabled
 
 SCC_SetDirection = lib.SCC_SetDirection
 SCC_SetDirection.restype = c_void_p
@@ -524,8 +524,8 @@ SCC_SetEncoderCounter.argtypes = [POINTER(c_char), c_long]
 
 SCC_SetHomingParamsBlock = lib.SCC_SetHomingParamsBlock
 SCC_SetHomingParamsBlock.restype = c_short
-SCC_SetHomingParamsBlock.argtypes = [MOT_HomingParameters, POINTER(c_char)]
-# *homingParams, *serialNo
+SCC_SetHomingParamsBlock.argtypes = [POINTER(c_char), MOT_HomingParameters]
+# *serialNo, *homingParams
 
 SCC_SetHomingVelocity = lib.SCC_SetHomingVelocity
 SCC_SetHomingVelocity.restype = c_short
@@ -539,8 +539,8 @@ SCC_SetJogMode.argtypes = [POINTER(c_char), MOT_JogModes, MOT_StopModes]
 
 SCC_SetJogParamsBlock = lib.SCC_SetJogParamsBlock
 SCC_SetJogParamsBlock.restype = c_short
-SCC_SetJogParamsBlock.argtypes = [MOT_JogParameters, POINTER(c_char)]
-# *jogParams, *serialNo
+SCC_SetJogParamsBlock.argtypes = [POINTER(c_char), MOT_JogParameters]
+# *serialNo, *jogParams
 
 SCC_SetJogStepSize = lib.SCC_SetJogStepSize
 SCC_SetJogStepSize.restype = c_short
@@ -562,16 +562,16 @@ SCC_SetLimitSwitchParams.restype = c_short
 SCC_SetLimitSwitchParams.argtypes = [
     POINTER(c_char),
     MOT_LimitSwitchModes,
-    c_uint,
     MOT_LimitSwitchModes,
     c_uint,
+    c_uint,
     MOT_LimitSwitchSWModes]
-# *serialNo, anticlockwiseHardwareLimit, anticlockwisePosition, clockwiseHardwareLimit, clockwisePosition, softLimitMode
+# *serialNo, clockwiseHardwareLimit, anticlockwiseHardwareLimit, clockwisePosition, anticlockwisePosition, softLimitMode
 
 SCC_SetLimitSwitchParamsBlock = lib.SCC_SetLimitSwitchParamsBlock
 SCC_SetLimitSwitchParamsBlock.restype = c_short
-SCC_SetLimitSwitchParamsBlock.argtypes = [MOT_LimitSwitchParameters, POINTER(c_char)]
-# *limitSwitchParams, *serialNo
+SCC_SetLimitSwitchParamsBlock.argtypes = [POINTER(c_char), MOT_LimitSwitchParameters]
+# *serialNo, *limitSwitchParams
 
 SCC_SetLimitsSoftwareApproachPolicy = lib.SCC_SetLimitsSoftwareApproachPolicy
 SCC_SetLimitsSoftwareApproachPolicy.restype = c_void_p
@@ -580,18 +580,18 @@ SCC_SetLimitsSoftwareApproachPolicy.argtypes = [POINTER(c_char), MOT_LimitsSoftw
 
 SCC_SetMotorParams = lib.SCC_SetMotorParams
 SCC_SetMotorParams.restype = c_short
-SCC_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_float, c_long]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+SCC_SetMotorParams.argtypes = [POINTER(c_char), c_long, c_long, c_float]
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 SCC_SetMotorParamsExt = lib.SCC_SetMotorParamsExt
 SCC_SetMotorParamsExt.restype = c_short
 SCC_SetMotorParamsExt.argtypes = [POINTER(c_char), c_double, c_double, c_double]
-# *serialNo, gearBoxRatio, pitch, stepsPerRev
+# *serialNo, stepsPerRev, gearBoxRatio, pitch
 
 SCC_SetMotorTravelLimits = lib.SCC_SetMotorTravelLimits
 SCC_SetMotorTravelLimits.restype = c_short
 SCC_SetMotorTravelLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 SCC_SetMotorTravelMode = lib.SCC_SetMotorTravelMode
 SCC_SetMotorTravelMode.restype = c_short
@@ -601,7 +601,7 @@ SCC_SetMotorTravelMode.argtypes = [POINTER(c_char), MOT_TravelModes]
 SCC_SetMotorVelocityLimits = lib.SCC_SetMotorVelocityLimits
 SCC_SetMotorVelocityLimits.restype = c_short
 SCC_SetMotorVelocityLimits.argtypes = [POINTER(c_char), c_double, c_double]
-# *serialNo, maxAcceleration, maxVelocity
+# *serialNo, maxVelocity, maxAcceleration
 
 SCC_SetMoveAbsolutePosition = lib.SCC_SetMoveAbsolutePosition
 SCC_SetMoveAbsolutePosition.restype = c_short
@@ -625,23 +625,23 @@ SCC_SetPotentiometerParams.argtypes = [POINTER(c_char), c_short, c_long, c_ulong
 
 SCC_SetPotentiometerParamsBlock = lib.SCC_SetPotentiometerParamsBlock
 SCC_SetPotentiometerParamsBlock.restype = c_short
-SCC_SetPotentiometerParamsBlock.argtypes = [MOT_PotentiometerSteps, POINTER(c_char)]
-# *potentiometerSteps, *serialNo
+SCC_SetPotentiometerParamsBlock.argtypes = [POINTER(c_char), MOT_PotentiometerSteps]
+# *serialNo, *potentiometerSteps
 
 SCC_SetPowerParams = lib.SCC_SetPowerParams
 SCC_SetPowerParams.restype = c_short
-SCC_SetPowerParams.argtypes = [MOT_PowerParameters, POINTER(c_char)]
-# *powerParams, *serialNo
+SCC_SetPowerParams.argtypes = [POINTER(c_char), MOT_PowerParameters]
+# *serialNo, *powerParams
 
 SCC_SetRotationModes = lib.SCC_SetRotationModes
 SCC_SetRotationModes.restype = c_short
-SCC_SetRotationModes.argtypes = [POINTER(c_char), MOT_MovementDirections, MOT_MovementModes]
-# *serialNo, direction, mode
+SCC_SetRotationModes.argtypes = [POINTER(c_char), MOT_MovementModes, MOT_MovementDirections]
+# *serialNo, mode, direction
 
 SCC_SetStageAxisLimits = lib.SCC_SetStageAxisLimits
 SCC_SetStageAxisLimits.restype = c_short
 SCC_SetStageAxisLimits.argtypes = [POINTER(c_char), c_int, c_int]
-# *serialNo, maxPosition, minPosition
+# *serialNo, minPosition, maxPosition
 
 SCC_SetStageType = lib.SCC_SetStageType
 SCC_SetStageType.restype = c_short
@@ -685,22 +685,23 @@ SCC_SuspendMoveMessages.argtypes = [POINTER(c_char)]
 
 SCC_TimeSinceLastMsgReceived = lib.SCC_TimeSinceLastMsgReceived
 SCC_TimeSinceLastMsgReceived.restype = c_bool
-SCC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+SCC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 SCC_WaitForMessage = lib.SCC_WaitForMessage
 SCC_WaitForMessage.restype = c_bool
-SCC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+SCC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -724,8 +725,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

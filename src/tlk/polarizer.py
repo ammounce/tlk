@@ -56,17 +56,17 @@ MPC_GetFirmwareVersion.argtypes = [POINTER(c_char)]
 MPC_GetHardwareInfo = lib.MPC_GetHardwareInfo
 MPC_GetHardwareInfo.restype = c_short
 MPC_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numchannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numchannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 MPC_GetHomeOffset = lib.MPC_GetHomeOffset
 MPC_GetHomeOffset.restype = c_double
@@ -85,8 +85,8 @@ MPC_GetMaxTravel.argtypes = [POINTER(c_char)]
 
 MPC_GetNextMessage = lib.MPC_GetNextMessage
 MPC_GetNextMessage.restype = c_bool
-MPC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+MPC_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 MPC_GetPaddleCount = lib.MPC_GetPaddleCount
 MPC_GetPaddleCount.restype = c_int
@@ -95,8 +95,8 @@ MPC_GetPaddleCount.argtypes = [POINTER(c_char)]
 
 MPC_GetPolParams = lib.MPC_GetPolParams
 MPC_GetPolParams.restype = c_short
-MPC_GetPolParams.argtypes = [PolarizerParameters, POINTER(c_char)]
-# *polParams, *serialNo
+MPC_GetPolParams.argtypes = [POINTER(c_char), PolarizerParameters]
+# *serialNo, *polParams
 
 MPC_GetPosition = lib.MPC_GetPosition
 MPC_GetPosition.restype = c_double
@@ -145,8 +145,8 @@ MPC_IsPaddleEnabled.argtypes = [POINTER(c_char), POL_Paddles]
 
 MPC_Jog = lib.MPC_Jog
 MPC_Jog.restype = c_short
-MPC_Jog.argtypes = [POINTER(c_char), MOT_TravelDirection, POL_Paddles]
-# *serialNo, direction, paddle
+MPC_Jog.argtypes = [POINTER(c_char), POL_Paddles, MOT_TravelDirection]
+# *serialNo, paddle, direction
 
 MPC_LoadNamedSettings = lib.MPC_LoadNamedSettings
 MPC_LoadNamedSettings.restype = c_bool
@@ -225,13 +225,13 @@ MPC_SetHomeOffset.argtypes = [POINTER(c_char), c_double]
 
 MPC_SetJogSize = lib.MPC_SetJogSize
 MPC_SetJogSize.restype = c_short
-MPC_SetJogSize.argtypes = [POINTER(c_char), c_double, POL_Paddles]
-# *serialNo, jogSize, paddle
+MPC_SetJogSize.argtypes = [POINTER(c_char), POL_Paddles, c_double]
+# *serialNo, paddle, jogSize
 
 MPC_SetPolParams = lib.MPC_SetPolParams
 MPC_SetPolParams.restype = c_short
-MPC_SetPolParams.argtypes = [PolarizerParameters, POINTER(c_char)]
-# *polParams, *serialNo
+MPC_SetPolParams.argtypes = [POINTER(c_char), PolarizerParameters]
+# *serialNo, *polParams
 
 MPC_SetVelocity = lib.MPC_SetVelocity
 MPC_SetVelocity.restype = c_short
@@ -255,22 +255,23 @@ MPC_StopPolling.argtypes = [POINTER(c_char)]
 
 MPC_TimeSinceLastMsgReceived = lib.MPC_TimeSinceLastMsgReceived
 MPC_TimeSinceLastMsgReceived.restype = c_bool
-MPC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+MPC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 MPC_WaitForMessage = lib.MPC_WaitForMessage
 MPC_WaitForMessage.restype = c_bool
-MPC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+MPC_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -294,8 +295,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

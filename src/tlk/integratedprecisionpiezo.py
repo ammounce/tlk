@@ -72,42 +72,42 @@ IPP_GetFrontPanelLocked.argtypes = [POINTER(c_char)]
 IPP_GetHardwareInfo = lib.IPP_GetHardwareInfo
 IPP_GetHardwareInfo.restype = c_short
 IPP_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 IPP_GetHardwareInfoBlock = lib.IPP_GetHardwareInfoBlock
 IPP_GetHardwareInfoBlock.restype = c_short
-IPP_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+IPP_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 IPP_GetIOSettings = lib.IPP_GetIOSettings
 IPP_GetIOSettings.restype = c_short
-IPP_GetIOSettings.argtypes = [PPC_IOSettings, POINTER(c_char)]
-# *ioSettings, *serialNo
+IPP_GetIOSettings.argtypes = [POINTER(c_char), PPC_IOSettings]
+# *serialNo, *ioSettings
 
 IPP_GetMMIParams = lib.IPP_GetMMIParams
 IPP_GetMMIParams.restype = c_short
 IPP_GetMMIParams.argtypes = [
-    KPZ_WheelDirectionSense,
-    c_int16,
-    c_int16,
-    c_int16,
-    c_int32,
-    c_int32,
     POINTER(c_char),
+    KPZ_WheelMode,
     KPZ_WheelChangeRate,
     c_int32,
-    KPZ_WheelMode]
-# *directionSense, *displayDimIntensity, *displayIntensity, *displayTimeout, *presetVoltage1, *presetVoltage2, *serialNo, *voltageAdjustRate, *voltageStep, *wheelMode
+    KPZ_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16,
+    c_int16,
+    c_int16]
+# *serialNo, *wheelMode, *voltageAdjustRate, *voltageStep, *directionSense, *presetVoltage1, *presetVoltage2, *displayIntensity, *displayTimeout, *displayDimIntensity
 
 IPP_GetMaxOutputVoltage = lib.IPP_GetMaxOutputVoltage
 IPP_GetMaxOutputVoltage.restype = c_short
@@ -121,8 +121,8 @@ IPP_GetMinOutputVoltage.argtypes = [POINTER(c_char)]
 
 IPP_GetNextMessage = lib.IPP_GetNextMessage
 IPP_GetNextMessage.restype = c_bool
-IPP_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+IPP_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 IPP_GetOutputVoltage = lib.IPP_GetOutputVoltage
 IPP_GetOutputVoltage.restype = c_short
@@ -131,13 +131,13 @@ IPP_GetOutputVoltage.argtypes = [POINTER(c_char)]
 
 IPP_GetPIDConsts = lib.IPP_GetPIDConsts
 IPP_GetPIDConsts.restype = c_short
-IPP_GetPIDConsts.argtypes = [PPC_PIDConsts, POINTER(c_char), c_byte]
-# *pidConsts, *serialNo, index
+IPP_GetPIDConsts.argtypes = [POINTER(c_char), c_byte, PPC_PIDConsts]
+# *serialNo, index, *pidConsts
 
 IPP_GetPIDCriteria = lib.IPP_GetPIDCriteria
 IPP_GetPIDCriteria.restype = c_short
-IPP_GetPIDCriteria.argtypes = [PPC_PIDCriteria, POINTER(c_char), c_byte]
-# *pidCriteria, *serialNo, criteriaID
+IPP_GetPIDCriteria.argtypes = [POINTER(c_char), c_byte, PPC_PIDCriteria]
+# *serialNo, criteriaID, *pidCriteria
 
 IPP_GetPosition = lib.IPP_GetPosition
 IPP_GetPosition.restype = c_short
@@ -162,15 +162,15 @@ IPP_GetStatusBits.argtypes = [POINTER(c_char)]
 IPP_GetTriggerConfigParams = lib.IPP_GetTriggerConfigParams
 IPP_GetTriggerConfigParams.restype = c_short
 IPP_GetTriggerConfigParams.argtypes = [
-    c_int32,
     POINTER(c_char),
-    c_int16,
     KSG_TriggerPortMode,
     KSG_TriggerPortPolarity,
     KSG_TriggerPortMode,
     KSG_TriggerPortPolarity,
-    c_int32]
-# *lowerLimit, *serialNo, *smoothingSamples, *trigger1Mode, *trigger1Polarity, *trigger2Mode, *trigger2Polarity, *upperLimit
+    c_int32,
+    c_int32,
+    c_int16]
+# *serialNo, *trigger1Mode, *trigger1Polarity, *trigger2Mode, *trigger2Polarity, *lowerLimit, *upperLimit, *smoothingSamples
 
 IPP_GetTriggerConfigParamsBlock = lib.IPP_GetTriggerConfigParamsBlock
 IPP_GetTriggerConfigParamsBlock.restype = c_short
@@ -299,23 +299,23 @@ IPP_SetFrontPanelLock.argtypes = [POINTER(c_char), c_bool]
 
 IPP_SetIOSettings = lib.IPP_SetIOSettings
 IPP_SetIOSettings.restype = c_short
-IPP_SetIOSettings.argtypes = [PPC_IOSettings, POINTER(c_char)]
-# *ioSettings, *serialNo
+IPP_SetIOSettings.argtypes = [POINTER(c_char), PPC_IOSettings]
+# *serialNo, *ioSettings
 
 IPP_SetMMIParams = lib.IPP_SetMMIParams
 IPP_SetMMIParams.restype = c_short
 IPP_SetMMIParams.argtypes = [
     POINTER(c_char),
-    KPZ_WheelDirectionSense,
-    c_int16,
-    c_int16,
-    c_int16,
-    c_int32,
-    c_int32,
+    KPZ_WheelMode,
     KPZ_WheelChangeRate,
     c_int32,
-    KPZ_WheelMode]
-# *serialNo, directionSense, displayDimIntensity, displayIntensity, displayTimeout, presetVoltage1, presetVoltage2, voltageAdjustRate, voltageStep, wheelMode
+    KPZ_WheelDirectionSense,
+    c_int32,
+    c_int32,
+    c_int16,
+    c_int16,
+    c_int16]
+# *serialNo, wheelMode, voltageAdjustRate, voltageStep, directionSense, presetVoltage1, presetVoltage2, displayIntensity, displayTimeout, displayDimIntensity
 
 IPP_SetOutputVoltage = lib.IPP_SetOutputVoltage
 IPP_SetOutputVoltage.restype = c_short
@@ -324,13 +324,13 @@ IPP_SetOutputVoltage.argtypes = [POINTER(c_char), c_short]
 
 IPP_SetPIDConsts = lib.IPP_SetPIDConsts
 IPP_SetPIDConsts.restype = c_short
-IPP_SetPIDConsts.argtypes = [PPC_PIDConsts, POINTER(c_char)]
-# *pidConsts, *serialNo
+IPP_SetPIDConsts.argtypes = [POINTER(c_char), PPC_PIDConsts]
+# *serialNo, *pidConsts
 
 IPP_SetPIDCriteria = lib.IPP_SetPIDCriteria
 IPP_SetPIDCriteria.restype = c_short
-IPP_SetPIDCriteria.argtypes = [PPC_PIDCriteria, POINTER(c_char)]
-# *pidCriteria, *serialNo
+IPP_SetPIDCriteria.argtypes = [POINTER(c_char), PPC_PIDCriteria]
+# *serialNo, *pidCriteria
 
 IPP_SetPosition = lib.IPP_SetPosition
 IPP_SetPosition.restype = c_short
@@ -346,14 +346,14 @@ IPP_SetTriggerConfigParams = lib.IPP_SetTriggerConfigParams
 IPP_SetTriggerConfigParams.restype = c_short
 IPP_SetTriggerConfigParams.argtypes = [
     POINTER(c_char),
+    KSG_TriggerPortMode,
+    KSG_TriggerPortPolarity,
+    KSG_TriggerPortMode,
+    KSG_TriggerPortPolarity,
     c_int32,
-    c_int16,
-    KSG_TriggerPortMode,
-    KSG_TriggerPortPolarity,
-    KSG_TriggerPortMode,
-    KSG_TriggerPortPolarity,
-    c_int32]
-# *serialNo, lowerLimit, smoothingSamples, trigger1Mode, trigger1Polarity, trigger2Mode, trigger2Polarity, upperLimit
+    c_int32,
+    c_int16]
+# *serialNo, trigger1Mode, trigger1Polarity, trigger2Mode, trigger2Polarity, lowerLimit, upperLimit, smoothingSamples
 
 IPP_SetTriggerConfigParamsBlock = lib.IPP_SetTriggerConfigParamsBlock
 IPP_SetTriggerConfigParamsBlock.restype = c_short
@@ -382,17 +382,18 @@ IPP_StopPolling.argtypes = [POINTER(c_char)]
 
 IPP_WaitForMessage = lib.IPP_WaitForMessage
 IPP_WaitForMessage.restype = c_bool
-IPP_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+IPP_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -416,8 +417,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

@@ -64,22 +64,22 @@ SG_GetForceCalib.argtypes = [POINTER(c_char)]
 SG_GetHardwareInfo = lib.SG_GetHardwareInfo
 SG_GetHardwareInfo.restype = c_short
 SG_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 SG_GetHardwareInfoBlock = lib.SG_GetHardwareInfoBlock
 SG_GetHardwareInfoBlock.restype = c_short
-SG_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+SG_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 SG_GetHubAnalogOutput = lib.SG_GetHubAnalogOutput
 SG_GetHubAnalogOutput.restype = TSG_Hub_Analogue_Modes
@@ -93,8 +93,8 @@ SG_GetHubBay.argtypes = [POINTER(c_char)]
 
 SG_GetIOsettingsBlock = lib.SG_GetIOsettingsBlock
 SG_GetIOsettingsBlock.restype = c_short
-SG_GetIOsettingsBlock.argtypes = [TSG_IOSettings, POINTER(c_char)]
-# *inputOutputSettings, *serialNo
+SG_GetIOsettingsBlock.argtypes = [POINTER(c_char), TSG_IOSettings]
+# *serialNo, *inputOutputSettings
 
 SG_GetLEDBrightness = lib.SG_GetLEDBrightness
 SG_GetLEDBrightness.restype = c_short
@@ -108,8 +108,8 @@ SG_GetMaximumTravel.argtypes = [POINTER(c_char)]
 
 SG_GetNextMessage = lib.SG_GetNextMessage
 SG_GetNextMessage.restype = c_bool
-SG_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+SG_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 SG_GetReading = lib.SG_GetReading
 SG_GetReading.restype = c_short
@@ -118,8 +118,8 @@ SG_GetReading.argtypes = [POINTER(c_char), c_bool]
 
 SG_GetReadingExt = lib.SG_GetReadingExt
 SG_GetReadingExt.restype = c_int
-SG_GetReadingExt.argtypes = [c_bool, POINTER(c_char), c_bool]
-# *overrange, *serialNo, clipReadng
+SG_GetReadingExt.argtypes = [POINTER(c_char), c_bool, c_bool]
+# *serialNo, clipReadng, *overrange
 
 SG_GetSoftwareVersion = lib.SG_GetSoftwareVersion
 SG_GetSoftwareVersion.restype = c_ulong
@@ -238,13 +238,13 @@ SG_SetHubAnalogOutput.argtypes = [POINTER(c_char), TSG_Hub_Analogue_Modes]
 
 SG_SetIOsettings = lib.SG_SetIOsettings
 SG_SetIOsettings.restype = c_short
-SG_SetIOsettings.argtypes = [POINTER(c_char), c_uint, TSG_Display_Modes, TSG_Hub_Analogue_Modes]
-# *serialNo, calibrationForce, displayMode, hubAnalogOutput
+SG_SetIOsettings.argtypes = [POINTER(c_char), TSG_Hub_Analogue_Modes, TSG_Display_Modes, c_uint]
+# *serialNo, hubAnalogOutput, displayMode, calibrationForce
 
 SG_SetIOsettingsBlock = lib.SG_SetIOsettingsBlock
 SG_SetIOsettingsBlock.restype = c_short
-SG_SetIOsettingsBlock.argtypes = [TSG_IOSettings, POINTER(c_char)]
-# *inputOutputSettings, *serialNo
+SG_SetIOsettingsBlock.argtypes = [POINTER(c_char), TSG_IOSettings]
+# *serialNo, *inputOutputSettings
 
 SG_SetLEDBrightness = lib.SG_SetLEDBrightness
 SG_SetLEDBrightness.restype = c_short
@@ -268,22 +268,23 @@ SG_StopPolling.argtypes = [POINTER(c_char)]
 
 SG_TimeSinceLastMsgReceived = lib.SG_TimeSinceLastMsgReceived
 SG_TimeSinceLastMsgReceived.restype = c_bool
-SG_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+SG_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 SG_WaitForMessage = lib.SG_WaitForMessage
 SG_WaitForMessage.restype = c_bool
-SG_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+SG_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -307,8 +308,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

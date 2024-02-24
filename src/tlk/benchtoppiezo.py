@@ -52,13 +52,13 @@ PBC_EnableLastMsgTimer.argtypes = [POINTER(c_char), c_short, c_bool, c_int32]
 
 PBC_GetFeedbackLoopPIconsts = lib.PBC_GetFeedbackLoopPIconsts
 PBC_GetFeedbackLoopPIconsts.restype = c_short
-PBC_GetFeedbackLoopPIconsts.argtypes = [c_short, c_short, POINTER(c_char), c_short]
-# *integralTerm, *proportionalTerm, *serialNo, channel
+PBC_GetFeedbackLoopPIconsts.argtypes = [POINTER(c_char), c_short, c_short, c_short]
+# *serialNo, channel, *proportionalTerm, *integralTerm
 
 PBC_GetFeedbackLoopPIconstsBlock = lib.PBC_GetFeedbackLoopPIconstsBlock
 PBC_GetFeedbackLoopPIconstsBlock.restype = c_short
-PBC_GetFeedbackLoopPIconstsBlock.argtypes = [PZ_FeedbackLoopConstants, POINTER(c_char), c_short]
-# *proportionalAndIntegralConstants, *serialNo, channel
+PBC_GetFeedbackLoopPIconstsBlock.argtypes = [POINTER(c_char), c_short, PZ_FeedbackLoopConstants]
+# *serialNo, channel, *proportionalAndIntegralConstants
 
 PBC_GetFirmwareVersion = lib.PBC_GetFirmwareVersion
 PBC_GetFirmwareVersion.restype = c_ulong
@@ -68,23 +68,23 @@ PBC_GetFirmwareVersion.argtypes = [POINTER(c_char)]
 PBC_GetHardwareInfo = lib.PBC_GetHardwareInfo
 PBC_GetHardwareInfo.restype = c_short
 PBC_GetHardwareInfo.argtypes = [
-    c_ulong,
-    c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_short,
+    POINTER(c_char),
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, channel, sizeOfModelNo, sizeOfNotes
+    c_long,
+    c_long,
+    POINTER(c_char),
+    c_ulong,
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, channel, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 PBC_GetHardwareInfoBlock = lib.PBC_GetHardwareInfoBlock
 PBC_GetHardwareInfoBlock.restype = c_short
-PBC_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char), c_short]
-# *hardwareInfo, *serialNo, channel
+PBC_GetHardwareInfoBlock.argtypes = [POINTER(c_char), c_short, TLI_HardwareInformation]
+# *serialNo, channel, *hardwareInfo
 
 PBC_GetMaxOutputVoltage = lib.PBC_GetMaxOutputVoltage
 PBC_GetMaxOutputVoltage.restype = c_short
@@ -98,8 +98,8 @@ PBC_GetMaximumTravel.argtypes = [POINTER(c_char), c_short]
 
 PBC_GetNextMessage = lib.PBC_GetNextMessage
 PBC_GetNextMessage.restype = c_bool
-PBC_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_short]
-# *messageData, *messageID, *messageType, *serialNo, channel
+PBC_GetNextMessage.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 PBC_GetNumChannels = lib.PBC_GetNumChannels
 PBC_GetNumChannels.restype = c_short
@@ -163,8 +163,8 @@ PBC_IsChannelValid.argtypes = [POINTER(c_char), c_short]
 
 PBC_LoadNamedSettings = lib.PBC_LoadNamedSettings
 PBC_LoadNamedSettings.restype = c_bool
-PBC_LoadNamedSettings.argtypes = [POINTER(c_char), POINTER(c_char), c_short]
-# *serialNo, *settingsName, channel
+PBC_LoadNamedSettings.argtypes = [POINTER(c_char), c_short, POINTER(c_char)]
+# *serialNo, channel, *settingsName
 
 PBC_LoadSettings = lib.PBC_LoadSettings
 PBC_LoadSettings.restype = c_bool
@@ -274,17 +274,17 @@ PBC_ResetParameters.argtypes = [POINTER(c_char), c_short]
 PBC_SetFeedbackLoopPIconsts = lib.PBC_SetFeedbackLoopPIconsts
 PBC_SetFeedbackLoopPIconsts.restype = c_short
 PBC_SetFeedbackLoopPIconsts.argtypes = [POINTER(c_char), c_short, c_short, c_short]
-# *serialNo, channel, integralTerm, proportionalTerm
+# *serialNo, channel, proportionalTerm, integralTerm
 
 PBC_SetFeedbackLoopPIconstsBlock = lib.PBC_SetFeedbackLoopPIconstsBlock
 PBC_SetFeedbackLoopPIconstsBlock.restype = c_short
-PBC_SetFeedbackLoopPIconstsBlock.argtypes = [PZ_FeedbackLoopConstants, POINTER(c_char), c_short]
-# *proportionalAndIntegralConstants, *serialNo, channel
+PBC_SetFeedbackLoopPIconstsBlock.argtypes = [POINTER(c_char), c_short, PZ_FeedbackLoopConstants]
+# *serialNo, channel, *proportionalAndIntegralConstants
 
 PBC_SetLUTwaveParams = lib.PBC_SetLUTwaveParams
 PBC_SetLUTwaveParams.restype = c_short
-PBC_SetLUTwaveParams.argtypes = [PZ_LUTWaveParameters, POINTER(c_char), c_short]
-# *LUTwaveParams, *serialNo, channel
+PBC_SetLUTwaveParams.argtypes = [POINTER(c_char), c_short, PZ_LUTWaveParameters]
+# *serialNo, channel, *LUTwaveParams
 
 PBC_SetLUTwaveSample = lib.PBC_SetLUTwaveSample
 PBC_SetLUTwaveSample.restype = c_short
@@ -353,22 +353,23 @@ PBC_StopPolling.argtypes = [POINTER(c_char), c_short]
 
 PBC_TimeSinceLastMsgReceived = lib.PBC_TimeSinceLastMsgReceived
 PBC_TimeSinceLastMsgReceived.restype = c_bool
-PBC_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char), c_short]
-# &lastUpdateTimeMS, *serialNo, channel
+PBC_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_short, c_int64]
+# *serialNo, channel, &lastUpdateTimeMS
 
 PBC_WaitForMessage = lib.PBC_WaitForMessage
 PBC_WaitForMessage.restype = c_bool
-PBC_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char), c_short]
-# *messageData, *messageID, *messageType, *serialNo, channel
+PBC_WaitForMessage.argtypes = [POINTER(c_char), c_short, c_long, c_long, c_ulong]
+# *serialNo, channel, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -392,8 +393,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

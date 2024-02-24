@@ -111,9 +111,9 @@ from .enumerations import (
 
 class BNT_IO_Settings(Structure):
     _fields_ = [
-        ("BNCtriggerOrLowVoltageOut", BNT_BNCTriggerModes),
         ("amplifierCurrentLimit", BNT_CurrentLimit),
         ("amplifierLowPassFilter", BNT_OutputLowPassFilter),
+        ("BNCtriggerOrLowVoltageOut", BNT_BNCTriggerModes),
         ("channel", c_long),
         ("feedbackSignal", BNT_FeedbackSignalSelection),
     ]
@@ -128,8 +128,8 @@ class FF_IOSettings(Structure):
         ("digIO2OperMode", FF_IOModes),
         ("digIO2PulseWidth", c_uint),
         ("digIO2SignalMode", FF_SignalModes),
-        ("reserved", c_uint),
         ("reserved1", c_int),
+        ("reserved", c_uint),
         ("transitTime", c_uint),
     ]
 
@@ -281,35 +281,41 @@ class KMOT_MMIParams(Structure):
         ("DisplayTimeout", c_int16),
         ("PresentPos1", c_int32),
         ("PresentPos2", c_int32),
-        ("WheelAcceleration", c_int32),
-        ("WheelDirectionSense", MOT_DirectionSense),
-        ("WheelMaxVelocity", c_int32),
-        ("WheelMode", KMOT_WheelMode),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
+        ("WheelAcceleration", c_int32),
+        ("WheelDirectionSense", MOT_DirectionSense),
+        ("WheelMaxVelocity", c_int32),
+        ("WheelMode", KMOT_WheelMode),
     ]
 
 
 class KMOT_TriggerConfig(Structure):
     _fields_ = [
-        ("Trigger1Mode", KMOT_TriggerPortMode),
-        ("Trigger1Polarity", KMOT_TriggerPortPolarity),
-        ("Trigger2Mode", KMOT_TriggerPortMode),
-        ("Trigger2Polarity", KMOT_TriggerPortPolarity),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
         ("reserved5", c_int16),
         ("reserved6", c_int16),
+        ("Trigger1Mode", KMOT_TriggerPortMode),
+        ("Trigger1Polarity", KMOT_TriggerPortPolarity),
+        ("Trigger2Mode", KMOT_TriggerPortMode),
+        ("Trigger2Polarity", KMOT_TriggerPortPolarity),
     ]
 
 
 class KMOT_TriggerParams(Structure):
     _fields_ = [
         ("Cyclecount", c_int32),
+        ("reserved1", c_int32),
+        ("reserved2", c_int32),
+        ("reserved3", c_int32),
+        ("reserved4", c_int32),
+        ("reserved5", c_int32),
+        ("reserved6", c_int32),
         ("TriggerIntervalFwd", c_int32),
         ("TriggerIntervalRev", c_int32),
         ("TriggerPulseCountFwd", c_int32),
@@ -317,12 +323,6 @@ class KMOT_TriggerParams(Structure):
         ("TriggerPulseWidth", c_int32),
         ("TriggerStartPositionFwd", c_int32),
         ("TriggerStartPositionRev", c_int32),
-        ("reserved1", c_int32),
-        ("reserved2", c_int32),
-        ("reserved3", c_int32),
-        ("reserved4", c_int32),
-        ("reserved5", c_int32),
-        ("reserved6", c_int32),
     ]
 
 
@@ -335,23 +335,23 @@ class KNA_FeedbackLoopConstants(Structure):
 
 class KNA_IOSettings(Structure):
     _fields_ = [
-        ("highVoltageOutRange", KNA_HighVoltageRange),
         ("highVoltageOutputRoute", KNA_HighOutputVoltageRoute),
-        ("lowVoltageOutRange", KNA_LowVoltageRange),
+        ("highVoltageOutRange", KNA_HighVoltageRange),
         ("lowVoltageOutputRoute", KNA_LowOutputVoltageRoute),
+        ("lowVoltageOutRange", KNA_LowVoltageRange),
     ]
 
 
 class KNA_MMIParams(Structure):
     _fields_ = [
         ("DisplayIntensity", c_uint16),
-        ("WheelAdjustRate", KNA_WheelAdjustRate),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
         ("reserved5", c_int16),
         ("reserved6", c_int16),
+        ("WheelAdjustRate", KNA_WheelAdjustRate),
     ]
 
 
@@ -377,14 +377,14 @@ class KNA_TIAReading(Structure):
 
 class KNA_TriggerConfig(Structure):
     _fields_ = [
-        ("Trigger1Mode", KNA_TriggerPortMode),
-        ("Trigger1Polarity", KNA_TriggerPolarity),
-        ("Trigger2Mode", KNA_TriggerPortMode),
-        ("Trigger2Polarity", KNA_TriggerPolarity),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
+        ("Trigger1Mode", KNA_TriggerPortMode),
+        ("Trigger1Polarity", KNA_TriggerPolarity),
+        ("Trigger2Mode", KNA_TriggerPortMode),
+        ("Trigger2Polarity", KNA_TriggerPolarity),
         ("unused1", c_int16),
         ("unused2", c_int16),
     ]
@@ -402,12 +402,12 @@ class KPC_MMIParams(Structure):
         ("PresentPos2", c_int16),
         ("PresentVolt1", c_int16),
         ("PresentVolt2", c_int16),
-        ("VoltageAdjustRate", KPZ_WheelChangeRate),
-        ("VoltageStep", c_int16),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
+        ("VoltageAdjustRate", KPZ_WheelChangeRate),
+        ("VoltageStep", c_int16),
     ]
 
 
@@ -417,15 +417,15 @@ class KPC_TriggerConfig(Structure):
         ("MonitorFilterFrequency", c_int16),
         ("MonitorOutput", KPC_MonitorOutputMode),
         ("MonitorOutputSoftwareValue", c_int32),
+        ("reserved1", c_int16),
+        ("reserved2", c_int16),
+        ("reserved3", c_int16),
         ("SmoothingSamples", c_int16),
         ("Trigger1Mode", KPC_TriggerPortMode),
         ("Trigger1Polarity", KPC_TriggerPortPolarity),
         ("Trigger2Mode", KPC_TriggerPortMode),
         ("Trigger2Polarity", KPC_TriggerPortPolarity),
         ("UpperLimit", c_int32),
-        ("reserved1", c_int16),
-        ("reserved2", c_int16),
-        ("reserved3", c_int16),
     ]
 
 
@@ -438,27 +438,27 @@ class KPZ_MMIParams(Structure):
         ("JoystickMode", KPZ_WheelMode),
         ("PresentPos1", c_int32),
         ("PresentPos2", c_int32),
-        ("VoltageAdjustRate", KPZ_WheelChangeRate),
-        ("VoltageStep", c_int32),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
+        ("VoltageAdjustRate", KPZ_WheelChangeRate),
+        ("VoltageStep", c_int32),
     ]
 
 
 class KPZ_TriggerConfig(Structure):
     _fields_ = [
-        ("Trigger1Mode", KPZ_TriggerPortMode),
-        ("Trigger1Polarity", KPZ_TriggerPortPolarity),
-        ("Trigger2Mode", KPZ_TriggerPortMode),
-        ("Trigger2Polarity", KPZ_TriggerPortPolarity),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
         ("reserved5", c_int16),
         ("reserved6", c_int16),
+        ("Trigger1Mode", KPZ_TriggerPortMode),
+        ("Trigger1Polarity", KPZ_TriggerPortPolarity),
+        ("Trigger2Mode", KPZ_TriggerPortMode),
+        ("Trigger2Polarity", KPZ_TriggerPortPolarity),
     ]
 
 
@@ -472,7 +472,6 @@ class KSC_MMIParams(Structure):
         ("reserved3", c_int16),
         ("reserved4", c_int16),
         ("unused1", c_int16),
-        ("unused10", c_int16),
         ("unused2", c_int16),
         ("unused3", c_int16),
         ("unused4", c_int16),
@@ -481,38 +480,39 @@ class KSC_MMIParams(Structure):
         ("unused7", c_int16),
         ("unused8", c_int16),
         ("unused9", c_int16),
+        ("unused10", c_int16),
     ]
 
 
 class KSC_TriggerConfig(Structure):
     _fields_ = [
-        ("Trigger1Mode", KSC_TriggerPortMode),
-        ("Trigger1Polarity", KSC_TriggerPolarity),
-        ("Trigger2Mode", KSC_TriggerPortMode),
-        ("Trigger2Polarity", KSC_TriggerPolarity),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
         ("reserved5", c_int16),
         ("reserved6", c_int16),
+        ("Trigger1Mode", KSC_TriggerPortMode),
+        ("Trigger1Polarity", KSC_TriggerPolarity),
+        ("Trigger2Mode", KSC_TriggerPortMode),
+        ("Trigger2Polarity", KSC_TriggerPolarity),
     ]
 
 
 class KSG_TriggerConfig(Structure):
     _fields_ = [
         ("LowerLimit", c_int32),
-        ("Trigger1Mode", KPZ_TriggerPortMode),
-        ("Trigger1Polarity", KPZ_TriggerPortPolarity),
-        ("Trigger2Mode", KPZ_TriggerPortMode),
-        ("Trigger2Polarity", KPZ_TriggerPortPolarity),
-        ("UpperLimit", c_int32),
         ("reserved1", c_int16),
         ("reserved2", c_int16),
         ("reserved3", c_int16),
         ("reserved4", c_int16),
         ("reserved5", c_int16),
         ("reserved6", c_int16),
+        ("Trigger1Mode", KPZ_TriggerPortMode),
+        ("Trigger1Polarity", KPZ_TriggerPortPolarity),
+        ("Trigger2Mode", KPZ_TriggerPortMode),
+        ("Trigger2Polarity", KPZ_TriggerPortPolarity),
+        ("UpperLimit", c_int32),
     ]
 
 
@@ -561,14 +561,14 @@ class MOT_BVC_ScanParams(Structure):
 
 class MOT_BrushlessCurrentLoopParameters(Structure):
     _fields_ = [
-        ("deadErrorBand", c_long),
-        ("feedForward", c_long),
-        ("integralGain", c_long),
-        ("integralLimit", c_long),
-        ("lastNotUsed", c_long),
-        ("notUsed", c_long),
         ("phase", MOT_CurrentLoopPhases),
         ("proportionalGain", c_long),
+        ("integralGain", c_long),
+        ("integralLimit", c_long),
+        ("deadErrorBand", c_long),
+        ("feedForward", c_long),
+        ("notUsed", c_long),
+        ("lastNotUsed", c_long),
     ]
 
 
@@ -576,36 +576,36 @@ class MOT_BrushlessElectricOutputParameters(Structure):
     _fields_ = [
         ("continuousCurrentLimit", c_long),
         ("excessEnergyLimit", c_long),
-        ("lastNotUsed", c_long),
-        ("motorSignalBias", c_short),
         ("motorSignalLimit", c_short),
+        ("motorSignalBias", c_short),
         ("notUsed", c_long),
+        ("lastNotUsed", c_long),
     ]
 
 
 class MOT_BrushlessPositionLoopParameters(Structure):
     _fields_ = [
-        ("accelerationFeedForward", c_long),
-        ("derivativeRecalculationTime", c_long),
-        ("differentialGain", c_long),
-        ("factorForOutput", c_long),
+        ("proportionalGain", c_long),
         ("integralGain", c_long),
         ("integralLimit", c_ulong),
-        ("lastNotUsed", c_long),
-        ("notUsed", c_long),
-        ("positionErrorLimit", c_ulong),
-        ("proportionalGain", c_long),
+        ("differentialGain", c_long),
+        ("derivativeRecalculationTime", c_long),
+        ("factorForOutput", c_long),
         ("velocityFeedForward", c_long),
+        ("accelerationFeedForward", c_long),
+        ("positionErrorLimit", c_ulong),
+        ("notUsed", c_long),
+        ("lastNotUsed", c_long),
     ]
 
 
 class MOT_BrushlessTrackSettleParameters(Structure):
     _fields_ = [
-        ("lastNotUsed", c_long),
+        ("time", c_long),
+        ("settledError", c_long),
         ("maxTrackingError", c_long),
         ("notUsed", c_long),
-        ("settledError", c_long),
-        ("time", c_long),
+        ("lastNotUsed", c_long),
     ]
 
 
@@ -638,8 +638,8 @@ class MOT_DC_PIDParameters(Structure):
 
 class MOT_EncoderResolutionParams(Structure):
     _fields_ = [
-        ("encoderResolutionWholeNumber", c_ulong),
         ("enconderResolutionFraction", c_long),
+        ("encoderResolutionWholeNumber", c_ulong),
         ("unused1", c_long),
         ("unused2", c_long),
         ("unused3", c_long),
@@ -657,9 +657,9 @@ class MOT_HomingParameters(Structure):
 
 class MOT_VelocityParameters(Structure):
     _fields_ = [
+        ("minVelocity", c_int),
         ("acceleration", c_int),
         ("maxVelocity", c_int),
-        ("minVelocity", c_int),
     ]
 
 
@@ -667,18 +667,18 @@ class MOT_JogParameters(Structure):
     _fields_ = [
         ("mode", MOT_JogModes),
         ("stepSize", c_uint),
-        ("stopMode", MOT_StopModes),
         ("velParams", MOT_VelocityParameters),
+        ("stopMode", MOT_StopModes),
     ]
 
 
 class MOT_JoystickParameters(Structure):
     _fields_ = [
-        ("directionSense", MOT_TravelDirection),
-        ("highGearAcceleration", c_ulong),
+        ("lowGearMaxVelocity", c_ulong),
         ("highGearMaxVelocity", c_ulong),
         ("lowGearAcceleration", c_ulong),
-        ("lowGearMaxVelocity", c_ulong),
+        ("highGearAcceleration", c_ulong),
+        ("directionSense", MOT_TravelDirection),
     ]
 
 
@@ -690,10 +690,7 @@ class MOT_LCDMoveParams(Structure):
         ("PresentPosition1", c_int),
         ("PresentPosition2", c_int),
         ("PresentPosition3", c_int),
-        ("StepSize", c_uint),
-        ("StopMode", MOT_StopModes),
         ("reserved1", c_long),
-        ("reserved10", c_long),
         ("reserved2", c_long),
         ("reserved3", c_long),
         ("reserved4", c_long),
@@ -702,6 +699,9 @@ class MOT_LCDMoveParams(Structure):
         ("reserved7", c_long),
         ("reserved8", c_long),
         ("reserved9", c_long),
+        ("reserved10", c_long),
+        ("StepSize", c_uint),
+        ("StopMode", MOT_StopModes),
     ]
 
 
@@ -712,7 +712,6 @@ class MOT_LCDParams(Structure):
         ("DisplayTimeout", c_long),
         ("JSSensitivity", c_long),
         ("reserved1", c_long),
-        ("reserved10", c_long),
         ("reserved2", c_long),
         ("reserved3", c_long),
         ("reserved4", c_long),
@@ -721,6 +720,7 @@ class MOT_LCDParams(Structure):
         ("reserved7", c_long),
         ("reserved8", c_long),
         ("reserved9", c_long),
+        ("reserved10", c_long),
     ]
 
 
@@ -735,11 +735,11 @@ class MOT_LimitSwitchParameters(Structure):
 
 class MOT_PIDLoopEncoderParams(Structure):
     _fields_ = [
-        ("PIDOutputLimit", c_int),
-        ("PIDTolerance", c_int),
         ("differentialGain", c_int),
         ("integralGain", c_int),
         ("loopMode", MOT_PID_LoopMode),
+        ("PIDOutputLimit", c_int),
+        ("PIDTolerance", c_int),
         ("proportionalGain", c_int),
     ]
 
@@ -790,14 +790,16 @@ class MOT_RasterScanMoveParams(Structure):
 
 class MOT_StageAxisParameters(Structure):
     _fields_ = [
+        ("stageID", c_long),
         ("axisID", c_long),
+        ("partNumber", 16 * c_char),
+        ("serialNumber", c_ulong),
         ("countsPerUnit", c_ulong),
+        ("minPosition", c_int),
+        ("maxPosition", c_int),
         ("maxAcceleration", c_int),
         ("maxDecceleration", c_int),
-        ("maxPosition", c_int),
         ("maxVelocity", c_int),
-        ("minPosition", c_int),
-        ("partNumber", 16 * c_char),
         ("reserved1", c_long),
         ("reserved2", c_long),
         ("reserved3", c_long),
@@ -806,8 +808,6 @@ class MOT_StageAxisParameters(Structure):
         ("reserved6", c_ulong),
         ("reserved7", c_ulong),
         ("reserved8", c_ulong),
-        ("serialNumber", c_ulong),
-        ("stageID", c_long),
     ]
 
 
@@ -820,25 +820,25 @@ class MOT_TriggerIOConfigParameters(Structure):
         ("PulseCountFwd", c_long),
         ("PulseCountRev", c_long),
         ("PulseWidth", c_long),
-        ("StartPositionFwd", c_long),
-        ("StartPositionRev", c_long),
-        ("TriggerInMode", MOT_TriggerInputConfigModes),
-        ("TriggerInPolarity", MOT_TriggerPolarity),
-        ("TriggerOUtPolarity", MOT_TriggerPolarity),
-        ("TriggerOutMode", MOT_TriggerOutputConfigModes),
         ("reserved1", c_long),
         ("reserved2", c_long),
         ("reserved3", c_long),
         ("reserved4", c_long),
+        ("StartPositionFwd", c_long),
+        ("StartPositionRev", c_long),
+        ("TriggerInMode", MOT_TriggerInputConfigModes),
+        ("TriggerInPolarity", MOT_TriggerPolarity),
+        ("TriggerOutMode", MOT_TriggerOutputConfigModes),
+        ("TriggerOUtPolarity", MOT_TriggerPolarity),
     ]
 
 
 class MOT_VelocityProfileParameters(Structure):
     _fields_ = [
-        ("jerk", c_ulong),
-        ("lastNotUsed", c_long),
         ("mode", MOT_VelocityProfileModes),
+        ("jerk", c_ulong),
         ("notUsed", c_long),
+        ("lastNotUsed", c_long),
     ]
 
 
@@ -860,13 +860,6 @@ class MPC_IOSettings(Structure):
 class NT_CircleDiameterLUT(Structure):
     _fields_ = [
         ("LUT_Diameter1", c_long),
-        ("LUT_Diameter10", c_long),
-        ("LUT_Diameter11", c_long),
-        ("LUT_Diameter12", c_long),
-        ("LUT_Diameter13", c_long),
-        ("LUT_Diameter14", c_long),
-        ("LUT_Diameter15", c_long),
-        ("LUT_Diameter16", c_long),
         ("LUT_Diameter2", c_long),
         ("LUT_Diameter3", c_long),
         ("LUT_Diameter4", c_long),
@@ -875,6 +868,13 @@ class NT_CircleDiameterLUT(Structure):
         ("LUT_Diameter7", c_long),
         ("LUT_Diameter8", c_long),
         ("LUT_Diameter9", c_long),
+        ("LUT_Diameter10", c_long),
+        ("LUT_Diameter11", c_long),
+        ("LUT_Diameter12", c_long),
+        ("LUT_Diameter13", c_long),
+        ("LUT_Diameter14", c_long),
+        ("LUT_Diameter15", c_long),
+        ("LUT_Diameter16", c_long),
     ]
 
 
@@ -905,8 +905,8 @@ class NT_HVComponent(Structure):
 
 class NT_IOSettings(Structure):
     _fields_ = [
-        ("lowVoltageOutputRange", NT_VoltageRange),
         ("lowVoltageOutputRoute", NT_OutputVoltageRoute),
+        ("lowVoltageOutputRange", NT_VoltageRange),
         ("notYetInUse", c_long),
         ("unused", c_long),
     ]
@@ -914,11 +914,11 @@ class NT_IOSettings(Structure):
 
 class NT_LowPassFilterParameters(Structure):
     _fields_ = [
+        ("param1", NT_LowPassFrequency),
         ("notUsed1", NT_LowPassFrequency),
         ("notUsed2", NT_LowPassFrequency),
         ("notUsed3", NT_LowPassFrequency),
         ("notUsed4", NT_LowPassFrequency),
-        ("param1", NT_LowPassFrequency),
     ]
 
 
@@ -954,9 +954,9 @@ class PDXC2_ClosedLoopParameters(Structure):
 
 class PDXC2_JogParameters(Structure):
     _fields_ = [
+        ("ClosedLoopAcceleration", c_int32),
         ("CloseLoopSpeed", c_int32),
         ("CloseLoopStepSize", c_int32),
-        ("ClosedLoopAcceleration", c_int32),
         ("JogMode", PZ_JogModes),
         ("OpenLoopAcceleration", c_int32),
         ("OpenLoopStepRate", c_int32),
@@ -980,10 +980,10 @@ class PDXC2_Status(Structure):
 
 class PDXC2_TriggerParams(Structure):
     _fields_ = [
+        ("analongInGain", c_float),
         ("analogInOffset", c_float),
         ("analogOutGain", c_float),
         ("analogOutOffset", c_float),
-        ("analongInGain", c_float),
         ("fallFixedStep", c_int32),
         ("fallPosition1", c_int32),
         ("fallPosition2", c_int32),
@@ -995,10 +995,10 @@ class PDXC2_TriggerParams(Structure):
 
 class PPC_IOSettings(Structure):
     _fields_ = [
-        ("FPBrightness", PCC_DisplayIntensity),
         ("controlSrc", PPC_IOControlMode),
         ("feedbackPolarity", PCC_FeedbackPolarity),
         ("feedbackSrc", PCC_IOFeedbackSourceDefinition),
+        ("FPBrightness", PCC_DisplayIntensity),
         ("monitorOPBandwidth", PCC_IOOutputBandwidth),
         ("monitorOPSig", PCC_IOOutputMode),
     ]
@@ -1029,8 +1029,8 @@ class PPC_PIDConsts(Structure):
 
 class PPC_PIDCriteria(Structure):
     _fields_ = [
-        ("PIDConstIndex", c_uint16),
         ("criterialD", c_uint8),
+        ("PIDConstIndex", c_uint16),
         ("priority", c_uint16),
         ("targetErrorWindow", c_uint16),
         ("unusedByte", c_uint8),
@@ -1049,8 +1049,8 @@ class PZ_FeedbackLoopConstants(Structure):
 
 class PZ_LUTWaveParameters(Structure):
     _fields_ = [
-        ("LUTValueDelay", c_uint),
         ("cycleLength", c_short),
+        ("LUTValueDelay", c_uint),
         ("mode", PZ_OutputLUTModes),
         ("numCycles", c_uint),
         ("numOutTriggerRepeat", c_short),
@@ -1105,8 +1105,8 @@ class QD_LoopParameters(Structure):
     _fields_ = [
         ("differentialGain", c_float),
         ("integralGain", c_float),
-        ("lowPassFilerEnabled", QD_FilterEnable),
         ("lowPassfilterCutOffFreq", c_float),
+        ("lowPassFilerEnabled", QD_FilterEnable),
         ("notchFilterCenterFrequency", c_float),
         ("notchFilterEnabled", QD_FilterEnable),
         ("notchFilterQ", c_float),
@@ -1183,31 +1183,31 @@ class TC_LoopParameters(Structure):
 
 class TLI_DeviceInfo(Structure):
     _fields_ = [
-        ("PID", c_ulong),
+        ("typeID", c_ulong),
         ("description", 65 * c_char),
-        ("isCustomType", c_bool),
+        ("serialNo", 9 * c_char),
+        ("PID", c_ulong),
         ("isKnownType", c_bool),
-        ("isLaser", c_bool),
+        ("motorType", MOT_MotorTypes),
         ("isPiezoDevice", c_bool),
+        ("isLaser", c_bool),
+        ("isCustomType", c_bool),
         ("isRack", c_bool),
         ("maxChannels", c_short),
-        ("motorType", MOT_MotorTypes),
-        ("serialNo", 9 * c_char),
-        ("typeID", c_ulong),
     ]
 
 
 class TLI_HardwareInformation(Structure):
     _fields_ = [
-        ("deviceDependantData", 12 * c_byte),
-        ("firmwareVersion", c_ulong),
-        ("hardwareVersion", c_long),
-        ("modelNumber", 8 * c_char),
-        ("modificationState", c_long),
-        ("notes", 48 * c_char),
-        ("numChannels", c_short),
         ("serialNumber", c_ulong),
+        ("modelNumber", 8 * c_char),
         ("type", c_long),
+        ("firmwareVersion", c_ulong),
+        ("notes", 48 * c_char),
+        ("deviceDependantData", 12 * c_byte),
+        ("hardwareVersion", c_long),
+        ("modificationState", c_long),
+        ("numChannels", c_short),
     ]
 
 

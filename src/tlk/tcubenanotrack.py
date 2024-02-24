@@ -67,23 +67,23 @@ NT_GetCircleDiameter.argtypes = [POINTER(c_char)]
 
 NT_GetCircleDiameterLUT = lib.NT_GetCircleDiameterLUT
 NT_GetCircleDiameterLUT.restype = c_short
-NT_GetCircleDiameterLUT.argtypes = [NT_CircleDiameterLUT, POINTER(c_char)]
-# *LUT, *serialNo
+NT_GetCircleDiameterLUT.argtypes = [POINTER(c_char), NT_CircleDiameterLUT]
+# *serialNo, *LUT
 
 NT_GetCircleHomePosition = lib.NT_GetCircleHomePosition
 NT_GetCircleHomePosition.restype = c_short
-NT_GetCircleHomePosition.argtypes = [NT_HVComponent, POINTER(c_char)]
-# *position, *serialNo
+NT_GetCircleHomePosition.argtypes = [POINTER(c_char), NT_HVComponent]
+# *serialNo, *position
 
 NT_GetCircleParams = lib.NT_GetCircleParams
 NT_GetCircleParams.restype = c_short
-NT_GetCircleParams.argtypes = [NT_CircleParameters, POINTER(c_char)]
-# *params, *serialNo
+NT_GetCircleParams.argtypes = [POINTER(c_char), NT_CircleParameters]
+# *serialNo, *params
 
 NT_GetCirclePosition = lib.NT_GetCirclePosition
 NT_GetCirclePosition.restype = c_short
-NT_GetCirclePosition.argtypes = [NT_HVComponent, POINTER(c_char)]
-# *position, *serialNo
+NT_GetCirclePosition.argtypes = [POINTER(c_char), NT_HVComponent]
+# *serialNo, *position
 
 NT_GetFeedbackSource = lib.NT_GetFeedbackSource
 NT_GetFeedbackSource.restype = NT_FeedbackSource
@@ -103,22 +103,22 @@ NT_GetGain.argtypes = [POINTER(c_char)]
 NT_GetHardwareInfo = lib.NT_GetHardwareInfo
 NT_GetHardwareInfo.restype = c_short
 NT_GetHardwareInfo.argtypes = [
+    POINTER(c_char),
+    POINTER(c_char),
     c_ulong,
     c_long,
-    POINTER(c_char),
     c_long,
     POINTER(c_char),
-    c_long,
-    POINTER(c_char),
-    c_long,
     c_ulong,
-    c_ulong]
-# *firmwareVersion, *hardwareVersion, *modelNo, *modificationState, *notes, *numChannels, *serialNo, *type, sizeOfModelNo, sizeOfNotes
+    c_ulong,
+    c_long,
+    c_long]
+# *serialNo, *modelNo, sizeOfModelNo, *type, *numChannels, *notes, sizeOfNotes, *firmwareVersion, *hardwareVersion, *modificationState
 
 NT_GetHardwareInfoBlock = lib.NT_GetHardwareInfoBlock
 NT_GetHardwareInfoBlock.restype = c_short
-NT_GetHardwareInfoBlock.argtypes = [TLI_HardwareInformation, POINTER(c_char)]
-# *hardwareInfo, *serialNo
+NT_GetHardwareInfoBlock.argtypes = [POINTER(c_char), TLI_HardwareInformation]
+# *serialNo, *hardwareInfo
 
 NT_GetHubBay = lib.NT_GetHubBay
 NT_GetHubBay.restype = POINTER(c_char)
@@ -128,17 +128,17 @@ NT_GetHubBay.argtypes = [POINTER(c_char)]
 NT_GetIOsettings = lib.NT_GetIOsettings
 NT_GetIOsettings.restype = c_short
 NT_GetIOsettings.argtypes = [
+    POINTER(c_char),
     KNA_HighVoltageRange,
-    KNA_HighOutputVoltageRoute,
     NT_VoltageRange,
-    NT_OutputVoltageRoute,
-    POINTER(c_char)]
-# *highVoltageOutRange, *highVoltageOutputRoute, *lowVoltageOutRange, *lowVoltageOutputRoute, *serialNo
+    KNA_HighOutputVoltageRoute,
+    NT_OutputVoltageRoute]
+# *serialNo, *highVoltageOutRange, *lowVoltageOutRange, *highVoltageOutputRoute, *lowVoltageOutputRoute
 
 NT_GetIOsettingsBlock = lib.NT_GetIOsettingsBlock
 NT_GetIOsettingsBlock.restype = c_short
-NT_GetIOsettingsBlock.argtypes = [BNT_IO_Settings, KNA_IOSettings, NT_IOSettings, POINTER(c_char), c_long]
-# *IOsettings, *IOsettings, *IOsettings, *serialNo, channel
+NT_GetIOsettingsBlock.argtypes = [POINTER(c_char), BNT_IO_Settings, KNA_IOSettings, NT_IOSettings, c_long]
+# *serialNo, *IOsettings, *IOsettings, *IOsettings, channel
 
 NT_GetLEDBrightness = lib.NT_GetLEDBrightness
 NT_GetLEDBrightness.restype = c_short
@@ -152,23 +152,23 @@ NT_GetMode.argtypes = [POINTER(c_char)]
 
 NT_GetNextMessage = lib.NT_GetNextMessage
 NT_GetNextMessage.restype = c_bool
-NT_GetNextMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+NT_GetNextMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 NT_GetPhaseCompensationParams = lib.NT_GetPhaseCompensationParams
 NT_GetPhaseCompensationParams.restype = c_short
-NT_GetPhaseCompensationParams.argtypes = [NT_HVComponent, POINTER(c_char)]
-# *params, *serialNo
+NT_GetPhaseCompensationParams.argtypes = [POINTER(c_char), NT_HVComponent]
+# *serialNo, *params
 
 NT_GetRangeMode = lib.NT_GetRangeMode
 NT_GetRangeMode.restype = c_short
-NT_GetRangeMode.argtypes = [NT_TIARangeMode, NT_OddOrEven, POINTER(c_char)]
-# *mode, *oddOrEven, *serialNo
+NT_GetRangeMode.argtypes = [POINTER(c_char), NT_TIARangeMode, NT_OddOrEven]
+# *serialNo, *mode, *oddOrEven
 
 NT_GetReading = lib.NT_GetReading
 NT_GetReading.restype = c_short
-NT_GetReading.argtypes = [NT_TIAReading, KNA_TIAReading, POINTER(c_char)]
-# *reading, *reading, *serialNo
+NT_GetReading.argtypes = [POINTER(c_char), NT_TIAReading, KNA_TIAReading]
+# *serialNo, *reading, *reading
 
 NT_GetSignalState = lib.NT_GetSignalState
 NT_GetSignalState.restype = NT_SignalState
@@ -187,8 +187,8 @@ NT_GetStatusBits.argtypes = [POINTER(c_char)]
 
 NT_GetTIALPFilterParams = lib.NT_GetTIALPFilterParams
 NT_GetTIALPFilterParams.restype = c_short
-NT_GetTIALPFilterParams.argtypes = [NT_LowPassFilterParameters, POINTER(c_char)]
-# *params, *serialNo
+NT_GetTIALPFilterParams.argtypes = [POINTER(c_char), NT_LowPassFilterParameters]
+# *serialNo, *params
 
 NT_GetTIARange = lib.NT_GetTIARange
 NT_GetTIARange.restype = NT_TIARange
@@ -197,8 +197,8 @@ NT_GetTIARange.argtypes = [POINTER(c_char)]
 
 NT_GetTIArangeParams = lib.NT_GetTIArangeParams
 NT_GetTIArangeParams.restype = c_short
-NT_GetTIArangeParams.argtypes = [NT_TIARangeParameters, KNA_TIARangeParameters, POINTER(c_char)]
-# *params, *params, *serialNo
+NT_GetTIArangeParams.argtypes = [POINTER(c_char), NT_TIARangeParameters, KNA_TIARangeParameters]
+# *serialNo, *params, *params
 
 NT_GetTrackingThresholdSignal = lib.NT_GetTrackingThresholdSignal
 NT_GetTrackingThresholdSignal.restype = c_float
@@ -347,18 +347,18 @@ NT_SetCircleDiameter.argtypes = [POINTER(c_char), c_long]
 
 NT_SetCircleDiameterLUT = lib.NT_SetCircleDiameterLUT
 NT_SetCircleDiameterLUT.restype = c_short
-NT_SetCircleDiameterLUT.argtypes = [NT_CircleDiameterLUT, POINTER(c_char)]
-# *LUT, *serialNo
+NT_SetCircleDiameterLUT.argtypes = [POINTER(c_char), NT_CircleDiameterLUT]
+# *serialNo, *LUT
 
 NT_SetCircleHomePosition = lib.NT_SetCircleHomePosition
 NT_SetCircleHomePosition.restype = c_short
-NT_SetCircleHomePosition.argtypes = [NT_HVComponent, POINTER(c_char)]
-# *position, *serialNo
+NT_SetCircleHomePosition.argtypes = [POINTER(c_char), NT_HVComponent]
+# *serialNo, *position
 
 NT_SetCircleParams = lib.NT_SetCircleParams
 NT_SetCircleParams.restype = c_short
-NT_SetCircleParams.argtypes = [NT_CircleParameters, POINTER(c_char)]
-# *params, *serialNo
+NT_SetCircleParams.argtypes = [POINTER(c_char), NT_CircleParameters]
+# *serialNo, *params
 
 NT_SetFeedbackSource = lib.NT_SetFeedbackSource
 NT_SetFeedbackSource.restype = c_short
@@ -375,15 +375,15 @@ NT_SetIOsettings.restype = c_short
 NT_SetIOsettings.argtypes = [
     POINTER(c_char),
     KNA_HighVoltageRange,
-    KNA_HighOutputVoltageRoute,
     NT_VoltageRange,
+    KNA_HighOutputVoltageRoute,
     NT_OutputVoltageRoute]
-# *serialNo, highVoltageOutRange, highVoltageOutputRoute, lowVoltageOutRange, lowVoltageOutputRoute
+# *serialNo, highVoltageOutRange, lowVoltageOutRange, highVoltageOutputRoute, lowVoltageOutputRoute
 
 NT_SetIOsettingsBlock = lib.NT_SetIOsettingsBlock
 NT_SetIOsettingsBlock.restype = c_short
-NT_SetIOsettingsBlock.argtypes = [BNT_IO_Settings, KNA_IOSettings, NT_IOSettings, POINTER(c_char), c_long]
-# *IOsettings, *IOsettings, *IOsettings, *serialNo, channel
+NT_SetIOsettingsBlock.argtypes = [POINTER(c_char), BNT_IO_Settings, KNA_IOSettings, NT_IOSettings, c_long]
+# *serialNo, *IOsettings, *IOsettings, *IOsettings, channel
 
 NT_SetLEDBrightness = lib.NT_SetLEDBrightness
 NT_SetLEDBrightness.restype = c_short
@@ -397,8 +397,8 @@ NT_SetMode.argtypes = [POINTER(c_char), NT_Mode]
 
 NT_SetPhaseCompensationParams = lib.NT_SetPhaseCompensationParams
 NT_SetPhaseCompensationParams.restype = c_short
-NT_SetPhaseCompensationParams.argtypes = [NT_HVComponent, POINTER(c_char)]
-# *params, *serialNo
+NT_SetPhaseCompensationParams.argtypes = [POINTER(c_char), NT_HVComponent]
+# *serialNo, *params
 
 NT_SetRangeMode = lib.NT_SetRangeMode
 NT_SetRangeMode.restype = c_short
@@ -407,8 +407,8 @@ NT_SetRangeMode.argtypes = [POINTER(c_char), NT_TIARangeMode, NT_OddOrEven]
 
 NT_SetTIALPFilterParams = lib.NT_SetTIALPFilterParams
 NT_SetTIALPFilterParams.restype = c_short
-NT_SetTIALPFilterParams.argtypes = [NT_LowPassFilterParameters, POINTER(c_char)]
-# *params, *serialNo
+NT_SetTIALPFilterParams.argtypes = [POINTER(c_char), NT_LowPassFilterParameters]
+# *serialNo, *params
 
 NT_SetTIARange = lib.NT_SetTIARange
 NT_SetTIARange.restype = c_short
@@ -417,8 +417,8 @@ NT_SetTIARange.argtypes = [POINTER(c_char), NT_TIARange, KNA_TIARange]
 
 NT_SetTIArangeParams = lib.NT_SetTIArangeParams
 NT_SetTIArangeParams.restype = c_short
-NT_SetTIArangeParams.argtypes = [NT_TIARangeParameters, KNA_TIARangeParameters, POINTER(c_char)]
-# *params, *params, *serialNo
+NT_SetTIArangeParams.argtypes = [POINTER(c_char), NT_TIARangeParameters, KNA_TIARangeParameters]
+# *serialNo, *params, *params
 
 NT_SetTrackingThresholdSignal = lib.NT_SetTrackingThresholdSignal
 NT_SetTrackingThresholdSignal.restype = c_short
@@ -437,22 +437,23 @@ NT_StopPolling.argtypes = [POINTER(c_char)]
 
 NT_TimeSinceLastMsgReceived = lib.NT_TimeSinceLastMsgReceived
 NT_TimeSinceLastMsgReceived.restype = c_bool
-NT_TimeSinceLastMsgReceived.argtypes = [c_int64, POINTER(c_char)]
-# &lastUpdateTimeMS, *serialNo
+NT_TimeSinceLastMsgReceived.argtypes = [POINTER(c_char), c_int64]
+# *serialNo, &lastUpdateTimeMS
 
 NT_WaitForMessage = lib.NT_WaitForMessage
 NT_WaitForMessage.restype = c_bool
-NT_WaitForMessage.argtypes = [c_ulong, c_long, c_long, POINTER(c_char)]
-# *messageData, *messageID, *messageType, *serialNo
+NT_WaitForMessage.argtypes = [POINTER(c_char), c_long, c_long, c_ulong]
+# *serialNo, *messageType, *messageID, *messageData
 
 TLI_BuildDeviceList = lib.TLI_BuildDeviceList
 TLI_BuildDeviceList.restype = c_short
-#
+TLI_BuildDeviceList.argtypes = [c_void_p]
+# void
 
 TLI_GetDeviceInfo = lib.TLI_GetDeviceInfo
 TLI_GetDeviceInfo.restype = c_short
-TLI_GetDeviceInfo.argtypes = [TLI_DeviceInfo, POINTER(c_char), POINTER(c_char)]
-# *info, *serialNo, *serialNumber
+TLI_GetDeviceInfo.argtypes = [POINTER(c_char), POINTER(c_char), TLI_DeviceInfo]
+# *serialNo, *serialNumber, *info
 
 TLI_GetDeviceList = lib.TLI_GetDeviceList
 TLI_GetDeviceList.restype = c_short
@@ -476,8 +477,8 @@ TLI_GetDeviceListByTypes.argtypes = [SafeArray, c_int, c_int]
 
 TLI_GetDeviceListByTypesExt = lib.TLI_GetDeviceListByTypesExt
 TLI_GetDeviceListByTypesExt.restype = c_short
-TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_int, c_int, c_ulong]
-# *receiveBuffer, *typeIDs, length, sizeOfBuffer
+TLI_GetDeviceListByTypesExt.argtypes = [POINTER(c_char), c_ulong, c_int, c_int]
+# *receiveBuffer, sizeOfBuffer, *typeIDs, length
 
 TLI_GetDeviceListExt = lib.TLI_GetDeviceListExt
 TLI_GetDeviceListExt.restype = c_short

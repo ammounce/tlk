@@ -609,6 +609,8 @@ NT_OutputVoltageRoute = c_long
 smaOnly = c_long()
 smaAndHub = c_long()
 
+NT_SignalState = c_short
+
 NT_TIARange = c_long
 i5nA = c_long()
 i16nA = c_long()
